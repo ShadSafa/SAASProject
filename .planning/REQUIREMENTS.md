@@ -153,12 +153,90 @@ Explicitly excluded. Documented to prevent scope creep.
 
 Which phases cover which requirements. Updated during roadmap creation.
 
-*Traceability table will be populated by roadmapper agent.*
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| AUTH-03 | Phase 1 | Pending |
+| AUTH-04 | Phase 1 | Pending |
+| AUTH-05 | Phase 1 | Pending |
+| AUTH-06 | Phase 1 | Pending |
+| AUTH-07 | Phase 1 | Pending |
+| AUTH-08 | Phase 1 | Pending |
+| AUTH-09 | Phase 1 | Pending |
+| INSTA-01 | Phase 2 | Pending |
+| INSTA-02 | Phase 2 | Pending |
+| INSTA-03 | Phase 2 | Pending |
+| INSTA-04 | Phase 2 | Pending |
+| INSTA-05 | Phase 2 | Pending |
+| INSTA-06 | Phase 2 | Pending |
+| SCAN-01 | Phase 3 | Pending |
+| SCAN-02 | Phase 3 | Pending |
+| SCAN-03 | Phase 3 | Pending |
+| SCAN-04 | Phase 3 | Pending |
+| SCAN-05 | Phase 3 | Pending |
+| SCAN-06 | Phase 3 | Pending |
+| SCAN-07 | Phase 3 | Pending |
+| SCAN-08 | Phase 3 | Pending |
+| ANALYSIS-01 | Phase 4 | Pending |
+| ANALYSIS-02 | Phase 4 | Pending |
+| ANALYSIS-03 | Phase 4 | Pending |
+| ANALYSIS-04 | Phase 4 | Pending |
+| ANALYSIS-05 | Phase 4 | Pending |
+| ANALYSIS-06 | Phase 4 | Pending |
+| ANALYSIS-07 | Phase 4 | Pending |
+| ANALYSIS-08 | Phase 4 | Pending |
+| ANALYSIS-09 | Phase 4 | Pending |
+| ANALYSIS-10 | Phase 4 | Pending |
+| ANALYSIS-11 | Phase 4 | Pending |
+| ANALYSIS-12 | Phase 5 | Pending |
+| ANALYSIS-13 | Phase 5 | Pending |
+| ANALYSIS-14 | Phase 5 | Pending |
+| ANALYSIS-15 | Phase 5 | Pending |
+| ANALYSIS-16 | Phase 5 | Pending |
+| ANALYSIS-17 | Phase 5 | Pending |
+| ANALYSIS-18 | Phase 5 | Pending |
+| ANALYSIS-19 | Phase 5 | Pending |
+| UX-01 | Phase 3 | Pending |
+| UX-02 | Phase 6 | Pending |
+| UX-03 | Phase 6 | Pending |
+| UX-04 | Phase 6 | Pending |
+| UX-05 | Phase 7 | Pending |
+| UX-06 | Phase 7 | Pending |
+| UX-07 | Phase 7 | Pending |
+| UX-08 | Phase 7 | Pending |
+| UX-09 | Phase 7 | Pending |
+| UX-10 | Phase 3 | Pending |
+| UX-11 | Phase 6 | Pending |
+| EXPORT-01 | Phase 8 | Pending |
+| EXPORT-02 | Phase 8 | Pending |
+| EXPORT-03 | Phase 8 | Pending |
+| EXPORT-04 | Phase 8 | Pending |
+| EXPORT-05 | Phase 8 | Pending |
+| EXPORT-06 | Phase 8 | Pending |
+| EXPORT-07 | Phase 8 | Pending |
+| HISTORY-01 | Phase 9 | Pending |
+| HISTORY-02 | Phase 9 | Pending |
+| HISTORY-03 | Phase 9 | Pending |
+| HISTORY-04 | Phase 9 | Pending |
+| HISTORY-05 | Phase 9 | Pending |
+| HISTORY-06 | Phase 9 | Pending |
+| HISTORY-07 | Phase 9 | Pending |
+| SUB-01 | Phase 10 | Pending |
+| SUB-02 | Phase 10 | Pending |
+| SUB-03 | Phase 10 | Pending |
+| SUB-04 | Phase 10 | Pending |
+| SUB-05 | Phase 10 | Pending |
+| SUB-06 | Phase 10 | Pending |
+| SUB-07 | Phase 10 | Pending |
+| SUB-08 | Phase 10 | Pending |
+| SUB-09 | Phase 10 | Pending |
+| SUB-10 | Phase 10 | Pending |
 
 **Coverage:**
 - v1 requirements: 79 total
-- Mapped to phases: (pending roadmap)
-- Unmapped: (pending roadmap)
+- Mapped to phases: 79 ✓
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-02-15*
