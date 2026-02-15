@@ -9,12 +9,12 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "postgresql+asyncpg://localhost/instagram_analyzer"
 
     # Security
-    SECRET_KEY: str
+    SECRET_KEY: str = "dev-secret-key-change-in-production"  # Must be changed in production
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
     # Email Service
-    RESEND_API_KEY: str
+    RESEND_API_KEY: str = ""  # Required for email functionality
     RESEND_DOMAIN: str = "yourdomain.com"
 
     # Frontend
