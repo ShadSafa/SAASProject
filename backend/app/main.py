@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
+from app.routes import auth
 
 # Create FastAPI application
 app = FastAPI(
@@ -26,7 +27,5 @@ async def health_check():
     return {"status": "ok"}
 
 
-# Future route includes will be added here:
-# app.include_router(auth_router)
-# app.include_router(scans_router)
-# etc.
+# Include routers
+app.include_router(auth.router)
