@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-02-15
 **Current Phase:** 01 - Foundation & Database
-**Current Plan:** 5 of 10
+**Current Plan:** 6 of 10
 **Milestone:** v1.0
 
 ---
@@ -27,11 +27,11 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Phase 01 Progress:**
 - Plans: 10 total
-- Completed: 4
-- In Progress: Plan 05
-- Remaining: 6
+- Completed: 5
+- In Progress: Plan 06
+- Remaining: 5
 
-Progress: [####------] 40%
+Progress: [#####-----] 50%
 
 **Requirements:**
 - Total v1: 79
@@ -44,39 +44,40 @@ Progress: [####------] 40%
 
 **Phase:** 01 - Foundation & Database
 **Status:** In Progress
-**Plans Completed:** 4 of 10
+**Plans Completed:** 5 of 10
 
 **Completed Plans:**
 - ✓ Plan 01-01: Database Schema & Migrations (2026-02-15)
 - ✓ Plan 01-02: Frontend Foundation (2026-02-15)
 - ✓ Plan 01-03: Authentication Services (2026-02-15)
 - ✓ Plan 01-04: React Frontend Foundation (2026-02-15)
+- ✓ Plan 01-05: Auth API Endpoints (2026-02-15)
 
 **Current Plan:**
-- Plan 01-05: Next in sequence
+- Plan 01-06: Next in sequence
 
 **Recently Completed:**
-- ✓ React 19.2 + TypeScript + Vite 7.3 frontend project
-- ✓ Tailwind CSS v4 configuration with PostCSS
-- ✓ Axios API client with httpOnly cookie support
-- ✓ Zustand auth store with localStorage persistence
-- ✓ TypeScript types for auth (User, Credentials, AuthState)
-- ✓ Vite proxy to forward /api requests to backend
+- ✓ Auth API endpoints (signup, verify-email, login, logout, me)
+- ✓ JWT authentication with httpOnly cookies
+- ✓ Email verification flow with Resend integration
+- ✓ Password strength validation (8 chars, uppercase, number)
+- ✓ Protected route pattern with get_current_active_user dependency
+- ✓ Error handling for all auth flows (409, 401, 403, 400)
 
 ---
 
 ## Next Steps
 
 **Immediate:**
-1. Execute Plan 01-05 (next plan in Phase 01)
+1. Execute Plan 01-06 (next plan in Phase 01)
 2. Build signup page with form validation
-3. Set up PostgreSQL database (locally or Railway)
-4. Apply migrations: `alembic upgrade head`
+3. Build login page and email verification flow
+4. Set up PostgreSQL database (locally or Railway)
 
 **Upcoming:**
-- Complete remaining 6 plans in Phase 01
-- Build login page and email verification flow
+- Complete remaining 5 plans in Phase 01
 - Implement password reset functionality
+- Build frontend auth pages
 
 ---
 
@@ -98,6 +99,9 @@ Progress: [####------] 40%
 | 2026-02-15 | Use Tailwind CSS v4 for styling | Modern utility-first CSS framework, v4 offers improved performance and DX | Enables rapid UI development |
 | 2026-02-15 | Use Zustand with persist middleware for auth state | Lightweight state management, built-in persistence, better than Redux for simple auth | Simpler than Redux, perfect for auth state |
 | 2026-02-15 | Axios with withCredentials for API client | Automatic httpOnly cookie handling, better interceptor support than fetch | Secure cookie-based auth, no localStorage tokens |
+| 2026-02-15 | HttpOnly cookies for JWT storage | XSS protection - JavaScript cannot access tokens | More secure than localStorage/sessionStorage |
+| 2026-02-15 | Email verification required before login | Ensures valid email addresses and prevents spam accounts | Better security and data quality |
+| 2026-02-15 | Security pattern: Don't reveal email existence in resend endpoint | Prevents email enumeration attacks | Standard security best practice |
 
 ---
 
@@ -147,16 +151,17 @@ Progress: [####------] 40%
 | 01-02 | - | - | - | - | 2026-02-15 |
 | 01-03 | 10 min | 3 | 5 | 3 | 2026-02-15 |
 | 01-04 | 13.5 min | 3 | 18 | 4 | 2026-02-15 |
+| 01-05 | 4 min | 2 | 3 | 1 | 2026-02-15 |
 
 ---
 
 ## Last Session
 
 **Date:** 2026-02-15
-**Stopped at:** Completed 01-04-PLAN.md (React Frontend Foundation)
+**Stopped at:** Completed 01-05-PLAN.md (Auth API Endpoints)
 **Status:** ✓ Plan completed successfully, SUMMARY created, STATE updated
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-15T20:16:06Z*
+*Last updated: 2026-02-15T20:24:48Z*
