@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-02-15
 **Current Phase:** 01 - Foundation & Database
-**Current Plan:** 2 of 10
+**Current Plan:** 4 of 10
 **Milestone:** v1.0
 
 ---
@@ -27,11 +27,11 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Phase 01 Progress:**
 - Plans: 10 total
-- Completed: 1
-- In Progress: Plan 02
-- Remaining: 9
+- Completed: 3
+- In Progress: Plan 04
+- Remaining: 7
 
-Progress: [##--------] 10%
+Progress: [###-------] 30%
 
 **Requirements:**
 - Total v1: 79
@@ -44,33 +44,36 @@ Progress: [##--------] 10%
 
 **Phase:** 01 - Foundation & Database
 **Status:** In Progress
-**Plans Completed:** 1 of 10
+**Plans Completed:** 3 of 10
 
 **Completed Plans:**
 - ✓ Plan 01-01: Database Schema & Migrations (2026-02-15)
+- ✓ Plan 01-02: Frontend Foundation (2026-02-15)
+- ✓ Plan 01-03: Authentication Services (2026-02-15)
 
 **Current Plan:**
-- Plan 01-02: Next in sequence
+- Plan 01-04: Next in sequence
 
 **Recently Completed:**
-- ✓ Backend project structure with FastAPI
-- ✓ SQLAlchemy models for 6 core entities (users, instagram_accounts, scans, viral_posts, analyses, user_usage)
-- ✓ Alembic migrations setup with initial schema
-- ✓ Database configuration with async support
-- ✓ Foreign key relationships with CASCADE deletes
+- ✓ Argon2id password hashing service (OWASP 2026 standard)
+- ✓ JWT token creation and verification
+- ✓ Time-limited email verification tokens
+- ✓ Time-limited password reset tokens
+- ✓ Async user CRUD operations
+- ✓ Pydantic schemas for user and auth endpoints
 
 ---
 
 ## Next Steps
 
 **Immediate:**
-1. Execute Plan 01-02 (next plan in Phase 01)
+1. Execute Plan 01-04 (next plan in Phase 01)
 2. Set up PostgreSQL database (locally or Railway)
 3. Apply migrations: `alembic upgrade head`
 
 **Upcoming:**
-- Complete remaining 9 plans in Phase 01
-- Build authentication system with JWT
+- Complete remaining 7 plans in Phase 01
+- Build authentication endpoints using services from 01-03
 - Implement email verification flow
 
 ---
@@ -87,6 +90,9 @@ Progress: [##--------] 10%
 | 2026-02-15 | Default SECRET_KEY in development config | Allow testing without environment variables while requiring proper values in production | Unblocks development and testing workflow |
 | 2026-02-15 | Dual database drivers (asyncpg + psycopg2) | Asyncpg for runtime performance, psycopg2 for Alembic sync migrations | Standard pattern for async FastAPI with Alembic |
 | 2026-02-15 | Manual initial migration creation | No database exists yet to autogenerate from; manually created based on model definitions | Appropriate for initial schema without database |
+| 2026-02-15 | Argon2id over bcrypt for password hashing | OWASP 2026 recommends Argon2id; configured with 64MB memory, 3 iterations, 4 threads | Better security against GPU attacks |
+| 2026-02-15 | Separate salts for verification vs reset tokens | Prevents cross-flow token reuse (verification token cannot be used for password reset) | Critical security measure |
+| 2026-02-15 | 1-hour token expiration for all types | Balances security (short-lived) with UX (enough time to complete flows) | Standard for email verification/reset flows |
 
 ---
 
@@ -133,16 +139,18 @@ Progress: [##--------] 10%
 | Plan | Duration | Tasks | Files | Commits | Date |
 |------|----------|-------|-------|---------|------|
 | 01-01 | 23 min | 3 | 11 | 3 | 2026-02-15 |
+| 01-02 | - | - | - | - | 2026-02-15 |
+| 01-03 | 10 min | 3 | 5 | 3 | 2026-02-15 |
 
 ---
 
 ## Last Session
 
 **Date:** 2026-02-15
-**Stopped at:** Completed 01-01-PLAN.md (Database Schema & Migrations)
+**Stopped at:** Completed 01-03-PLAN.md (Authentication Services)
 **Status:** ✓ Plan completed successfully, SUMMARY created, STATE updated
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-15T21:43:51Z*
+*Last updated: 2026-02-15T19:59:16Z*
