@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(gsd:new-project)",
+      "Skill(gsd:new-project:*)",
+      "Bash(node:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Read(//c/Users/shadi/.claude/agents/**)",
+      "Read(//c/Users/shadi/.claude/get-shit-done/templates/research-project/**)"
+    ]
+  }
+}
