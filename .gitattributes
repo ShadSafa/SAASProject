@@ -1,0 +1,21 @@
+# Auto detect text files and normalize to LF on commit
+* text=auto eol=lf
+
+# Force batch/PowerShell scripts to use CRLF (Windows-only files)
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files - don't touch
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.pyc binary
+*.pyo binary
