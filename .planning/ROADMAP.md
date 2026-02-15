@@ -53,15 +53,19 @@
 
 **Dependencies:** None (starting phase)
 
-**Estimated Plans:** 6-8
-- Database schema design & migrations
-- User registration endpoint
-- Email service integration (verification, password reset)
-- Login/logout endpoints with JWT
-- Session management
-- Profile management endpoints
-- Frontend auth pages (signup, login, reset, profile)
-- Auth state management
+**Plans:** 10 plans in 5 waves
+
+Plans:
+- [ ] 01-01-PLAN.md — Database schema and migrations (all entities)
+- [ ] 01-02-PLAN.md — Email service integration (Resend)
+- [ ] 01-03-PLAN.md — Auth service layer (Argon2id, JWT, tokens)
+- [ ] 01-04-PLAN.md — Frontend setup (React, Vite, Zustand)
+- [ ] 01-05-PLAN.md — Backend signup and email verification
+- [ ] 01-06-PLAN.md — Frontend signup and login pages
+- [ ] 01-07-PLAN.md — Backend password reset
+- [ ] 01-08-PLAN.md — Frontend password reset pages
+- [ ] 01-09-PLAN.md — Backend profile management and account deletion
+- [ ] 01-10-PLAN.md — Frontend profile page
 
 ---
 
