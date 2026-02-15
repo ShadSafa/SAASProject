@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { User, AuthState, AuthActions } from '../types/auth';
+import type { User, AuthState, AuthActions } from '../types/auth';
 
 type AuthStore = AuthState & AuthActions;
 

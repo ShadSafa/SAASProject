@@ -1,5 +1,5 @@
 import { api } from '../utils/api';
-import { User, LoginCredentials, SignupCredentials } from '../types/auth';
+import type { User, LoginCredentials, SignupCredentials } from '../types/auth';
 
 export const authApi = {
   signup: async (credentials: SignupCredentials) => {

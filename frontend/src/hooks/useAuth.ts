@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authApi } from '../api/auth';
 import { useAuthStore } from '../store/authStore';
-import { LoginCredentials, SignupCredentials } from '../types/auth';
+import type { LoginCredentials, SignupCredentials } from '../types/auth';
 
 export const useAuth = () => {
   const navigate = useNavigate();

@@ -1,3 +1,4 @@
+// User types
 export interface User {
   id: number;
   email: string;
@@ -5,6 +6,7 @@ export interface User {
   created_at: string;
 }
 
+// Credential types
 export interface LoginCredentials {
   email: string;
   password: string;
@@ -15,6 +17,7 @@ export interface SignupCredentials {
   password: string;
 }
 
+// Auth state types
 export interface AuthState {
   user: User | null;
   isLoading: boolean;
