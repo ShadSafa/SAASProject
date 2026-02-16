@@ -14,7 +14,13 @@
       "Bash(.venvScriptspython.exe -m alembic current)",
       "Bash(alembic current:*)",
       "Bash(pip install:*)",
-      "Bash(xargs git rm --cached)"
+      "Bash(xargs git rm --cached)",
+      "Bash(alembic upgrade:*)",
+      "Bash(psql:*)",
+      "Bash(\"/c/Program Files/PostgreSQL/18/bin/psql.exe\" -U postgres -c \"CREATE DATABASE instagram_analyzer;\")",
+      "Bash(PGPASSWORD=Matrix4466 \"/c/Program Files/PostgreSQL/18/bin/psql.exe\":*)",
+      "Bash(uvicorn:*)",
+      "Bash(npm run dev:*)"
     ]
   }
 }
