@@ -7,7 +7,14 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Read(//c/Users/shadi/.claude/agents/**)",
-      "Read(//c/Users/shadi/.claude/get-shit-done/templates/research-project/**)"
+      "Read(//c/Users/shadi/.claude/get-shit-done/templates/research-project/**)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(python -c:*)",
+      "Bash(.venvScriptspython.exe -m alembic current)",
+      "Bash(alembic current:*)",
+      "Bash(pip install:*)",
+      "Bash(xargs git rm --cached)"
     ]
   }
 }

@@ -3,14 +3,13 @@
 from pathlib import Path
 from typing import Dict
 
-from resend import Resend
-from resend.exceptions import ResendError
+import resend
 
 from app.config import settings
 
 
-# Initialize Resend client
-resend_client = Resend(api_key=settings.RESEND_API_KEY)
+# Initialize Resend with API key
+resend.api_key = settings.RESEND_API_KEY
 
 
 def render_template(template_name: str, context: Dict[str, str]) -> str:
@@ -55,10 +54,10 @@ def send_verification_email(email: str, token: str) -> Dict[str, str]:
         )
 
         # Send email via Resend
-        response = resend_client.emails.send(
+        response = resend.Emails.send(
             {
                 "from": f"no-reply@{settings.RESEND_DOMAIN}",
-                "to": email,
+                "to": [email],  # to field must be a list in v2.0
                 "subject": "Verify your email for Instagram Viral Analyzer",
                 "html": html_content,
             }
@@ -69,7 +68,7 @@ def send_verification_email(email: str, token: str) -> Dict[str, str]:
             "message_id": response.get("id", "")
         }
 
-    except ResendError as e:
+    except Exception as e:
         return {
             "status": "failed",
             "error": str(e)
@@ -106,10 +105,10 @@ def send_password_reset_email(email: str, token: str) -> Dict[str, str]:
         )
 
         # Send email via Resend
-        response = resend_client.emails.send(
+        response = resend.Emails.send(
             {
                 "from": f"no-reply@{settings.RESEND_DOMAIN}",
-                "to": email,
+                "to": [email],  # to field must be a list in v2.0
                 "subject": "Reset your password for Instagram Viral Analyzer",
                 "html": html_content,
             }
@@ -120,7 +119,7 @@ def send_password_reset_email(email: str, token: str) -> Dict[str, str]:
             "message_id": response.get("id", "")
         }
 
-    except ResendError as e:
+    except Exception as e:
         return {
             "status": "failed",
             "error": str(e)
