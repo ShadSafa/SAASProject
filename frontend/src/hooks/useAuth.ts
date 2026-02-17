@@ -98,6 +98,43 @@ export const useAuth = () => {
     }
   }, [setLoading, setError]);
 
+  const updateProfile = useCallback(async (data: {
+    email?: string;
+    currentPassword?: string;
+    newPassword?: string;
+  }) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const updatedUser = await authApi.updateProfile(data);
+      setUser(updatedUser);
+      return true;
+    } catch (error: any) {
+      const message = error.response?.data?.detail || 'Update failed';
+      setError(message);
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }, [setLoading, setError, setUser]);
+
+  const deleteAccount = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      await authApi.deleteAccount();
+      clearAuth();
+      navigate('/login');
+      return true;
+    } catch (error: any) {
+      const message = error.response?.data?.detail || 'Delete failed';
+      setError(message);
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }, [setLoading, setError, clearAuth, navigate]);
+
   return {
     user,
     signup,
@@ -106,5 +143,7 @@ export const useAuth = () => {
     verifyEmail,
     requestPasswordReset,
     resetPassword,
+    updateProfile,
+    deleteAccount,
   };
 };

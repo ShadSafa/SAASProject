@@ -44,4 +44,23 @@ export const authApi = {
     });
     return response.data;
   },
+
+  getProfile: async (): Promise<User> => {
+    const response = await api.get('/profile');
+    return response.data;
+  },
+
+  updateProfile: async (data: { email?: string; currentPassword?: string; newPassword?: string }): Promise<User> => {
+    const response = await api.put('/profile', {
+      email: data.email,
+      current_password: data.currentPassword,
+      new_password: data.newPassword,
+    });
+    return response.data;
+  },
+
+  deleteAccount: async () => {
+    const response = await api.delete('/profile/account');
+    return response.data;
+  },
 };
