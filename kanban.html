@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Kanban — Instagram Viral Content Analyzer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root { --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font);
+      background: #07081a;
+      color: #e2e8f0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Background orbs ─────────────────────────────────── */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+    }
+
+    .orb-1 { /* Red — top-right: reinforces "Pending" danger */
+      width: 540px; height: 540px;
+      top: -170px; right: -130px;
+      background: radial-gradient(circle, rgba(220,38,38,0.42) 0%, transparent 70%);
+    }
+
+    .orb-2 { /* Violet — top-left: general depth */
+      width: 660px; height: 660px;
+      top: -230px; left: -190px;
+      background: radial-gradient(circle, rgba(109,40,217,0.36) 0%, transparent 70%);
+    }
+
+    .orb-3 { /* Emerald — bottom-right: reinforces "Completed" success */
+      width: 500px; height: 500px;
+      bottom: -160px; right: -130px;
+      background: radial-gradient(circle, rgba(5,150,105,0.4) 0%, transparent 70%);
+    }
+
+    .orb-4 { /* Cyan — bottom-left: ambient glow */
+      width: 440px; height: 440px;
+      bottom: -130px; left: -110px;
+      background: radial-gradient(circle, rgba(8,145,178,0.3) 0%, transparent 70%);
+    }
+
+    /* ── Header ─────────────────────────────────────────── */
+    .app-header {
+      background: rgba(7, 8, 26, 0.65);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      color: white;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .header-title h1 {
+      font-size: 1rem;
+      font-weight: 700;
+      background: linear-gradient(120deg, #f1f5f9 30%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.01em;
+    }
+
+    .header-subtitle {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.38);
+      margin-top: 3px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+
+    .milestone-badge {
+      background: rgba(99,102,241,0.2);
+      color: #a5b4fc;
+      border: 1px solid rgba(99,102,241,0.4);
+      padding: 4px 14px;
+      border-radius: 9999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      backdrop-filter: blur(8px);
+    }
+
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .progress-text {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.42);
+      white-space: nowrap;
+    }
+
+    .progress-track {
+      width: 130px;
+      height: 5px;
+      background: rgba(255,255,255,0.09);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981, #818cf8);
+      border-radius: 9999px;
+      transition: width 0.6s ease;
+      box-shadow: 0 0 10px rgba(129,140,248,0.5);
+    }
+
+    /* ── Board ───────────────────────────────────────────── */
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 14px 16px;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* ── Column ──────────────────────────────────────────── */
+    .column {
+      display: flex;
+      flex-direction: column;
+      border-radius: 14px;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .column-header {
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .column-title {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      color: white;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    }
+
+    .column-count {
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: rgba(0,0,0,0.28);
+      color: rgba(255,255,255,0.85);
+      padding: 2px 9px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .column-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .column-body::-webkit-scrollbar { width: 3px; }
+    .column-body::-webkit-scrollbar-track { background: transparent; }
+    .column-body::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.15);
+      border-radius: 9999px;
+    }
+
+    /* ── Column themes ───────────────────────────────────── */
+    .col-pending {
+      background: rgba(220,38,38,0.07);
+      border-color: rgba(220,38,38,0.28);
+    }
+    .col-pending .column-header {
+      background: linear-gradient(135deg, rgba(220,38,38,0.88), rgba(185,28,28,0.78));
+    }
+
+    .col-current-pending {
+      background: rgba(248,113,113,0.07);
+      border-color: rgba(252,165,165,0.22);
+    }
+    .col-current-pending .column-header {
+      background: linear-gradient(135deg, rgba(248,113,113,0.82), rgba(239,68,68,0.72));
+    }
+
+    .col-current-complete {
+      background: rgba(74,222,128,0.06);
+      border-color: rgba(74,222,128,0.22);
+    }
+    .col-current-complete .column-header {
+      background: linear-gradient(135deg, rgba(74,222,128,0.78), rgba(34,197,94,0.68));
+    }
+
+    .col-completed {
+      background: rgba(16,185,129,0.08);
+      border-color: rgba(52,211,153,0.26);
+    }
+    .col-completed .column-header {
+      background: linear-gradient(135deg, rgba(16,185,129,0.88), rgba(5,150,105,0.78));
+    }
+
+    /* ── Card ────────────────────────────────────────────── */
+    .card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 9px;
+      padding: 9px 11px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.06);
+      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+    }
+
+    .card:hover {
+      background: rgba(255,255,255,0.09);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+      transform: translateY(-1px);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+      gap: 6px;
+    }
+
+    .phase-badge {
+      font-size: 0.58rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .seq-label {
+      font-size: 0.58rem;
+      color: rgba(255,255,255,0.32);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .card-name {
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      line-height: 1.35;
+      margin-bottom: 3px;
+    }
+
+    .card-phase-name {
+      font-size: 0.58rem;
+      color: rgba(255,255,255,0.36);
+      font-weight: 500;
+    }
+
+    /* ── Phase badge palette (glassmorphism) ─────────────── */
+    .ph-1  { background: rgba(99,102,241,0.22);  color: #a5b4fc; border: 1px solid rgba(99,102,241,0.35); }
+    .ph-2  { background: rgba(59,130,246,0.22);  color: #93c5fd; border: 1px solid rgba(59,130,246,0.35); }
+    .ph-3  { background: rgba(6,182,212,0.22);   color: #67e8f9; border: 1px solid rgba(6,182,212,0.35);  }
+    .ph-4  { background: rgba(139,92,246,0.22);  color: #c4b5fd; border: 1px solid rgba(139,92,246,0.35); }
+    .ph-5  { background: rgba(168,85,247,0.22);  color: #d8b4fe; border: 1px solid rgba(168,85,247,0.35); }
+    .ph-6  { background: rgba(20,184,166,0.22);  color: #5eead4; border: 1px solid rgba(20,184,166,0.35); }
+    .ph-7  { background: rgba(34,197,94,0.22);   color: #86efac; border: 1px solid rgba(34,197,94,0.35);  }
+    .ph-8  { background: rgba(234,179,8,0.22);   color: #fde047; border: 1px solid rgba(234,179,8,0.35);  }
+    .ph-9  { background: rgba(249,115,22,0.22);  color: #fdba74; border: 1px solid rgba(249,115,22,0.35); }
+    .ph-10 { background: rgba(239,68,68,0.22);   color: #fca5a5; border: 1px solid rgba(239,68,68,0.35);  }
+    .ph-11 { background: rgba(148,163,184,0.16); color: #cbd5e1; border: 1px solid rgba(148,163,184,0.28); }
+
+    /* ── Empty state ─────────────────────────────────────── */
+    .empty-state {
+      text-align: center;
+      padding: 48px 16px;
+      color: rgba(255,255,255,0.16);
+      font-size: 0.72rem;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    .app-footer {
+      background: rgba(7, 8, 26, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      color: rgba(255,255,255,0.28);
+      padding: 7px 24px;
+      font-size: 0.63rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      gap: 20px;
+    }
+
+    .refresh-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      color: rgba(255,255,255,0.32);
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .refresh-label input { cursor: pointer; accent-color: #818cf8; }
+
+    #refreshStatus { color: #34d399; margin-left: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- Glassmorphism background orbs -->
+<div class="bg-orbs" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="orb orb-4"></div>
+</div>
+
+<header class="app-header">
+  <div class="header-title">
+    <h1>Project Kanban — Instagram Viral Content Analyzer</h1>
+    <div class="header-subtitle" id="headerSubtitle"></div>
+  </div>
+  <div class="header-right">
+    <span class="milestone-badge" id="milestoneBadge"></span>
+    <div class="progress-wrap">
+      <span class="progress-text" id="progressText"></span>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="board" id="board"></div>
+
+<footer class="app-footer">
+  <span id="footerInfo"></span>
+  <label class="refresh-label">
+    <input type="checkbox" id="autoRefresh">
+    Auto-refresh every 30s from kanban-state.json
+    <span id="refreshStatus"></span>
+  </label>
+</footer>
+
+<script>
+// ================================================================
+// === BEGIN KANBAN STATE (auto-updated by .planning/update_kanban.py)
+const STATE = {
+  project:      "Instagram Viral Content Analyzer",
+  milestone:    "v1.0",
+  lastUpdated:  "2026-02-17",
+  currentPhase: 2,
+  plans: [
+    // ── Phase 1 — Foundation & Database ───────────────────
+    {id:"01-01",phase:1,phaseName:"Foundation & Database",seq:1,total:10,name:"Database Schema & Migrations",status:"completed"},
+    {id:"01-02",phase:1,phaseName:"Foundation & Database",seq:2,total:10,name:"Email Service Integration (Resend)",status:"completed"},
+    {id:"01-03",phase:1,phaseName:"Foundation & Database",seq:3,total:10,name:"Authentication Services (Argon2id, JWT)",status:"completed"},
+    {id:"01-04",phase:1,phaseName:"Foundation & Database",seq:4,total:10,name:"React Frontend Foundation",status:"completed"},
+    {id:"01-05",phase:1,phaseName:"Foundation & Database",seq:5,total:10,name:"Auth API Endpoints",status:"completed"},
+    {id:"01-06",phase:1,phaseName:"Foundation & Database",seq:6,total:10,name:"Frontend Signup & Login Pages",status:"completed"},
+    {id:"01-07",phase:1,phaseName:"Foundation & Database",seq:7,total:10,name:"Backend Password Reset",status:"completed"},
+    {id:"01-08",phase:1,phaseName:"Foundation & Database",seq:8,total:10,name:"Frontend Password Reset Pages",status:"completed"},
+    {id:"01-09",phase:1,phaseName:"Foundation & Database",seq:9,total:10,name:"Backend Profile Management & Account Deletion",status:"completed"},
+    {id:"01-10",phase:1,phaseName:"Foundation & Database",seq:10,total:10,name:"Frontend Profile Page",status:"completed"},
+    // ── Phase 2 — Instagram Integration ───────────────────
+    {id:"02-01",phase:2,phaseName:"Instagram Integration",seq:1,total:7,name:"Instagram OAuth Backend Endpoints",status:"current_pending"},
+    {id:"02-02",phase:2,phaseName:"Instagram Integration",seq:2,total:7,name:"Token Storage & Encryption",status:"current_pending"},
+    {id:"02-03",phase:2,phaseName:"Instagram Integration",seq:3,total:7,name:"Token Auto-Refresh Background Job",status:"current_pending"},
+    {id:"02-04",phase:2,phaseName:"Instagram Integration",seq:4,total:7,name:"Multiple Account Data Model",status:"current_pending"},
+    {id:"02-05",phase:2,phaseName:"Instagram Integration",seq:5,total:7,name:"Connection Status API Endpoints",status:"current_pending"},
+    {id:"02-06",phase:2,phaseName:"Instagram Integration",seq:6,total:7,name:"Frontend Instagram Connection UI",status:"current_pending"},
+    {id:"02-07",phase:2,phaseName:"Instagram Integration",seq:7,total:7,name:"Error Handling & User Notifications",status:"current_pending"},
+    // ── Phase 3 — Core Scanning Engine ────────────────────
+    {id:"03-01",phase:3,phaseName:"Core Scanning Engine",seq:1,total:9,name:"Third-Party API Integration (Apify)",status:"pending"},
+    {id:"03-02",phase:3,phaseName:"Core Scanning Engine",seq:2,total:9,name:"PhantomBuster Fallback Implementation",status:"pending"},
+    {id:"03-03",phase:3,phaseName:"Core Scanning Engine",seq:3,total:9,name:"Growth Velocity Algorithm",status:"pending"},
+    {id:"03-04",phase:3,phaseName:"Core Scanning Engine",seq:4,total:9,name:"URL Parsing & Single-Post Analysis",status:"pending"},
+    {id:"03-05",phase:3,phaseName:"Core Scanning Engine",seq:5,total:9,name:"Scan Job Orchestration (Background Workers)",status:"pending"},
+    {id:"03-06",phase:3,phaseName:"Core Scanning Engine",seq:6,total:9,name:"Scan Result Storage",status:"pending"},
+    {id:"03-07",phase:3,phaseName:"Core Scanning Engine",seq:7,total:9,name:"Frontend Scan Trigger UI",status:"pending"},
+    {id:"03-08",phase:3,phaseName:"Core Scanning Engine",seq:8,total:9,name:"Summary Card Component",status:"pending"},
+    {id:"03-09",phase:3,phaseName:"Core Scanning Engine",seq:9,total:9,name:"Loading & Progress States",status:"pending"},
+    // ── Phase 4 — AI Analysis — Algorithm Factors ─────────
+    {id:"04-01",phase:4,phaseName:"AI Analysis — Algorithm Factors",seq:1,total:10,name:"OpenAI API Integration",status:"pending"},
+    {id:"04-02",phase:4,phaseName:"AI Analysis — Algorithm Factors",seq:2,total:10,name:"Prompt Engineering for Viral Analysis",status:"pending"},
+    {id:"04-03",phase:4,phaseName:"AI Analysis — Algorithm Factors",seq:3,total:10,name:"Hook Analysis (Video Thumbnails & Captions)",status:"pending"},
+    {id:"04-04",phase:4,phaseName:"AI Analysis — Algorithm Factors",seq:4,total:10,name:"Emotional Trigger Taxonomy",status:"pending"},
+    {id:"04-05",phase:4,phaseName:"AI Analysis — Algorithm Factors",seq:5,total:10,name:"Engagement Velocity Calculations",status:"pending"},
+    {id:"04-06",phase:4,phaseName:"AI Analysis — Algorithm Factors",seq:6,total:10,name:"Hashtag Performance Metrics",status:"pending"},
+    {id:"04-07",phase:4,phaseName:"AI Analysis — Algorithm Factors",seq:7,total:10,name:"Comment Sentiment Analysis",status:"pending"},
+    {id:"04-08",phase:4,phaseName:"AI Analysis — Algorithm Factors",seq:8,total:10,name:"Analysis Caching Layer",status:"pending"},
+    {id:"04-09",phase:4,phaseName:"AI Analysis — Algorithm Factors",seq:9,total:10,name:"Structured Output Validation",status:"pending"},
+    {id:"04-10",phase:4,phaseName:"AI Analysis — Algorithm Factors",seq:10,total:10,name:"Cost Monitoring",status:"pending"},
+    // ── Phase 5 — AI Analysis — Content Deep Dive ─────────
+    {id:"05-01",phase:5,phaseName:"AI Analysis — Content Deep Dive",seq:1,total:7,name:"Demographics Extraction from Instagram Data",status:"pending"},
+    {id:"05-02",phase:5,phaseName:"AI Analysis — Content Deep Dive",seq:2,total:7,name:"Engagement Rate Formulas",status:"pending"},
+    {id:"05-03",phase:5,phaseName:"AI Analysis — Content Deep Dive",seq:3,total:7,name:"Interest Inference Logic",status:"pending"},
+    {id:"05-04",phase:5,phaseName:"AI Analysis — Content Deep Dive",seq:4,total:7,name:"Content Type Taxonomy (Native & Extended)",status:"pending"},
+    {id:"05-05",phase:5,phaseName:"AI Analysis — Content Deep Dive",seq:5,total:7,name:"Niche Detection with OpenAI",status:"pending"},
+    {id:"05-06",phase:5,phaseName:"AI Analysis — Content Deep Dive",seq:6,total:7,name:"User Niche Override UI",status:"pending"},
+    {id:"05-07",phase:5,phaseName:"AI Analysis — Content Deep Dive",seq:7,total:7,name:"Content Categorization Storage",status:"pending"},
+    // ── Phase 6 — User Interface & Display ────────────────
+    {id:"06-01",phase:6,phaseName:"User Interface & Display",seq:1,total:6,name:"Summary Card Enhancement (All Metrics)",status:"pending"},
+    {id:"06-02",phase:6,phaseName:"User Interface & Display",seq:2,total:6,name:"Detailed Analysis View Component",status:"pending"},
+    {id:"06-03",phase:6,phaseName:"User Interface & Display",seq:3,total:6,name:"Drill-Down Modal & Page Routing",status:"pending"},
+    {id:"06-04",phase:6,phaseName:"User Interface & Display",seq:4,total:6,name:"Data Visualization Components (Charts)",status:"pending"},
+    {id:"06-05",phase:6,phaseName:"User Interface & Display",seq:5,total:6,name:"External Link Handling",status:"pending"},
+    {id:"06-06",phase:6,phaseName:"User Interface & Display",seq:6,total:6,name:"Responsive Design Polish",status:"pending"},
+    // ── Phase 7 — Filtering & Search ──────────────────────
+    {id:"07-01",phase:7,phaseName:"Filtering & Search",seq:1,total:5,name:"Filter API Endpoints (Query Builder)",status:"pending"},
+    {id:"07-02",phase:7,phaseName:"Filtering & Search",seq:2,total:5,name:"Filter UI Components (Dropdowns, Ranges)",status:"pending"},
+    {id:"07-03",phase:7,phaseName:"Filtering & Search",seq:3,total:5,name:"Search Functionality",status:"pending"},
+    {id:"07-04",phase:7,phaseName:"Filtering & Search",seq:4,total:5,name:"Filter State Management",status:"pending"},
+    {id:"07-05",phase:7,phaseName:"Filtering & Search",seq:5,total:5,name:"Performance Optimization & Indexing",status:"pending"},
+    // ── Phase 8 — Export System ───────────────────────────
+    {id:"08-01",phase:8,phaseName:"Export System",seq:1,total:7,name:"PDF Generation Service (ReportLab)",status:"pending"},
+    {id:"08-02",phase:8,phaseName:"Export System",seq:2,total:7,name:"CSV Export Endpoint",status:"pending"},
+    {id:"08-03",phase:8,phaseName:"Export System",seq:3,total:7,name:"Shareable Link System (Token Generation)",status:"pending"},
+    {id:"08-04",phase:8,phaseName:"Export System",seq:4,total:7,name:"Public Share Page (Unauthenticated Access)",status:"pending"},
+    {id:"08-05",phase:8,phaseName:"Export System",seq:5,total:7,name:"Password Protection for Links",status:"pending"},
+    {id:"08-06",phase:8,phaseName:"Export System",seq:6,total:7,name:"Link Revocation API",status:"pending"},
+    {id:"08-07",phase:8,phaseName:"Export System",seq:7,total:7,name:"Export UI Controls",status:"pending"},
+    // ── Phase 9 — Historical Data & Trends ────────────────
+    {id:"09-01",phase:9,phaseName:"Historical Data & Trends",seq:1,total:7,name:"Scan History List UI",status:"pending"},
+    {id:"09-02",phase:9,phaseName:"Historical Data & Trends",seq:2,total:7,name:"Scan Archive Viewer",status:"pending"},
+    {id:"09-03",phase:9,phaseName:"Historical Data & Trends",seq:3,total:7,name:"Time-Series Queries (TimescaleDB)",status:"pending"},
+    {id:"09-04",phase:9,phaseName:"Historical Data & Trends",seq:4,total:7,name:"Trend Visualization Components (Recharts)",status:"pending"},
+    {id:"09-05",phase:9,phaseName:"Historical Data & Trends",seq:5,total:7,name:"Comparison View (Side-by-Side)",status:"pending"},
+    {id:"09-06",phase:9,phaseName:"Historical Data & Trends",seq:6,total:7,name:"Trending Algorithms",status:"pending"},
+    {id:"09-07",phase:9,phaseName:"Historical Data & Trends",seq:7,total:7,name:"Delete Scan Functionality",status:"pending"},
+    // ── Phase 10 — Subscription & Monetization ─────────────
+    {id:"10-01",phase:10,phaseName:"Subscription & Monetization",seq:1,total:9,name:"Stripe Integration (API Keys, SDK)",status:"pending"},
+    {id:"10-02",phase:10,phaseName:"Subscription & Monetization",seq:2,total:9,name:"Subscription Tier Data Model",status:"pending"},
+    {id:"10-03",phase:10,phaseName:"Subscription & Monetization",seq:3,total:9,name:"Usage Tracking (Scans per User per Month)",status:"pending"},
+    {id:"10-04",phase:10,phaseName:"Subscription & Monetization",seq:4,total:9,name:"Limit Enforcement Middleware",status:"pending"},
+    {id:"10-05",phase:10,phaseName:"Subscription & Monetization",seq:5,total:9,name:"Stripe Checkout Flow",status:"pending"},
+    {id:"10-06",phase:10,phaseName:"Subscription & Monetization",seq:6,total:9,name:"Webhook Endpoint & Handlers",status:"pending"},
+    {id:"10-07",phase:10,phaseName:"Subscription & Monetization",seq:7,total:9,name:"Billing Portal Link",status:"pending"},
+    {id:"10-08",phase:10,phaseName:"Subscription & Monetization",seq:8,total:9,name:"Pricing Page UI",status:"pending"},
+    {id:"10-09",phase:10,phaseName:"Subscription & Monetization",seq:9,total:9,name:"Email Notifications (Subscription Events)",status:"pending"},
+    // ── Phase 11 — Polish & Launch Preparation ─────────────
+    {id:"11-01",phase:11,phaseName:"Polish & Launch Preparation",seq:1,total:6,name:"End-to-End Testing Suite",status:"pending"},
+    {id:"11-02",phase:11,phaseName:"Polish & Launch Preparation",seq:2,total:6,name:"Performance Profiling & Optimization",status:"pending"},
+    {id:"11-03",phase:11,phaseName:"Polish & Launch Preparation",seq:3,total:6,name:"Production Environment Setup",status:"pending"},
+    {id:"11-04",phase:11,phaseName:"Polish & Launch Preparation",seq:4,total:6,name:"Deployment Automation (CI/CD)",status:"pending"},
+    {id:"11-05",phase:11,phaseName:"Polish & Launch Preparation",seq:5,total:6,name:"Monitoring Setup (Sentry, Logs)",status:"pending"},
+    {id:"11-06",phase:11,phaseName:"Polish & Launch Preparation",seq:6,total:6,name:"User Documentation",status:"pending"},
+  ]
+};
+// === END KANBAN STATE ===
+
+// ================================================================
+// Rendering
+// ================================================================
+
+const COLUMNS = [
+  { key: "pending",          label: "Pending",                 cls: "col-pending"          },
+  { key: "current_pending",  label: "Current Phase Pending",   cls: "col-current-pending"  },
+  { key: "current_complete", label: "Current Phase Complete",  cls: "col-current-complete" },
+  { key: "completed",        label: "Completed",               cls: "col-completed"        },
+];
+
+function cardHTML(p) {
+  const phaseNum = String(p.phase).padStart(2, "0");
+  return `
+    <div class="card">
+      <div class="card-top">
+        <span class="phase-badge ph-${p.phase}">Phase ${phaseNum}</span>
+        <span class="seq-label">Step ${p.seq} of ${p.total}</span>
+      </div>
+      <div class="card-name">${p.name}</div>
+      <div class="card-phase-name">${p.phaseName}</div>
+    </div>`;
+}
+
+function render(data) {
+  const { project, milestone, lastUpdated, plans } = data;
+
+  // Header
+  document.getElementById("headerSubtitle").textContent =
+    `${project}  ·  Last updated: ${lastUpdated}`;
+  document.getElementById("milestoneBadge").textContent = milestone;
+
+  // Progress (count completed + current_complete as "done for progress")
+  const total = plans.length;
+  const done  = plans.filter(p => p.status === "completed" || p.status === "current_complete").length;
+  const pct   = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById("progressText").textContent = `${done} / ${total} plans`;
+  document.getElementById("progressFill").style.width = `${pct}%`;
+
+  const fullyDone = plans.filter(p => p.status === "completed").length;
+  document.getElementById("footerInfo").textContent =
+    `${total} plans across 11 phases  ·  ${fullyDone} fully completed  ·  ${pct}% overall progress`;
+
+  // Group plans by status (preserve phase+seq order)
+  const groups = { pending: [], current_pending: [], current_complete: [], completed: [] };
+  [...plans]
+    .sort((a, b) => a.phase !== b.phase ? a.phase - b.phase : a.seq - b.seq)
+    .forEach(p => { if (groups[p.status]) groups[p.status].push(p); });
+
+  // Render columns
+  document.getElementById("board").innerHTML = COLUMNS.map(col => {
+    const cards = groups[col.key];
+    const body  = cards.length
+      ? cards.map(cardHTML).join("")
+      : `<div class="empty-state">No items here yet</div>`;
+    return `
+      <div class="column ${col.cls}">
+        <div class="column-header">
+          <span class="column-title">${col.label}</span>
+          <span class="column-count">${cards.length}</span>
+        </div>
+        <div class="column-body">${body}</div>
+      </div>`;
+  }).join("");
+}
+
+// Initial render from embedded state
+render(STATE);
+
+// ── Auto-refresh (polling kanban-state.json when served) ──
+let refreshTimer = null;
+
+document.getElementById("autoRefresh").addEventListener("change", function () {
+  const status = document.getElementById("refreshStatus");
+  if (this.checked) {
+    status.textContent = "(active)";
+    refreshTimer = setInterval(async () => {
+      try {
+        const res = await fetch(`kanban-state.json?_=${Date.now()}`);
+        if (res.ok) {
+          const data = await res.json();
+          render(data);
+          status.textContent = `(refreshed ${new Date().toLocaleTimeString()})`;
+        }
+      } catch (_) {
+        status.textContent = "(server not available)";
+      }
+    }, 30000);
+  } else {
+    clearInterval(refreshTimer);
+    refreshTimer = null;
+    status.textContent = "";
+  }
+});
+</script>
+</body>
+</html>

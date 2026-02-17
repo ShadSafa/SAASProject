@@ -1,11 +1,12 @@
 """Authentication API routes for signup, login, email verification, and password reset."""
 
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Cookie
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBearer
 from fastapi.security.http import HTTPAuthorizationCredentials
 from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import timedelta
+from typing import Optional
 
 from app.database import get_db
 from app.schemas.auth import VerifyEmailRequest, Token, PasswordResetRequest, PasswordResetConfirm
@@ -291,11 +292,23 @@ async def reset_password(
 
 
 async def get_current_active_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(HTTPBearer(auto_error=False)),
+    access_token: Optional[str] = Cookie(default=None),
     db: AsyncSession = Depends(get_db)
 ) -> User:
-    """Dependency for protected routes - validates JWT token."""
-    token = credentials.credentials
+    """Dependency for protected routes - validates JWT token from Bearer header or httpOnly cookie."""
+    token = None
+    if credentials:
+        token = credentials.credentials
+    elif access_token:
+        token = access_token
+
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated"
+        )
+
     payload = verify_token(token)
 
     if not payload:

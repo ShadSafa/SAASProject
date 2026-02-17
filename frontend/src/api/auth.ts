@@ -46,12 +46,12 @@ export const authApi = {
   },
 
   getProfile: async (): Promise<User> => {
-    const response = await api.get('/profile');
+    const response = await api.get('/api/profile');
     return response.data;
   },
 
   updateProfile: async (data: { email?: string; currentPassword?: string; newPassword?: string }): Promise<User> => {
-    const response = await api.put('/profile', {
+    const response = await api.put('/api/profile', {
       email: data.email,
       current_password: data.currentPassword,
       new_password: data.newPassword,
@@ -60,7 +60,7 @@ export const authApi = {
   },
 
   deleteAccount: async () => {
-    const response = await api.delete('/profile/account');
+    const response = await api.delete('/api/profile/account');
     return response.data;
   },
 };

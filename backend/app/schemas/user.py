@@ -30,3 +30,21 @@ class UserResponse(UserBase):
 
     class Config:
         from_attributes = True  # Pydantic v2 (was orm_mode in v1)
+
+
+class ProfileUpdateRequest(BaseModel):
+    """Schema for profile update requests (email or password change)."""
+    email: EmailStr | None = None
+    current_password: str | None = None
+    new_password: str | None = None
+
+
+class ProfileResponse(BaseModel):
+    """Schema for profile response (authenticated user data)."""
+    id: int
+    email: str
+    email_verified: bool
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
