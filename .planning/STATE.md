@@ -1,8 +1,8 @@
 # Project State: Instagram Viral Content Analyzer
 
-**Last Updated:** 2026-02-15
+**Last Updated:** 2026-02-17
 **Current Phase:** 01 - Foundation & Database
-**Current Plan:** 6 of 10
+**Current Plan:** 8 of 10
 **Milestone:** v1.0
 
 ---
@@ -27,11 +27,11 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Phase 01 Progress:**
 - Plans: 10 total
-- Completed: 5
-- In Progress: Plan 06
-- Remaining: 5
+- Completed: 7
+- In Progress: Plan 08
+- Remaining: 3
 
-Progress: [#####-----] 50%
+Progress: [#######---] 70%
 
 **Requirements:**
 - Total v1: 79
@@ -52,9 +52,11 @@ Progress: [#####-----] 50%
 - ✓ Plan 01-03: Authentication Services (2026-02-15)
 - ✓ Plan 01-04: React Frontend Foundation (2026-02-15)
 - ✓ Plan 01-05: Auth API Endpoints (2026-02-15)
+- ✓ Plan 01-06: (completed)
+- ✓ Plan 01-07: Password Reset Endpoints (2026-02-17)
 
 **Current Plan:**
-- Plan 01-06: Next in sequence
+- Plan 01-08: Next in sequence
 
 **Recently Completed:**
 - ✓ Auth API endpoints (signup, verify-email, login, logout, me)
@@ -63,13 +65,16 @@ Progress: [#####-----] 50%
 - ✓ Password strength validation (8 chars, uppercase, number)
 - ✓ Protected route pattern with get_current_active_user dependency
 - ✓ Error handling for all auth flows (409, 401, 403, 400)
+- ✓ Password reset endpoints (request-password-reset, reset-password)
+- ✓ Email enumeration prevention in password reset flow
+- ✓ Time-limited reset tokens (1 hour) with separate itsdangerous salt
 
 ---
 
 ## Next Steps
 
 **Immediate:**
-1. Execute Plan 01-06 (next plan in Phase 01)
+1. Execute Plan 01-08 (next plan in Phase 01)
 2. Build signup page with form validation
 3. Build login page and email verification flow
 4. Set up PostgreSQL database (locally or Railway)
@@ -102,6 +107,7 @@ Progress: [#####-----] 50%
 | 2026-02-15 | HttpOnly cookies for JWT storage | XSS protection - JavaScript cannot access tokens | More secure than localStorage/sessionStorage |
 | 2026-02-15 | Email verification required before login | Ensures valid email addresses and prevents spam accounts | Better security and data quality |
 | 2026-02-15 | Security pattern: Don't reveal email existence in resend endpoint | Prevents email enumeration attacks | Standard security best practice |
+| 2026-02-17 | Call email service functions synchronously (no await) | send_verification_email and send_password_reset_email are synchronous functions; awaiting them would cause a runtime error | Consistent with existing signup/resend-verification patterns |
 
 ---
 
@@ -152,16 +158,17 @@ Progress: [#####-----] 50%
 | 01-03 | 10 min | 3 | 5 | 3 | 2026-02-15 |
 | 01-04 | 13.5 min | 3 | 18 | 4 | 2026-02-15 |
 | 01-05 | 4 min | 2 | 3 | 1 | 2026-02-15 |
+| 01-07 | 5 min | 1 | 1 | 1 | 2026-02-17 |
 
 ---
 
 ## Last Session
 
-**Date:** 2026-02-15
-**Stopped at:** Completed 01-05-PLAN.md (Auth API Endpoints)
+**Date:** 2026-02-17
+**Stopped at:** Completed 01-07-PLAN.md (Password Reset Endpoints)
 **Status:** ✓ Plan completed successfully, SUMMARY created, STATE updated
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-15T20:24:48Z*
+*Last updated: 2026-02-17T00:00:00Z*
