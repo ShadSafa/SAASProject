@@ -68,11 +68,43 @@ export const useAuth = () => {
     }
   }, [setLoading, setError]);
 
+  const requestPasswordReset = useCallback(async (email: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await authApi.requestPasswordReset(email);
+      return true;
+    } catch (error: any) {
+      const message = error.response?.data?.detail || 'Request failed';
+      setError(message);
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }, [setLoading, setError]);
+
+  const resetPassword = useCallback(async (token: string, newPassword: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await authApi.resetPassword(token, newPassword);
+      return true;
+    } catch (error: any) {
+      const message = error.response?.data?.detail || 'Password reset failed';
+      setError(message);
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }, [setLoading, setError]);
+
   return {
     user,
     signup,
     login,
     logout,
     verifyEmail,
+    requestPasswordReset,
+    resetPassword,
   };
 };
