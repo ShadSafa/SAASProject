@@ -1,4 +1,4 @@
-"""Authentication API routes for signup, login, and email verification."""
+"""Authentication API routes for signup, login, email verification, and password reset."""
 
 from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.responses import JSONResponse
@@ -8,16 +8,22 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import timedelta
 
 from app.database import get_db
-from app.schemas.auth import VerifyEmailRequest, Token
+from app.schemas.auth import VerifyEmailRequest, Token, PasswordResetRequest, PasswordResetConfirm
 from app.schemas.user import UserCreate, UserResponse
 from app.crud.user import get_user_by_email, create_user, verify_user_email
-from app.services.auth import generate_verification_token, verify_verification_token
-from app.services.email import send_verification_email
+from app.services.auth import (
+    generate_verification_token,
+    verify_verification_token,
+    generate_reset_token,
+    verify_reset_token,
+)
+from app.services.email import send_verification_email, send_password_reset_email
 from app.services.security import (
     validate_password_strength,
     verify_password,
     create_access_token,
-    verify_token
+    verify_token,
+    hash_password,
 )
 from app.models.user import User
 from app.config import settings
@@ -204,6 +210,84 @@ async def logout():
     response = JSONResponse(content={"message": "Logged out successfully"})
     response.delete_cookie(key="access_token")
     return response
+
+
+@router.post("/request-password-reset")
+async def request_password_reset(
+    request: PasswordResetRequest,
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Send password reset email with time-limited token.
+
+    Requirements covered:
+    - AUTH-07: Password reset (step 1 - request)
+    """
+    # Don't reveal if email exists (security best practice)
+    user = await get_user_by_email(db, request.email)
+    if not user:
+        # Return success anyway to prevent email enumeration
+        return {
+            "message": "If that email exists, a password reset link has been sent."
+        }
+
+    # Generate reset token (1 hour expiration)
+    reset_token = generate_reset_token(user.email)
+
+    # Send password reset email
+    email_result = send_password_reset_email(user.email, reset_token)
+
+    if email_result.get("status") != "sent":
+        # Log error but don't reveal to user
+        print(f"Warning: Failed to send password reset email to {user.email}")
+
+    return {
+        "message": "If that email exists, a password reset link has been sent."
+    }
+
+
+@router.post("/reset-password")
+async def reset_password(
+    request: PasswordResetConfirm,
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Reset password using token from email link.
+
+    Requirements covered:
+    - AUTH-07: Password reset (step 2 - confirm)
+    """
+    # Verify token and extract email
+    email = verify_reset_token(request.token)
+    if not email:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid or expired reset token"
+        )
+
+    # Get user
+    user = await get_user_by_email(db, email)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+
+    # Validate new password strength
+    is_valid, error_msg = validate_password_strength(request.new_password)
+    if not is_valid:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=error_msg
+        )
+
+    # Update password (hash automatically)
+    user.hashed_password = hash_password(request.new_password)
+    await db.commit()
+
+    return {
+        "message": "Password reset successfully. You can now log in with your new password."
+    }
 
 
 async def get_current_active_user(
