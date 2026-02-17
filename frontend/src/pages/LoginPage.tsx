@@ -66,7 +66,7 @@ export default function LoginPage() {
                 <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
               )}
               <div className="mt-1 text-right">
-                <Link to="/reset-password" className="text-sm text-blue-600 hover:text-blue-500">
+                <Link to="/request-password-reset" className="text-sm text-blue-600 hover:text-blue-500">
                   Forgot password?
                 </Link>
               </div>
