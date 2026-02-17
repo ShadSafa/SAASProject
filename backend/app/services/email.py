@@ -73,11 +73,6 @@ def send_verification_email(email: str, token: str) -> Dict[str, str]:
             "status": "failed",
             "error": str(e)
         }
-    except Exception as e:
-        return {
-            "status": "failed",
-            "error": f"Unexpected error: {str(e)}"
-        }
 
 
 def send_password_reset_email(email: str, token: str) -> Dict[str, str]:
@@ -123,9 +118,4 @@ def send_password_reset_email(email: str, token: str) -> Dict[str, str]:
         return {
             "status": "failed",
             "error": str(e)
-        }
-    except Exception as e:
-        return {
-            "status": "failed",
-            "error": f"Unexpected error: {str(e)}"
         }
