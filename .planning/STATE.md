@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-02-18
 **Current Phase:** 02-instagram-integration
-**Current Plan:** 02-04 at checkpoint — awaiting human verification (Tasks 1+2 done)
+**Current Plan:** 02-05 complete — 5/6 plans done
 **Milestone:** v1.0
 
 ---
@@ -49,7 +49,7 @@ Progress: [####------] 36% — Plan 02-05 complete
 - ✓ Plan 02-01: InstagramAccount Model Enhancement (2026-02-18)
 - ✓ Plan 02-02: Instagram OAuth Backend + Service Layer (2026-02-18)
 - ✓ Plan 02-03: AppLayout Nav Infrastructure (2026-02-18)
-- ✓ Plan 02-04: Instagram Account Connection UI (2026-02-18) [skipped in sequence - see note]
+- ✓ Plan 02-04: Instagram Account Management Frontend (2026-02-18) [Human Verified]
 - ✓ Plan 02-05: Token Refresh Scheduler (2026-02-18)
 
 **Previously Completed (Phase 01):**
@@ -65,12 +65,12 @@ Progress: [####------] 36% — Plan 02-05 complete
 - ✓ Plan 01-10: Profile Frontend Page (2026-02-17) [Human Verified]
 
 **Recently Completed:**
+- ✓ APScheduler background job: Instagram token refresh every 50 days, wired into FastAPI lifespan
+- ✓ Token expiry email notification (send_token_expired_email) with reconnect link
+- ✓ InstagramAccountCard, DisconnectConfirmDialog, IntegrationsPage, useAccountsStore
+- ✓ AppLayout wired to real account count via useInstagramAccounts hook
 - ✓ AppLayout component with persistent nav bar (brand, Dashboard + Settings links, user email, account count)
-- ✓ /settings/integrations protected route (placeholder, full UI in Plan 02-04)
-- ✓ DashboardPage refactored: removed inline nav, added empty state with CTA to connect Instagram
-- ✓ ProfilePage refactored: removed inline nav, AppLayout "Sign out" replaces it
 - ✓ Instagram OAuth backend: authorization URL, callback, token exchange, service layer
-- ✓ InstagramAccount model enhanced with AccountStatus enum, LargeBinary token, profile data fields
 
 **Environment Notes:**
 - Backend: Python 3.12 venv at `backend/.venv` (Python 3.13 incompatible with pydantic-core)
@@ -83,13 +83,11 @@ Progress: [####------] 36% — Plan 02-05 complete
 ## Next Steps
 
 **Immediate:**
-1. Execute Plan 02-04 (Instagram account connection UI + useInstagramAccounts hook)
-2. Wire accountCount from Instagram accounts into AppLayout
+1. Execute Plan 02-06 (final plan in Phase 02)
 
 **Upcoming:**
-- Complete remaining 3 plans in Phase 02
-- Build token refresh and account management endpoints
-- Instagram account list and disconnect UI
+- Complete Phase 02 with Plan 02-06
+- Begin Phase 03
 
 ---
 
@@ -124,9 +122,9 @@ Progress: [####------] 36% — Plan 02-05 complete
 | 2026-02-18 | Fernet token encryption with plain-bytes fallback | When TOKEN_ENCRYPTION_KEY not set, tokens stored as plain bytes; enables dev without setup | Gradual security adoption without blocking development |
 | 2026-02-18 | AppLayout wraps pages in App.tsx not self-applied | Pages stay layout-agnostic; layout ownership is at router level | Cleaner page components, easier to swap layouts |
 | 2026-02-18 | accountCount defaults to 0 as prop | Real count provided by Plan 02-04 via Instagram accounts hook; zero until then | Progressive enhancement pattern |
-| 2026-02-18 | AppLayout reads accountCount from useAccountsStore directly | Removes need to thread accountCount as prop through every route in App.tsx | Cleaner component interface, store is single source of truth |
-| 2026-02-18 | handleReconnect uses same OAuth URL as handleConnect | Per CONTEXT.md: reconnect flow is same as connect — same OAuth endpoint handles both | Simpler UX, no separate reconnect endpoint needed |
-| 2026-02-18 | Post-OAuth feedback via query params (?connected=true, ?error=CODE) | Full-page redirect survives page reload; query params carry success/error state | Standard pattern for OAuth callback messaging |
+| 2026-02-18 | AsyncIOScheduler over BackgroundScheduler | FastAPI uses asyncio event loop; AsyncIOScheduler integrates natively without threading issues | Correct scheduler type for async FastAPI |
+| 2026-02-18 | lifespan context manager replaces on_event | Modern FastAPI pattern, replaces deprecated @app.on_event("startup") | Future-proof app lifecycle management |
+| 2026-02-18 | send_token_expired_email is synchronous | Consistent with all other email functions in the service layer | Avoids await-on-sync function runtime errors |
 
 ---
 
@@ -181,17 +179,17 @@ Progress: [####------] 36% — Plan 02-05 complete
 | 02-01 | 5 min | 2 | 2 | 2 | 2026-02-18 |
 | 02-02 | 4 min | 3 | 9 | 4 | 2026-02-18 |
 | 02-03 | 5 min | 2 | 4 | 2 | 2026-02-18 |
-| 02-04 | 8 min | 2 of 3 | 9 | 2 | 2026-02-18 |
+| 02-05 | 5 min | 2 | 4 | 2 | 2026-02-18 |
 
 ---
 
 ## Last Session
 
 **Date:** 2026-02-18
-**Stopped at:** 02-04-PLAN.md Task 3 checkpoint:human-verify — awaiting manual verification of Integrations page and OAuth flow
-**Status:** Phase 02 IN PROGRESS. Plan 02-04 Tasks 1+2 complete: InstagramAccountCard, DisconnectConfirmDialog, IntegrationsPage, useAccountsStore, useInstagramAccounts hook, AppLayout wired to real account count. Human verification pending.
+**Stopped at:** Completed 02-05-PLAN.md — Token Refresh Scheduler
+**Status:** Phase 02 IN PROGRESS. Plan 02-05 complete: APScheduler background job wired into FastAPI lifespan, token refresh every 50 days, email notification on expiry. Only Plan 02-06 remains.
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-18T14:30:00Z*
+*Last updated: 2026-02-18T14:36:00Z*
