@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-02-18
 **Current Phase:** 02-instagram-integration
-**Current Plan:** 02-01 complete — 1/6 plans done
+**Current Plan:** 02-03 complete — 3/6 plans done
 **Milestone:** v1.0
 
 ---
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Phase 02 Progress:**
 - Plans: 6 total
-- Completed: 1 ✓
-- Remaining: 5
+- Completed: 3 ✓
+- Remaining: 3
 
-Progress: [#---------] 17% — Plan 02-01 complete
+Progress: [##--------] 22% — Plan 02-03 complete
 
 **Requirements:**
 - Total v1: 79
@@ -43,10 +43,12 @@ Progress: [#---------] 17% — Plan 02-01 complete
 
 **Phase:** 02 - Instagram Integration
 **Status:** IN PROGRESS
-**Plans Completed:** 1 of 6
+**Plans Completed:** 3 of 6
 
 **Completed Plans:**
 - ✓ Plan 02-01: InstagramAccount Model Enhancement (2026-02-18)
+- ✓ Plan 02-02: Instagram OAuth Backend + Service Layer (2026-02-18)
+- ✓ Plan 02-03: AppLayout Nav Infrastructure (2026-02-18)
 
 **Previously Completed (Phase 01):**
 - ✓ Plan 01-01: Database Schema & Migrations (2026-02-15)
@@ -61,12 +63,12 @@ Progress: [#---------] 17% — Plan 02-01 complete
 - ✓ Plan 01-10: Profile Frontend Page (2026-02-17) [Human Verified]
 
 **Recently Completed:**
-- ✓ InstagramAccount model enhanced with AccountStatus enum (active/expired/revoked)
-- ✓ LargeBinary access_token column for future encrypted token storage
-- ✓ Profile data fields added: profile_picture, account_type, follower_count
-- ✓ status column with enum default (active)
-- ✓ username field (renamed from instagram_username)
-- ✓ Alembic migration 002_instagram_enhancements ready to apply
+- ✓ AppLayout component with persistent nav bar (brand, Dashboard + Settings links, user email, account count)
+- ✓ /settings/integrations protected route (placeholder, full UI in Plan 02-04)
+- ✓ DashboardPage refactored: removed inline nav, added empty state with CTA to connect Instagram
+- ✓ ProfilePage refactored: removed inline nav, AppLayout "Sign out" replaces it
+- ✓ Instagram OAuth backend: authorization URL, callback, token exchange, service layer
+- ✓ InstagramAccount model enhanced with AccountStatus enum, LargeBinary token, profile data fields
 
 **Environment Notes:**
 - Backend: Python 3.12 venv at `backend/.venv` (Python 3.13 incompatible with pydantic-core)
@@ -79,13 +81,13 @@ Progress: [#---------] 17% — Plan 02-01 complete
 ## Next Steps
 
 **Immediate:**
-1. Execute Plan 02-02 (next plan in Phase 02)
-2. Build Instagram OAuth flow (authorization URL, callback, token exchange)
+1. Execute Plan 02-04 (Instagram account connection UI + useInstagramAccounts hook)
+2. Wire accountCount from Instagram accounts into AppLayout
 
 **Upcoming:**
-- Complete remaining 5 plans in Phase 02
-- Implement Instagram account connection UI
+- Complete remaining 3 plans in Phase 02
 - Build token refresh and account management endpoints
+- Instagram account list and disconnect UI
 
 ---
 
@@ -115,6 +117,8 @@ Progress: [#---------] 17% — Plan 02-01 complete
 | 2026-02-18 | AccountStatus as str+enum.Enum | String mixin allows enum values to be used directly in JSON serialization and string comparisons | Simpler serialization without custom encoders |
 | 2026-02-18 | server_default='active' in migration | Ensures NOT NULL status on all existing rows without a separate UPDATE statement | Safe migration for production tables with data |
 | 2026-02-18 | No refresh_token column on InstagramAccount | Instagram long-lived tokens self-refresh via /refresh_access_token using the same access token | Simpler schema, matches Instagram API design |
+| 2026-02-18 | AppLayout wraps pages in App.tsx not self-applied | Pages stay layout-agnostic; layout ownership is at router level | Cleaner page components, easier to swap layouts |
+| 2026-02-18 | accountCount defaults to 0 as prop | Real count provided by Plan 02-04 via Instagram accounts hook; zero until then | Progressive enhancement pattern |
 
 ---
 
@@ -167,16 +171,18 @@ Progress: [#---------] 17% — Plan 02-01 complete
 | 01-05 | 4 min | 2 | 3 | 1 | 2026-02-15 |
 | 01-07 | 5 min | 1 | 1 | 1 | 2026-02-17 |
 | 02-01 | 5 min | 2 | 2 | 2 | 2026-02-18 |
+| 02-02 | 4 min | 3 | 9 | 4 | 2026-02-18 |
+| 02-03 | 5 min | 2 | 4 | 2 | 2026-02-18 |
 
 ---
 
 ## Last Session
 
 **Date:** 2026-02-18
-**Stopped at:** Completed 02-01-PLAN.md — InstagramAccount model enhancement
-**Status:** Phase 02 IN PROGRESS. Plan 02-01 complete: enhanced InstagramAccount model with AccountStatus enum, LargeBinary token, profile data fields, and Alembic migration 002.
+**Stopped at:** docs(02-03): complete AppLayout nav infrastructure plan
+**Status:** Phase 02 IN PROGRESS. Plan 02-03 complete: AppLayout with persistent nav, all protected routes wrapped, DashboardPage and ProfilePage refactored to use AppLayout.
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-18T14:26:00Z*
+*Last updated: 2026-02-18T14:30:00Z*
