@@ -20,6 +20,14 @@ class Settings(BaseSettings):
     # Frontend
     FRONTEND_URL: str = "http://localhost:3000"
 
+    # Instagram OAuth
+    INSTAGRAM_APP_ID: str = ""
+    INSTAGRAM_APP_SECRET: str = ""
+    INSTAGRAM_REDIRECT_URI: str = "http://localhost:8000/integrations/instagram/callback"
+
+    # Token encryption
+    TOKEN_ENCRYPTION_KEY: str = ""  # Fernet key for encrypting access tokens; generate with: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+
     # Environment
     ENVIRONMENT: str = "development"
 
