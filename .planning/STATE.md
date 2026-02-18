@@ -117,6 +117,9 @@ Progress: [##--------] 22% — Plan 02-03 complete
 | 2026-02-18 | AccountStatus as str+enum.Enum | String mixin allows enum values to be used directly in JSON serialization and string comparisons | Simpler serialization without custom encoders |
 | 2026-02-18 | server_default='active' in migration | Ensures NOT NULL status on all existing rows without a separate UPDATE statement | Safe migration for production tables with data |
 | 2026-02-18 | No refresh_token column on InstagramAccount | Instagram long-lived tokens self-refresh via /refresh_access_token using the same access token | Simpler schema, matches Instagram API design |
+| 2026-02-18 | Shared app/dependencies.py for get_current_active_user | Avoids circular imports between auth.py and instagram.py; both routes import from dependencies.py | Single source of truth for auth guard dependency |
+| 2026-02-18 | In-memory _oauth_states dict for CSRF state | Simple development approach; needs Redis replacement for multi-process production deployments | Works for dev/single-process, explicit upgrade path noted |
+| 2026-02-18 | Fernet token encryption with plain-bytes fallback | When TOKEN_ENCRYPTION_KEY not set, tokens stored as plain bytes; enables dev without setup | Gradual security adoption without blocking development |
 | 2026-02-18 | AppLayout wraps pages in App.tsx not self-applied | Pages stay layout-agnostic; layout ownership is at router level | Cleaner page components, easier to swap layouts |
 | 2026-02-18 | accountCount defaults to 0 as prop | Real count provided by Plan 02-04 via Instagram accounts hook; zero until then | Progressive enhancement pattern |
 
