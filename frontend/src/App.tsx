@@ -8,6 +8,7 @@ import ResetPasswordPage from './pages/ResetPasswordPage';
 import DashboardPage from './pages/DashboardPage';
 import ProfilePage from './pages/ProfilePage';
 import ProtectedRoute from './components/ProtectedRoute';
+import AppLayout from './components/AppLayout';
 
 function App() {
   return (
@@ -24,7 +25,21 @@ function App() {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <DashboardPage />
+              <AppLayout>
+                <DashboardPage />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings/integrations"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <div className="text-center py-20 text-gray-500">
+                  Integrations page — coming in this phase
+                </div>
+              </AppLayout>
             </ProtectedRoute>
           }
         />
@@ -32,7 +47,9 @@ function App() {
           path="/profile"
           element={
             <ProtectedRoute>
-              <ProfilePage />
+              <AppLayout>
+                <ProfilePage />
+              </AppLayout>
             </ProtectedRoute>
           }
         />
