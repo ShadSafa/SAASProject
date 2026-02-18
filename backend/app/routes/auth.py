@@ -28,6 +28,7 @@ from app.services.security import (
 )
 from app.models.user import User
 from app.config import settings
+from app.dependencies import get_current_active_user
 
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -289,49 +290,6 @@ async def reset_password(
     return {
         "message": "Password reset successfully. You can now log in with your new password."
     }
-
-
-async def get_current_active_user(
-    credentials: Optional[HTTPAuthorizationCredentials] = Depends(HTTPBearer(auto_error=False)),
-    access_token: Optional[str] = Cookie(default=None),
-    db: AsyncSession = Depends(get_db)
-) -> User:
-    """Dependency for protected routes - validates JWT token from Bearer header or httpOnly cookie."""
-    token = None
-    if credentials:
-        token = credentials.credentials
-    elif access_token:
-        token = access_token
-
-    if not token:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Not authenticated"
-        )
-
-    payload = verify_token(token)
-
-    if not payload:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid or expired token"
-        )
-
-    email = payload.get("sub")
-    if not email:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid token payload"
-        )
-
-    user = await get_user_by_email(db, email)
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User not found"
-        )
-
-    return user
 
 
 @router.get("/me", response_model=UserResponse)
