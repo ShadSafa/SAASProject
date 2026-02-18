@@ -1,8 +1,15 @@
+import enum
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Index, UniqueConstraint
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Index, UniqueConstraint, Enum, LargeBinary
 from sqlalchemy.orm import relationship
 
 from app.database import Base
+
+
+class AccountStatus(str, enum.Enum):
+    active = "active"
+    expired = "expired"
+    revoked = "revoked"
 
 
 class InstagramAccount(Base):
@@ -13,9 +20,13 @@ class InstagramAccount(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     instagram_user_id = Column(String, nullable=False)
-    instagram_username = Column(String)
-    access_token = Column(String)
-    token_expires_at = Column(DateTime)
+    username = Column(String, nullable=True)
+    access_token = Column(LargeBinary, nullable=True)
+    profile_picture = Column(String, nullable=True)
+    account_type = Column(String, nullable=True)
+    follower_count = Column(Integer, nullable=True)
+    token_expires_at = Column(DateTime, nullable=True)
+    status = Column(Enum(AccountStatus), default=AccountStatus.active, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -29,4 +40,4 @@ class InstagramAccount(Base):
     )
 
     def __repr__(self):
-        return f"<InstagramAccount(id={self.id}, username={self.instagram_username})>"
+        return f"<InstagramAccount(id={self.id}, username={self.username})>"
