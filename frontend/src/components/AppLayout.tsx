@@ -1,15 +1,17 @@
 import { NavLink, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useAuth } from '../hooks/useAuth';
+import { useAccountsStore } from '../store/accountsStore';
 
 interface AppLayoutProps {
   children: React.ReactNode;
-  accountCount?: number;
 }
 
-export default function AppLayout({ children, accountCount = 0 }: AppLayoutProps) {
+export default function AppLayout({ children }: AppLayoutProps) {
   const { user } = useAuthStore();
   const { logout } = useAuth();
+  const accounts = useAccountsStore((state) => state.accounts);
+  const accountCount = accounts.length;
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -7,6 +7,7 @@ import RequestPasswordResetPage from './pages/RequestPasswordResetPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import DashboardPage from './pages/DashboardPage';
 import ProfilePage from './pages/ProfilePage';
+import IntegrationsPage from './pages/IntegrationsPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import AppLayout from './components/AppLayout';
 
@@ -36,9 +37,7 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <div className="text-center py-20 text-gray-500">
-                  Integrations page — coming in this phase
-                </div>
+                <IntegrationsPage />
               </AppLayout>
             </ProtectedRoute>
           }
