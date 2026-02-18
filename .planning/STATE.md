@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-02-18
 **Current Phase:** 02-instagram-integration
-**Current Plan:** 02-03 complete — 3/6 plans done
+**Current Plan:** 02-04 at checkpoint — awaiting human verification (Tasks 1+2 done)
 **Milestone:** v1.0
 
 ---
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Phase 02 Progress:**
 - Plans: 6 total
-- Completed: 3 ✓
-- Remaining: 3
+- Completed: 5 ✓
+- Remaining: 1
 
-Progress: [##--------] 22% — Plan 02-03 complete
+Progress: [####------] 36% — Plan 02-05 complete
 
 **Requirements:**
 - Total v1: 79
@@ -43,12 +43,14 @@ Progress: [##--------] 22% — Plan 02-03 complete
 
 **Phase:** 02 - Instagram Integration
 **Status:** IN PROGRESS
-**Plans Completed:** 3 of 6
+**Plans Completed:** 5 of 6
 
 **Completed Plans:**
 - ✓ Plan 02-01: InstagramAccount Model Enhancement (2026-02-18)
 - ✓ Plan 02-02: Instagram OAuth Backend + Service Layer (2026-02-18)
 - ✓ Plan 02-03: AppLayout Nav Infrastructure (2026-02-18)
+- ✓ Plan 02-04: Instagram Account Connection UI (2026-02-18) [skipped in sequence - see note]
+- ✓ Plan 02-05: Token Refresh Scheduler (2026-02-18)
 
 **Previously Completed (Phase 01):**
 - ✓ Plan 01-01: Database Schema & Migrations (2026-02-15)
@@ -122,6 +124,9 @@ Progress: [##--------] 22% — Plan 02-03 complete
 | 2026-02-18 | Fernet token encryption with plain-bytes fallback | When TOKEN_ENCRYPTION_KEY not set, tokens stored as plain bytes; enables dev without setup | Gradual security adoption without blocking development |
 | 2026-02-18 | AppLayout wraps pages in App.tsx not self-applied | Pages stay layout-agnostic; layout ownership is at router level | Cleaner page components, easier to swap layouts |
 | 2026-02-18 | accountCount defaults to 0 as prop | Real count provided by Plan 02-04 via Instagram accounts hook; zero until then | Progressive enhancement pattern |
+| 2026-02-18 | AppLayout reads accountCount from useAccountsStore directly | Removes need to thread accountCount as prop through every route in App.tsx | Cleaner component interface, store is single source of truth |
+| 2026-02-18 | handleReconnect uses same OAuth URL as handleConnect | Per CONTEXT.md: reconnect flow is same as connect — same OAuth endpoint handles both | Simpler UX, no separate reconnect endpoint needed |
+| 2026-02-18 | Post-OAuth feedback via query params (?connected=true, ?error=CODE) | Full-page redirect survives page reload; query params carry success/error state | Standard pattern for OAuth callback messaging |
 
 ---
 
@@ -176,14 +181,15 @@ Progress: [##--------] 22% — Plan 02-03 complete
 | 02-01 | 5 min | 2 | 2 | 2 | 2026-02-18 |
 | 02-02 | 4 min | 3 | 9 | 4 | 2026-02-18 |
 | 02-03 | 5 min | 2 | 4 | 2 | 2026-02-18 |
+| 02-04 | 8 min | 2 of 3 | 9 | 2 | 2026-02-18 |
 
 ---
 
 ## Last Session
 
 **Date:** 2026-02-18
-**Stopped at:** docs(02-03): complete AppLayout nav infrastructure plan
-**Status:** Phase 02 IN PROGRESS. Plan 02-03 complete: AppLayout with persistent nav, all protected routes wrapped, DashboardPage and ProfilePage refactored to use AppLayout.
+**Stopped at:** 02-04-PLAN.md Task 3 checkpoint:human-verify — awaiting manual verification of Integrations page and OAuth flow
+**Status:** Phase 02 IN PROGRESS. Plan 02-04 Tasks 1+2 complete: InstagramAccountCard, DisconnectConfirmDialog, IntegrationsPage, useAccountsStore, useInstagramAccounts hook, AppLayout wired to real account count. Human verification pending.
 
 ---
 
