@@ -90,14 +90,15 @@ Plans:
 
 **Dependencies:** Phase 1 (user auth required)
 
-**Estimated Plans:** 5-7
-- Instagram OAuth flow (backend endpoints)
-- Token storage and encryption
-- Token refresh job (background worker)
-- Multiple account data model
-- Connection status API endpoints
-- Frontend Instagram connection UI
-- Error handling and user notifications
+**Plans:** 6 plans in 4 waves
+
+Plans:
+- [ ] 02-01-PLAN.md — InstagramAccount model enhancement + Alembic migration
+- [ ] 02-02-PLAN.md — Instagram OAuth backend (authorize/callback + account management endpoints)
+- [ ] 02-03-PLAN.md — Shared AppLayout with persistent nav + account count
+- [ ] 02-04-PLAN.md — Frontend IntegrationsPage + InstagramAccountCard + OAuth connect flow
+- [ ] 02-05-PLAN.md — Token refresh APScheduler + expiry email notification
+- [ ] 02-06-PLAN.md — Dashboard expiry banner + Phase 2 human verification
 
 ---
 
