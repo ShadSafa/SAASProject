@@ -1,8 +1,8 @@
 # Project State: Instagram Viral Content Analyzer
 
-**Last Updated:** 2026-02-17
-**Current Phase:** 02 (pending planning)
-**Current Plan:** Phase 01 complete — 10/10 plans done
+**Last Updated:** 2026-02-18
+**Current Phase:** 02-instagram-integration
+**Current Plan:** 02-01 complete — 1/6 plans done
 **Milestone:** v1.0
 
 ---
@@ -13,7 +13,7 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Core value:** Users can identify and understand viral content patterns to create better performing Instagram content themselves
 
-**Current focus:** Building foundation and database infrastructure for user authentication and data management
+**Current focus:** Instagram OAuth integration - connecting Instagram accounts to the platform
 
 ---
 
@@ -22,15 +22,15 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 **Milestone v1.0:**
 - Phases: 11 total
 - Completed: 1 (Phase 01)
-- In Progress: None
-- Pending: 10
+- In Progress: 1 (Phase 02)
+- Pending: 9
 
-**Phase 01 Progress:**
-- Plans: 10 total
-- Completed: 10 ✓
-- Remaining: 0
+**Phase 02 Progress:**
+- Plans: 6 total
+- Completed: 1 ✓
+- Remaining: 5
 
-Progress: [##########] 100% — PHASE COMPLETE
+Progress: [#---------] 17% — Plan 02-01 complete
 
 **Requirements:**
 - Total v1: 79
@@ -41,11 +41,14 @@ Progress: [##########] 100% — PHASE COMPLETE
 
 ## Current Phase
 
-**Phase:** 01 - Foundation & Database
-**Status:** COMPLETE ✓
-**Plans Completed:** 10 of 10
+**Phase:** 02 - Instagram Integration
+**Status:** IN PROGRESS
+**Plans Completed:** 1 of 6
 
 **Completed Plans:**
+- ✓ Plan 02-01: InstagramAccount Model Enhancement (2026-02-18)
+
+**Previously Completed (Phase 01):**
 - ✓ Plan 01-01: Database Schema & Migrations (2026-02-15)
 - ✓ Plan 01-02: Frontend Foundation (2026-02-15)
 - ✓ Plan 01-03: Authentication Services (2026-02-15)
@@ -58,21 +61,12 @@ Progress: [##########] 100% — PHASE COMPLETE
 - ✓ Plan 01-10: Profile Frontend Page (2026-02-17) [Human Verified]
 
 **Recently Completed:**
-- ✓ Auth API endpoints (signup, verify-email, login, logout, me)
-- ✓ JWT authentication with httpOnly cookies
-- ✓ Email verification flow with Resend integration (Resend v2.0 API)
-- ✓ Password strength validation (8 chars, uppercase, number)
-- ✓ Protected route pattern with get_current_active_user dependency
-- ✓ Error handling for all auth flows (409, 401, 403, 400)
-- ✓ Frontend signup/login/verify pages with React Hook Form + Zod
-- ✓ Zustand auth store with persist middleware
-- ✓ Vite proxy for /auth routes (bypasses CORS in development)
-- ✓ Full auth flow human-verified (signup → email → verify → login → dashboard)
-- ✓ Password reset endpoints (request-password-reset, reset-password)
-- ✓ Email enumeration prevention in password reset flow
-- ✓ Time-limited reset tokens (1 hour) with separate itsdangerous salt
-- ✓ Password reset frontend pages (RequestPasswordResetPage, ResetPasswordPage)
-- ✓ Auth hook extended with requestPasswordReset and resetPassword methods
+- ✓ InstagramAccount model enhanced with AccountStatus enum (active/expired/revoked)
+- ✓ LargeBinary access_token column for future encrypted token storage
+- ✓ Profile data fields added: profile_picture, account_type, follower_count
+- ✓ status column with enum default (active)
+- ✓ username field (renamed from instagram_username)
+- ✓ Alembic migration 002_instagram_enhancements ready to apply
 
 **Environment Notes:**
 - Backend: Python 3.12 venv at `backend/.venv` (Python 3.13 incompatible with pydantic-core)
@@ -85,15 +79,13 @@ Progress: [##########] 100% — PHASE COMPLETE
 ## Next Steps
 
 **Immediate:**
-1. Execute Plan 01-08 (next plan in Phase 01)
-2. Build signup page with form validation
-3. Build login page and email verification flow
-4. Set up PostgreSQL database (locally or Railway)
+1. Execute Plan 02-02 (next plan in Phase 02)
+2. Build Instagram OAuth flow (authorization URL, callback, token exchange)
 
 **Upcoming:**
-- Complete remaining 5 plans in Phase 01
-- Implement password reset functionality
-- Build frontend auth pages
+- Complete remaining 5 plans in Phase 02
+- Implement Instagram account connection UI
+- Build token refresh and account management endpoints
 
 ---
 
@@ -119,6 +111,10 @@ Progress: [##########] 100% — PHASE COMPLETE
 | 2026-02-15 | Email verification required before login | Ensures valid email addresses and prevents spam accounts | Better security and data quality |
 | 2026-02-15 | Security pattern: Don't reveal email existence in resend endpoint | Prevents email enumeration attacks | Standard security best practice |
 | 2026-02-17 | Call email service functions synchronously (no await) | send_verification_email and send_password_reset_email are synchronous functions; awaiting them would cause a runtime error | Consistent with existing signup/resend-verification patterns |
+| 2026-02-18 | LargeBinary for access_token | Future encryption stores raw bytes, not plaintext strings; no schema change needed when encryption is added | Prepared for secure token storage from day one |
+| 2026-02-18 | AccountStatus as str+enum.Enum | String mixin allows enum values to be used directly in JSON serialization and string comparisons | Simpler serialization without custom encoders |
+| 2026-02-18 | server_default='active' in migration | Ensures NOT NULL status on all existing rows without a separate UPDATE statement | Safe migration for production tables with data |
+| 2026-02-18 | No refresh_token column on InstagramAccount | Instagram long-lived tokens self-refresh via /refresh_access_token using the same access token | Simpler schema, matches Instagram API design |
 
 ---
 
@@ -170,16 +166,17 @@ Progress: [##########] 100% — PHASE COMPLETE
 | 01-04 | 13.5 min | 3 | 18 | 4 | 2026-02-15 |
 | 01-05 | 4 min | 2 | 3 | 1 | 2026-02-15 |
 | 01-07 | 5 min | 1 | 1 | 1 | 2026-02-17 |
+| 02-01 | 5 min | 2 | 2 | 2 | 2026-02-18 |
 
 ---
 
 ## Last Session
 
-**Date:** 2026-02-17
-**Stopped at:** Phase 01 complete — all 10 plans done and human verified
-**Status:** ✓ Phase 01 COMPLETE. Full auth system working: signup, login, email verification, password reset, profile management, account deletion.
+**Date:** 2026-02-18
+**Stopped at:** Completed 02-01-PLAN.md — InstagramAccount model enhancement
+**Status:** Phase 02 IN PROGRESS. Plan 02-01 complete: enhanced InstagramAccount model with AccountStatus enum, LargeBinary token, profile data fields, and Alembic migration 002.
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-17T00:00:00Z*
+*Last updated: 2026-02-18T14:26:00Z*
