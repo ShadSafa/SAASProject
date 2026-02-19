@@ -138,6 +138,10 @@ Progress: [##--------] 29% — IN PROGRESS
 | 2026-02-18 | AsyncIOScheduler over BackgroundScheduler | FastAPI uses asyncio event loop; AsyncIOScheduler integrates natively without threading issues | Correct scheduler type for async FastAPI |
 | 2026-02-18 | lifespan context manager replaces on_event | Modern FastAPI pattern, replaces deprecated @app.on_event("startup") | Future-proof app lifecycle management |
 | 2026-02-18 | send_token_expired_email is synchronous | Consistent with all other email functions in the service layer | Avoids await-on-sync function runtime errors |
+| 2026-02-19 | task_acks_late=True + worker_prefetch_multiplier=1 for Celery | Scan jobs (5-30s Apify calls) acknowledged only after completion; prevents job loss if worker crashes mid-execution | Crash-safe scan job orchestration |
+| 2026-02-19 | Dropped unique constraint on instagram_post_id | Same viral post can be discovered in multiple independent scans; uniqueness was incorrect semantics | Allows same post to appear in multiple scan results |
+| 2026-02-19 | BigInteger for all engagement counts | Viral posts can exceed 2.1B Integer limit (e.g. 100M+ likes + comments + shares) | Prevents integer overflow on highly viral content |
+| 2026-02-19 | thumbnail_s3_url stored separately from thumbnail_url | Instagram CDN URLs expire ~1hr; S3 provides persistent storage for UX requirements (UX-10) | Persistent thumbnail display beyond 1 hour |
 | 2026-02-19 | age <= 24h uses multiplier 1.0 (not 0.5) | Plan examples explicitly show age=24.0 -> 10.0 (multiplier 1.0); examples are authoritative over text description | Boundary is > 24h for 0.5 slow multiplier |
 | 2026-02-19 | round() to 10dp for viral score | IEEE 754 float artifacts (30.000000000000004) break equality tests; 10dp eliminates noise without losing precision | Required for reliable downstream comparisons |
 | 2026-02-19 | pytest installed to venv | Was missing from requirements.txt; added as blocking fix for TDD execution | pytest 9.0.2 now available for all future test plans |
@@ -196,6 +200,7 @@ Progress: [##--------] 29% — IN PROGRESS
 | 02-02 | 4 min | 3 | 9 | 4 | 2026-02-18 |
 | 02-03 | 5 min | 2 | 4 | 2 | 2026-02-18 |
 | 02-05 | 5 min | 2 | 4 | 2 | 2026-02-18 |
+| 03-01 | 4 min | 2 | 6 | 2 | 2026-02-19 |
 | 03-02 | 15 min | 3 | 3 | 3 | 2026-02-19 |
 
 ---
@@ -203,10 +208,10 @@ Progress: [##--------] 29% — IN PROGRESS
 ## Last Session
 
 **Date:** 2026-02-19
-**Stopped at:** Completed 03-02-PLAN.md (Viral Scoring Algorithm — TDD)
-**Status:** Phase 03 IN PROGRESS. Plan 03-02 complete: calculate_viral_score() and calculate_growth_velocity() implemented with 25/25 tests passing. Ready for Plan 03-03 (Apify Integration).
+**Stopped at:** docs(03-01): complete Celery infrastructure + model enhancements plan
+**Status:** Phase 03 IN PROGRESS. Plan 03-01 complete: Celery app, migration 003, Scan/ViralPost model enhancements. Plans 03-01 and 03-02 done. Next: Plan 03-03 Apify Integration.
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-19T00:00:00Z*
+*Last updated: 2026-02-19T13:49:00Z*
