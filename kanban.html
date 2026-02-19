@@ -243,8 +243,6 @@
     /* ── Card ────────────────────────────────────────────── */
     .card {
       background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border-radius: 9px;
       padding: 9px 11px;
       border: 1px solid rgba(255,255,255,0.08);
@@ -394,7 +392,7 @@
 const STATE = {
   project:      "Instagram Viral Content Analyzer",
   milestone:    "v1.0",
-  lastUpdated:  "2026-02-17",
+  lastUpdated:  "2026-02-19",
   currentPhase: 2,
   plans: [
     // ── Phase 1 — Foundation & Database ───────────────────
@@ -409,13 +407,12 @@ const STATE = {
     {id:"01-09",phase:1,phaseName:"Foundation & Database",seq:9,total:10,name:"Backend Profile Management & Account Deletion",status:"completed"},
     {id:"01-10",phase:1,phaseName:"Foundation & Database",seq:10,total:10,name:"Frontend Profile Page",status:"completed"},
     // ── Phase 2 — Instagram Integration ───────────────────
-    {id:"02-01",phase:2,phaseName:"Instagram Integration",seq:1,total:7,name:"Instagram OAuth Backend Endpoints",status:"current_pending"},
-    {id:"02-02",phase:2,phaseName:"Instagram Integration",seq:2,total:7,name:"Token Storage & Encryption",status:"current_pending"},
-    {id:"02-03",phase:2,phaseName:"Instagram Integration",seq:3,total:7,name:"Token Auto-Refresh Background Job",status:"current_pending"},
-    {id:"02-04",phase:2,phaseName:"Instagram Integration",seq:4,total:7,name:"Multiple Account Data Model",status:"current_pending"},
-    {id:"02-05",phase:2,phaseName:"Instagram Integration",seq:5,total:7,name:"Connection Status API Endpoints",status:"current_pending"},
-    {id:"02-06",phase:2,phaseName:"Instagram Integration",seq:6,total:7,name:"Frontend Instagram Connection UI",status:"current_pending"},
-    {id:"02-07",phase:2,phaseName:"Instagram Integration",seq:7,total:7,name:"Error Handling & User Notifications",status:"current_pending"},
+    {id:"02-01",phase:2,phaseName:"Instagram Integration",seq:1,total:6,name:"Instagram OAuth Backend Endpoints",status:"current_complete"},
+    {id:"02-02",phase:2,phaseName:"Instagram Integration",seq:2,total:6,name:"Token Storage & Encryption",status:"current_complete"},
+    {id:"02-03",phase:2,phaseName:"Instagram Integration",seq:3,total:6,name:"Token Auto-Refresh Background Job",status:"current_complete"},
+    {id:"02-04",phase:2,phaseName:"Instagram Integration",seq:4,total:6,name:"Multiple Account Data Model",status:"current_complete"},
+    {id:"02-05",phase:2,phaseName:"Instagram Integration",seq:5,total:6,name:"Connection Status API Endpoints",status:"current_complete"},
+    {id:"02-06",phase:2,phaseName:"Instagram Integration",seq:6,total:6,name:"Frontend Instagram Connection UI",status:"current_complete"},
     // ── Phase 3 — Core Scanning Engine ────────────────────
     {id:"03-01",phase:3,phaseName:"Core Scanning Engine",seq:1,total:9,name:"Third-Party API Integration (Apify)",status:"pending"},
     {id:"03-02",phase:3,phaseName:"Core Scanning Engine",seq:2,total:9,name:"PhantomBuster Fallback Implementation",status:"pending"},

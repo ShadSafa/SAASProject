@@ -1,0 +1,746 @@
+{
+  "project": "Instagram Viral Content Analyzer",
+  "milestone": "v1.0",
+  "lastUpdated": "2026-02-19",
+  "currentPhase": 2,
+  "plans": [
+    {
+      "id": "01-01",
+      "phase": 1,
+      "phaseName": "Foundation & Database",
+      "seq": 1,
+      "total": 10,
+      "name": "Database Schema & Migrations",
+      "status": "completed"
+    },
+    {
+      "id": "01-02",
+      "phase": 1,
+      "phaseName": "Foundation & Database",
+      "seq": 2,
+      "total": 10,
+      "name": "Email Service Integration (Resend)",
+      "status": "completed"
+    },
+    {
+      "id": "01-03",
+      "phase": 1,
+      "phaseName": "Foundation & Database",
+      "seq": 3,
+      "total": 10,
+      "name": "Authentication Services (Argon2id, JWT)",
+      "status": "completed"
+    },
+    {
+      "id": "01-04",
+      "phase": 1,
+      "phaseName": "Foundation & Database",
+      "seq": 4,
+      "total": 10,
+      "name": "React Frontend Foundation",
+      "status": "completed"
+    },
+    {
+      "id": "01-05",
+      "phase": 1,
+      "phaseName": "Foundation & Database",
+      "seq": 5,
+      "total": 10,
+      "name": "Auth API Endpoints",
+      "status": "completed"
+    },
+    {
+      "id": "01-06",
+      "phase": 1,
+      "phaseName": "Foundation & Database",
+      "seq": 6,
+      "total": 10,
+      "name": "Frontend Signup & Login Pages",
+      "status": "completed"
+    },
+    {
+      "id": "01-07",
+      "phase": 1,
+      "phaseName": "Foundation & Database",
+      "seq": 7,
+      "total": 10,
+      "name": "Backend Password Reset",
+      "status": "completed"
+    },
+    {
+      "id": "01-08",
+      "phase": 1,
+      "phaseName": "Foundation & Database",
+      "seq": 8,
+      "total": 10,
+      "name": "Frontend Password Reset Pages",
+      "status": "completed"
+    },
+    {
+      "id": "01-09",
+      "phase": 1,
+      "phaseName": "Foundation & Database",
+      "seq": 9,
+      "total": 10,
+      "name": "Backend Profile Management & Account Deletion",
+      "status": "completed"
+    },
+    {
+      "id": "01-10",
+      "phase": 1,
+      "phaseName": "Foundation & Database",
+      "seq": 10,
+      "total": 10,
+      "name": "Frontend Profile Page",
+      "status": "completed"
+    },
+    {
+      "id": "02-01",
+      "phase": 2,
+      "phaseName": "Instagram Integration",
+      "seq": 1,
+      "total": 6,
+      "name": "Instagram OAuth Backend Endpoints",
+      "status": "current_complete"
+    },
+    {
+      "id": "02-02",
+      "phase": 2,
+      "phaseName": "Instagram Integration",
+      "seq": 2,
+      "total": 6,
+      "name": "Token Storage & Encryption",
+      "status": "current_complete"
+    },
+    {
+      "id": "02-03",
+      "phase": 2,
+      "phaseName": "Instagram Integration",
+      "seq": 3,
+      "total": 6,
+      "name": "Token Auto-Refresh Background Job",
+      "status": "current_complete"
+    },
+    {
+      "id": "02-04",
+      "phase": 2,
+      "phaseName": "Instagram Integration",
+      "seq": 4,
+      "total": 6,
+      "name": "Multiple Account Data Model",
+      "status": "current_complete"
+    },
+    {
+      "id": "02-05",
+      "phase": 2,
+      "phaseName": "Instagram Integration",
+      "seq": 5,
+      "total": 6,
+      "name": "Connection Status API Endpoints",
+      "status": "current_complete"
+    },
+    {
+      "id": "02-06",
+      "phase": 2,
+      "phaseName": "Instagram Integration",
+      "seq": 6,
+      "total": 6,
+      "name": "Frontend Instagram Connection UI",
+      "status": "current_complete"
+    },
+    {
+      "id": "03-01",
+      "phase": 3,
+      "phaseName": "Core Scanning Engine",
+      "seq": 1,
+      "total": 9,
+      "name": "Third-Party API Integration (Apify)",
+      "status": "pending"
+    },
+    {
+      "id": "03-02",
+      "phase": 3,
+      "phaseName": "Core Scanning Engine",
+      "seq": 2,
+      "total": 9,
+      "name": "PhantomBuster Fallback Implementation",
+      "status": "pending"
+    },
+    {
+      "id": "03-03",
+      "phase": 3,
+      "phaseName": "Core Scanning Engine",
+      "seq": 3,
+      "total": 9,
+      "name": "Growth Velocity Algorithm",
+      "status": "pending"
+    },
+    {
+      "id": "03-04",
+      "phase": 3,
+      "phaseName": "Core Scanning Engine",
+      "seq": 4,
+      "total": 9,
+      "name": "URL Parsing & Single-Post Analysis",
+      "status": "pending"
+    },
+    {
+      "id": "03-05",
+      "phase": 3,
+      "phaseName": "Core Scanning Engine",
+      "seq": 5,
+      "total": 9,
+      "name": "Scan Job Orchestration (Background Workers)",
+      "status": "pending"
+    },
+    {
+      "id": "03-06",
+      "phase": 3,
+      "phaseName": "Core Scanning Engine",
+      "seq": 6,
+      "total": 9,
+      "name": "Scan Result Storage",
+      "status": "pending"
+    },
+    {
+      "id": "03-07",
+      "phase": 3,
+      "phaseName": "Core Scanning Engine",
+      "seq": 7,
+      "total": 9,
+      "name": "Frontend Scan Trigger UI",
+      "status": "pending"
+    },
+    {
+      "id": "03-08",
+      "phase": 3,
+      "phaseName": "Core Scanning Engine",
+      "seq": 8,
+      "total": 9,
+      "name": "Summary Card Component",
+      "status": "pending"
+    },
+    {
+      "id": "03-09",
+      "phase": 3,
+      "phaseName": "Core Scanning Engine",
+      "seq": 9,
+      "total": 9,
+      "name": "Loading & Progress States",
+      "status": "pending"
+    },
+    {
+      "id": "04-01",
+      "phase": 4,
+      "phaseName": "AI Analysis — Algorithm Factors",
+      "seq": 1,
+      "total": 10,
+      "name": "OpenAI API Integration",
+      "status": "pending"
+    },
+    {
+      "id": "04-02",
+      "phase": 4,
+      "phaseName": "AI Analysis — Algorithm Factors",
+      "seq": 2,
+      "total": 10,
+      "name": "Prompt Engineering for Viral Analysis",
+      "status": "pending"
+    },
+    {
+      "id": "04-03",
+      "phase": 4,
+      "phaseName": "AI Analysis — Algorithm Factors",
+      "seq": 3,
+      "total": 10,
+      "name": "Hook Analysis (Video Thumbnails & Captions)",
+      "status": "pending"
+    },
+    {
+      "id": "04-04",
+      "phase": 4,
+      "phaseName": "AI Analysis — Algorithm Factors",
+      "seq": 4,
+      "total": 10,
+      "name": "Emotional Trigger Taxonomy",
+      "status": "pending"
+    },
+    {
+      "id": "04-05",
+      "phase": 4,
+      "phaseName": "AI Analysis — Algorithm Factors",
+      "seq": 5,
+      "total": 10,
+      "name": "Engagement Velocity Calculations",
+      "status": "pending"
+    },
+    {
+      "id": "04-06",
+      "phase": 4,
+      "phaseName": "AI Analysis — Algorithm Factors",
+      "seq": 6,
+      "total": 10,
+      "name": "Hashtag Performance Metrics",
+      "status": "pending"
+    },
+    {
+      "id": "04-07",
+      "phase": 4,
+      "phaseName": "AI Analysis — Algorithm Factors",
+      "seq": 7,
+      "total": 10,
+      "name": "Comment Sentiment Analysis",
+      "status": "pending"
+    },
+    {
+      "id": "04-08",
+      "phase": 4,
+      "phaseName": "AI Analysis — Algorithm Factors",
+      "seq": 8,
+      "total": 10,
+      "name": "Analysis Caching Layer",
+      "status": "pending"
+    },
+    {
+      "id": "04-09",
+      "phase": 4,
+      "phaseName": "AI Analysis — Algorithm Factors",
+      "seq": 9,
+      "total": 10,
+      "name": "Structured Output Validation",
+      "status": "pending"
+    },
+    {
+      "id": "04-10",
+      "phase": 4,
+      "phaseName": "AI Analysis — Algorithm Factors",
+      "seq": 10,
+      "total": 10,
+      "name": "Cost Monitoring",
+      "status": "pending"
+    },
+    {
+      "id": "05-01",
+      "phase": 5,
+      "phaseName": "AI Analysis — Content Deep Dive",
+      "seq": 1,
+      "total": 7,
+      "name": "Demographics Extraction from Instagram Data",
+      "status": "pending"
+    },
+    {
+      "id": "05-02",
+      "phase": 5,
+      "phaseName": "AI Analysis — Content Deep Dive",
+      "seq": 2,
+      "total": 7,
+      "name": "Engagement Rate Formulas",
+      "status": "pending"
+    },
+    {
+      "id": "05-03",
+      "phase": 5,
+      "phaseName": "AI Analysis — Content Deep Dive",
+      "seq": 3,
+      "total": 7,
+      "name": "Interest Inference Logic",
+      "status": "pending"
+    },
+    {
+      "id": "05-04",
+      "phase": 5,
+      "phaseName": "AI Analysis — Content Deep Dive",
+      "seq": 4,
+      "total": 7,
+      "name": "Content Type Taxonomy (Native & Extended)",
+      "status": "pending"
+    },
+    {
+      "id": "05-05",
+      "phase": 5,
+      "phaseName": "AI Analysis — Content Deep Dive",
+      "seq": 5,
+      "total": 7,
+      "name": "Niche Detection with OpenAI",
+      "status": "pending"
+    },
+    {
+      "id": "05-06",
+      "phase": 5,
+      "phaseName": "AI Analysis — Content Deep Dive",
+      "seq": 6,
+      "total": 7,
+      "name": "User Niche Override UI",
+      "status": "pending"
+    },
+    {
+      "id": "05-07",
+      "phase": 5,
+      "phaseName": "AI Analysis — Content Deep Dive",
+      "seq": 7,
+      "total": 7,
+      "name": "Content Categorization Storage",
+      "status": "pending"
+    },
+    {
+      "id": "06-01",
+      "phase": 6,
+      "phaseName": "User Interface & Display",
+      "seq": 1,
+      "total": 6,
+      "name": "Summary Card Enhancement (All Metrics)",
+      "status": "pending"
+    },
+    {
+      "id": "06-02",
+      "phase": 6,
+      "phaseName": "User Interface & Display",
+      "seq": 2,
+      "total": 6,
+      "name": "Detailed Analysis View Component",
+      "status": "pending"
+    },
+    {
+      "id": "06-03",
+      "phase": 6,
+      "phaseName": "User Interface & Display",
+      "seq": 3,
+      "total": 6,
+      "name": "Drill-Down Modal & Page Routing",
+      "status": "pending"
+    },
+    {
+      "id": "06-04",
+      "phase": 6,
+      "phaseName": "User Interface & Display",
+      "seq": 4,
+      "total": 6,
+      "name": "Data Visualization Components (Charts)",
+      "status": "pending"
+    },
+    {
+      "id": "06-05",
+      "phase": 6,
+      "phaseName": "User Interface & Display",
+      "seq": 5,
+      "total": 6,
+      "name": "External Link Handling",
+      "status": "pending"
+    },
+    {
+      "id": "06-06",
+      "phase": 6,
+      "phaseName": "User Interface & Display",
+      "seq": 6,
+      "total": 6,
+      "name": "Responsive Design Polish",
+      "status": "pending"
+    },
+    {
+      "id": "07-01",
+      "phase": 7,
+      "phaseName": "Filtering & Search",
+      "seq": 1,
+      "total": 5,
+      "name": "Filter API Endpoints (Query Builder)",
+      "status": "pending"
+    },
+    {
+      "id": "07-02",
+      "phase": 7,
+      "phaseName": "Filtering & Search",
+      "seq": 2,
+      "total": 5,
+      "name": "Filter UI Components (Dropdowns, Ranges)",
+      "status": "pending"
+    },
+    {
+      "id": "07-03",
+      "phase": 7,
+      "phaseName": "Filtering & Search",
+      "seq": 3,
+      "total": 5,
+      "name": "Search Functionality",
+      "status": "pending"
+    },
+    {
+      "id": "07-04",
+      "phase": 7,
+      "phaseName": "Filtering & Search",
+      "seq": 4,
+      "total": 5,
+      "name": "Filter State Management",
+      "status": "pending"
+    },
+    {
+      "id": "07-05",
+      "phase": 7,
+      "phaseName": "Filtering & Search",
+      "seq": 5,
+      "total": 5,
+      "name": "Performance Optimization & Indexing",
+      "status": "pending"
+    },
+    {
+      "id": "08-01",
+      "phase": 8,
+      "phaseName": "Export System",
+      "seq": 1,
+      "total": 7,
+      "name": "PDF Generation Service (ReportLab)",
+      "status": "pending"
+    },
+    {
+      "id": "08-02",
+      "phase": 8,
+      "phaseName": "Export System",
+      "seq": 2,
+      "total": 7,
+      "name": "CSV Export Endpoint",
+      "status": "pending"
+    },
+    {
+      "id": "08-03",
+      "phase": 8,
+      "phaseName": "Export System",
+      "seq": 3,
+      "total": 7,
+      "name": "Shareable Link System (Token Generation)",
+      "status": "pending"
+    },
+    {
+      "id": "08-04",
+      "phase": 8,
+      "phaseName": "Export System",
+      "seq": 4,
+      "total": 7,
+      "name": "Public Share Page (Unauthenticated Access)",
+      "status": "pending"
+    },
+    {
+      "id": "08-05",
+      "phase": 8,
+      "phaseName": "Export System",
+      "seq": 5,
+      "total": 7,
+      "name": "Password Protection for Links",
+      "status": "pending"
+    },
+    {
+      "id": "08-06",
+      "phase": 8,
+      "phaseName": "Export System",
+      "seq": 6,
+      "total": 7,
+      "name": "Link Revocation API",
+      "status": "pending"
+    },
+    {
+      "id": "08-07",
+      "phase": 8,
+      "phaseName": "Export System",
+      "seq": 7,
+      "total": 7,
+      "name": "Export UI Controls",
+      "status": "pending"
+    },
+    {
+      "id": "09-01",
+      "phase": 9,
+      "phaseName": "Historical Data & Trends",
+      "seq": 1,
+      "total": 7,
+      "name": "Scan History List UI",
+      "status": "pending"
+    },
+    {
+      "id": "09-02",
+      "phase": 9,
+      "phaseName": "Historical Data & Trends",
+      "seq": 2,
+      "total": 7,
+      "name": "Scan Archive Viewer",
+      "status": "pending"
+    },
+    {
+      "id": "09-03",
+      "phase": 9,
+      "phaseName": "Historical Data & Trends",
+      "seq": 3,
+      "total": 7,
+      "name": "Time-Series Queries (TimescaleDB)",
+      "status": "pending"
+    },
+    {
+      "id": "09-04",
+      "phase": 9,
+      "phaseName": "Historical Data & Trends",
+      "seq": 4,
+      "total": 7,
+      "name": "Trend Visualization Components (Recharts)",
+      "status": "pending"
+    },
+    {
+      "id": "09-05",
+      "phase": 9,
+      "phaseName": "Historical Data & Trends",
+      "seq": 5,
+      "total": 7,
+      "name": "Comparison View (Side-by-Side)",
+      "status": "pending"
+    },
+    {
+      "id": "09-06",
+      "phase": 9,
+      "phaseName": "Historical Data & Trends",
+      "seq": 6,
+      "total": 7,
+      "name": "Trending Algorithms",
+      "status": "pending"
+    },
+    {
+      "id": "09-07",
+      "phase": 9,
+      "phaseName": "Historical Data & Trends",
+      "seq": 7,
+      "total": 7,
+      "name": "Delete Scan Functionality",
+      "status": "pending"
+    },
+    {
+      "id": "10-01",
+      "phase": 10,
+      "phaseName": "Subscription & Monetization",
+      "seq": 1,
+      "total": 9,
+      "name": "Stripe Integration (API Keys, SDK)",
+      "status": "pending"
+    },
+    {
+      "id": "10-02",
+      "phase": 10,
+      "phaseName": "Subscription & Monetization",
+      "seq": 2,
+      "total": 9,
+      "name": "Subscription Tier Data Model",
+      "status": "pending"
+    },
+    {
+      "id": "10-03",
+      "phase": 10,
+      "phaseName": "Subscription & Monetization",
+      "seq": 3,
+      "total": 9,
+      "name": "Usage Tracking (Scans per User per Month)",
+      "status": "pending"
+    },
+    {
+      "id": "10-04",
+      "phase": 10,
+      "phaseName": "Subscription & Monetization",
+      "seq": 4,
+      "total": 9,
+      "name": "Limit Enforcement Middleware",
+      "status": "pending"
+    },
+    {
+      "id": "10-05",
+      "phase": 10,
+      "phaseName": "Subscription & Monetization",
+      "seq": 5,
+      "total": 9,
+      "name": "Stripe Checkout Flow",
+      "status": "pending"
+    },
+    {
+      "id": "10-06",
+      "phase": 10,
+      "phaseName": "Subscription & Monetization",
+      "seq": 6,
+      "total": 9,
+      "name": "Webhook Endpoint & Handlers",
+      "status": "pending"
+    },
+    {
+      "id": "10-07",
+      "phase": 10,
+      "phaseName": "Subscription & Monetization",
+      "seq": 7,
+      "total": 9,
+      "name": "Billing Portal Link",
+      "status": "pending"
+    },
+    {
+      "id": "10-08",
+      "phase": 10,
+      "phaseName": "Subscription & Monetization",
+      "seq": 8,
+      "total": 9,
+      "name": "Pricing Page UI",
+      "status": "pending"
+    },
+    {
+      "id": "10-09",
+      "phase": 10,
+      "phaseName": "Subscription & Monetization",
+      "seq": 9,
+      "total": 9,
+      "name": "Email Notifications (Subscription Events)",
+      "status": "pending"
+    },
+    {
+      "id": "11-01",
+      "phase": 11,
+      "phaseName": "Polish & Launch Preparation",
+      "seq": 1,
+      "total": 6,
+      "name": "End-to-End Testing Suite",
+      "status": "pending"
+    },
+    {
+      "id": "11-02",
+      "phase": 11,
+      "phaseName": "Polish & Launch Preparation",
+      "seq": 2,
+      "total": 6,
+      "name": "Performance Profiling & Optimization",
+      "status": "pending"
+    },
+    {
+      "id": "11-03",
+      "phase": 11,
+      "phaseName": "Polish & Launch Preparation",
+      "seq": 3,
+      "total": 6,
+      "name": "Production Environment Setup",
+      "status": "pending"
+    },
+    {
+      "id": "11-04",
+      "phase": 11,
+      "phaseName": "Polish & Launch Preparation",
+      "seq": 4,
+      "total": 6,
+      "name": "Deployment Automation (CI/CD)",
+      "status": "pending"
+    },
+    {
+      "id": "11-05",
+      "phase": 11,
+      "phaseName": "Polish & Launch Preparation",
+      "seq": 5,
+      "total": 6,
+      "name": "Monitoring Setup (Sentry, Logs)",
+      "status": "pending"
+    },
+    {
+      "id": "11-06",
+      "phase": 11,
+      "phaseName": "Polish & Launch Preparation",
+      "seq": 6,
+      "total": 6,
+      "name": "User Documentation",
+      "status": "pending"
+    }
+  ]
+}
