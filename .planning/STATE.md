@@ -1,8 +1,8 @@
 # Project State: Instagram Viral Content Analyzer
 
-**Last Updated:** 2026-02-18
-**Current Phase:** 02-instagram-integration COMPLETE ✓
-**Current Plan:** 02-06 complete — 6/6 plans done
+**Last Updated:** 2026-02-19
+**Current Phase:** 03-core-scanning-engine IN PROGRESS
+**Current Plan:** 03-02 complete — 2/7 plans done
 **Milestone:** v1.0
 
 ---
@@ -22,15 +22,15 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 **Milestone v1.0:**
 - Phases: 11 total
 - Completed: 2 (Phase 01, Phase 02)
-- In Progress: 0
-- Pending: 9
+- In Progress: 1 (Phase 03)
+- Pending: 8
 
-**Phase 02 Progress:**
-- Plans: 6 total
-- Completed: 6 ✓
-- Remaining: 0
+**Phase 03 Progress:**
+- Plans: 7 total
+- Completed: 2 (03-01, 03-02)
+- Remaining: 5
 
-Progress: [##########] 100% — PHASE COMPLETE
+Progress: [##--------] 29% — IN PROGRESS
 
 **Requirements:**
 - Total v1: 79
@@ -41,11 +41,22 @@ Progress: [##########] 100% — PHASE COMPLETE
 
 ## Current Phase
 
-**Phase:** 02 - Instagram Integration
-**Status:** COMPLETE ✓
-**Plans Completed:** 6 of 6
+**Phase:** 03 - Core Scanning Engine
+**Status:** IN PROGRESS
+**Plans Completed:** 2 of 7
 
 **Completed Plans:**
+- ✓ Plan 03-01: Celery/Redis Infrastructure + Scan/ViralPost Models (2026-02-19)
+- ✓ Plan 03-02: Viral Scoring Algorithm — TDD (2026-02-19)
+
+**Remaining Plans:**
+- Plan 03-03: Apify Integration
+- Plan 03-04: Scan Job Orchestration
+- Plan 03-05: Content Analysis (OpenAI)
+- Plan 03-06: Results Storage + API Endpoints
+- Plan 03-07: Frontend Scan UI
+
+**Previously Completed (Phase 02):**
 - ✓ Plan 02-01: InstagramAccount Model Enhancement (2026-02-18)
 - ✓ Plan 02-02: Instagram OAuth Backend + Service Layer (2026-02-18)
 - ✓ Plan 02-03: AppLayout Nav Infrastructure (2026-02-18)
@@ -66,12 +77,12 @@ Progress: [##########] 100% — PHASE COMPLETE
 - ✓ Plan 01-10: Profile Frontend Page (2026-02-17) [Human Verified]
 
 **Recently Completed:**
+- ✓ Viral scoring algorithm: calculate_viral_score() with 6-tier velocity multiplier, capped at 100.0
+- ✓ Growth velocity: calculate_growth_velocity() with zero-division safety
+- ✓ 25/25 TDD test cases passing (pytest added to venv)
+- ✓ Celery app + Scan/ViralPost SQLAlchemy models + migration 003
 - ✓ APScheduler background job: Instagram token refresh every 50 days, wired into FastAPI lifespan
 - ✓ Token expiry email notification (send_token_expired_email) with reconnect link
-- ✓ InstagramAccountCard, DisconnectConfirmDialog, IntegrationsPage, useAccountsStore
-- ✓ AppLayout wired to real account count via useInstagramAccounts hook
-- ✓ AppLayout component with persistent nav bar (brand, Dashboard + Settings links, user email, account count)
-- ✓ Instagram OAuth backend: authorization URL, callback, token exchange, service layer
 
 **Environment Notes:**
 - Backend: Python 3.12 venv at `backend/.venv` (Python 3.13 incompatible with pydantic-core)
@@ -84,12 +95,12 @@ Progress: [##########] 100% — PHASE COMPLETE
 ## Next Steps
 
 **Immediate:**
-1. Plan Phase 03: Core Scanning Engine
+1. Execute Plan 03-03: Apify Integration
 
 **Upcoming:**
-- Execute Phase 03 plans (7-9 estimated)
+- Execute Phase 03 plans 03-03 through 03-07
 - Build viral content discovery using Apify/PhantomBuster APIs
-- Implement growth velocity calculations
+- Wire scan_jobs.py to use calculate_viral_score() from viral_scoring.py
 
 ---
 
@@ -127,13 +138,16 @@ Progress: [##########] 100% — PHASE COMPLETE
 | 2026-02-18 | AsyncIOScheduler over BackgroundScheduler | FastAPI uses asyncio event loop; AsyncIOScheduler integrates natively without threading issues | Correct scheduler type for async FastAPI |
 | 2026-02-18 | lifespan context manager replaces on_event | Modern FastAPI pattern, replaces deprecated @app.on_event("startup") | Future-proof app lifecycle management |
 | 2026-02-18 | send_token_expired_email is synchronous | Consistent with all other email functions in the service layer | Avoids await-on-sync function runtime errors |
+| 2026-02-19 | age <= 24h uses multiplier 1.0 (not 0.5) | Plan examples explicitly show age=24.0 -> 10.0 (multiplier 1.0); examples are authoritative over text description | Boundary is > 24h for 0.5 slow multiplier |
+| 2026-02-19 | round() to 10dp for viral score | IEEE 754 float artifacts (30.000000000000004) break equality tests; 10dp eliminates noise without losing precision | Required for reliable downstream comparisons |
+| 2026-02-19 | pytest installed to venv | Was missing from requirements.txt; added as blocking fix for TDD execution | pytest 9.0.2 now available for all future test plans |
 
 ---
 
 ## Open Questions
 
 - [ ] Specific Apify actor/endpoint to use for Instagram data?
-- [ ] Exact growth velocity formula (engagement rate change per hour)?
+- [x] Exact growth velocity formula (engagement rate change per hour)? — RESOLVED: (current - previous) / time_delta_hours
 - [ ] Free tier: Confirm 5 scans/month limit?
 - [ ] Paid tier: Confirm $20/month for 50 scans?
 - [ ] Multiple paid tiers or just one?
@@ -182,16 +196,17 @@ Progress: [##########] 100% — PHASE COMPLETE
 | 02-02 | 4 min | 3 | 9 | 4 | 2026-02-18 |
 | 02-03 | 5 min | 2 | 4 | 2 | 2026-02-18 |
 | 02-05 | 5 min | 2 | 4 | 2 | 2026-02-18 |
+| 03-02 | 15 min | 3 | 3 | 3 | 2026-02-19 |
 
 ---
 
 ## Last Session
 
-**Date:** 2026-02-18
-**Stopped at:** docs(02-06): create plan summary, update state — awaiting Phase 2 human verification
-**Status:** Phase 02 IN PROGRESS. Plan 02-05 complete: APScheduler background job wired into FastAPI lifespan, token refresh every 50 days, email notification on expiry. Only Plan 02-06 remains.
+**Date:** 2026-02-19
+**Stopped at:** Completed 03-02-PLAN.md (Viral Scoring Algorithm — TDD)
+**Status:** Phase 03 IN PROGRESS. Plan 03-02 complete: calculate_viral_score() and calculate_growth_velocity() implemented with 25/25 tests passing. Ready for Plan 03-03 (Apify Integration).
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-18T14:36:00Z*
+*Last updated: 2026-02-19T00:00:00Z*
