@@ -22,6 +22,10 @@ export default defineConfig({
       '/integrations': {
         target: 'http://localhost:8000',
         changeOrigin: true,
+      },
+      '/scans': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
       }
     }
   }
