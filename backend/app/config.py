@@ -28,12 +28,27 @@ class Settings(BaseSettings):
     # Token encryption
     TOKEN_ENCRYPTION_KEY: str = ""  # Fernet key for encrypting access tokens; generate with: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 
+    # Celery / Redis
+    CELERY_BROKER_URL: str = "redis://localhost:6379/0"
+    CELERY_RESULT_BACKEND: str = "redis://localhost:6379/1"
+
+    # AWS S3 for thumbnail caching
+    AWS_ACCESS_KEY_ID: str = ""
+    AWS_SECRET_ACCESS_KEY: str = ""
+    AWS_S3_BUCKET: str = ""
+    AWS_S3_REGION: str = "us-east-1"
+
+    # Third-party scan APIs
+    APIFY_API_KEY: str = ""
+    PHANTOMBUSTER_API_KEY: str = ""
+
     # Environment
     ENVIRONMENT: str = "development"
 
     class Config:
         env_file = ".env"
         case_sensitive = True
+        extra = "ignore"  # Allow extra fields from .env (like NGROK_URL) without error
 
 
 settings = Settings()
