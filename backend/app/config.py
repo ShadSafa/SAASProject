@@ -41,6 +41,7 @@ class Settings(BaseSettings):
     # Third-party scan APIs
     APIFY_API_KEY: str = ""
     PHANTOMBUSTER_API_KEY: str = ""
+    PHANTOMBUSTER_AGENT_ID: str = ""
 
     # Environment
     ENVIRONMENT: str = "development"
