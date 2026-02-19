@@ -6,13 +6,14 @@ All operations use async/await with AsyncSession for FastAPI compatibility.
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
 from app.services.security import hash_password
 
 
 async def get_user_by_email(db: AsyncSession, email: str) -> User | None:
-    """Get user by email address.
+    """Get user by email address with eager-loaded relationships.
 
     Args:
         db: Async database session
@@ -21,7 +22,11 @@ async def get_user_by_email(db: AsyncSession, email: str) -> User | None:
     Returns:
         User if found, None otherwise
     """
-    result = await db.execute(select(User).filter(User.email == email))
+    result = await db.execute(
+        select(User)
+        .filter(User.email == email)
+        .options(selectinload(User.instagram_accounts))
+    )
     return result.scalar_one_or_none()
 
 
