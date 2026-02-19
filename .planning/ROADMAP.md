@@ -127,16 +127,16 @@ Plans:
 
 **Dependencies:** Phase 2 (Instagram connection required)
 
-**Estimated Plans:** 7-9
-- Third-party API integration (Apify primary)
-- PhantomBuster fallback implementation
-- Growth velocity algorithm
-- URL parsing and single-post analysis
-- Scan job orchestration (background workers)
-- Scan result storage
-- Frontend scan trigger UI
-- Summary card component
-- Loading/progress states
+**Plans:** 7 plans in 5 waves
+
+Plans:
+- [ ] 03-01-PLAN.md — Celery infra + Scan/ViralPost model enhancements + Alembic migration 003
+- [ ] 03-02-PLAN.md — Viral scoring algorithm (TDD: calculate_viral_score, calculate_growth_velocity)
+- [ ] 03-03-PLAN.md — Apify + PhantomBuster integrations + S3 thumbnail caching + Celery scan task
+- [ ] 03-04-PLAN.md — Scan schemas + FastAPI routes (/trigger, /analyze-url, /status, /history) + Vite proxy
+- [ ] 03-05-PLAN.md — Frontend types + API client + Zustand scanStore + useScan polling hook
+- [ ] 03-06-PLAN.md — ScanForm, ScanProgress, ViralPostCard, ViralPostGrid, ScanPage components
+- [ ] 03-07-PLAN.md — App.tsx /scan route + AppLayout nav link + human verification checkpoint
 
 ---
 
