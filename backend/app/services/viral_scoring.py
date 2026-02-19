@@ -13,12 +13,12 @@ def _get_velocity_multiplier(post_age_hours: float) -> float:
 
     Returns:
         Velocity multiplier based on post age:
-        - < 1 hour:      3.0 (exceptional speed)
-        - 1 to < 2 hrs:  2.5 (very fast)
-        - 2 to < 4 hrs:  2.0 (fast)
-        - 4 to < 12 hrs: 1.5 (moderate)
-        - 12 to < 24 hrs: 1.0 (normal)
-        - >= 24 hrs:     0.5 (slow)
+        - < 1 hour:       3.0 (exceptional speed)
+        - 1 to < 2 hrs:   2.5 (very fast)
+        - 2 to < 4 hrs:   2.0 (fast)
+        - 4 to < 12 hrs:  1.5 (moderate)
+        - 12 to <= 24 hrs: 1.0 (normal)
+        - > 24 hrs:       0.5 (slow)
     """
     if post_age_hours < 1.0:
         return 3.0
