@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-02-19
 **Current Phase:** 03-core-scanning-engine IN PROGRESS
-**Current Plan:** 03-02 complete — 2/7 plans done
+**Current Plan:** 03-04 complete — 4/7 plans done
 **Milestone:** v1.0
 
 ---
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Phase 03 Progress:**
 - Plans: 7 total
-- Completed: 2 (03-01, 03-02)
-- Remaining: 5
+- Completed: 4 (03-01, 03-02, 03-03, 03-04)
+- Remaining: 3
 
-Progress: [##--------] 29% — IN PROGRESS
+Progress: [####------] 43% — IN PROGRESS
 
 **Requirements:**
 - Total v1: 79
@@ -43,15 +43,15 @@ Progress: [##--------] 29% — IN PROGRESS
 
 **Phase:** 03 - Core Scanning Engine
 **Status:** IN PROGRESS
-**Plans Completed:** 2 of 7
+**Plans Completed:** 4 of 7
 
 **Completed Plans:**
 - ✓ Plan 03-01: Celery/Redis Infrastructure + Scan/ViralPost Models (2026-02-19)
 - ✓ Plan 03-02: Viral Scoring Algorithm — TDD (2026-02-19)
+- ✓ Plan 03-03: Apify Integration (2026-02-19)
+- ✓ Plan 03-04: Scan API Endpoints — schemas, routes, Vite proxy (2026-02-19)
 
 **Remaining Plans:**
-- Plan 03-03: Apify Integration
-- Plan 03-04: Scan Job Orchestration
 - Plan 03-05: Content Analysis (OpenAI)
 - Plan 03-06: Results Storage + API Endpoints
 - Plan 03-07: Frontend Scan UI
@@ -77,12 +77,13 @@ Progress: [##--------] 29% — IN PROGRESS
 - ✓ Plan 01-10: Profile Frontend Page (2026-02-17) [Human Verified]
 
 **Recently Completed:**
+- ✓ Scan API: POST /scans/trigger, POST /scans/analyze-url, GET /scans/status/{id}, GET /scans/history — all with auth, rate limit, 404/422/429
+- ✓ Pydantic schemas: ScanRequest (time_range regex), AnalyzeUrlRequest, ViralPostResponse, ScanResponse, ScanTriggerResponse, ScanHistoryItem
+- ✓ scan_service.py: extract_post_id_from_url(), cache_thumbnail_to_s3(), get_scan_with_posts()
+- ✓ execute_scan Celery task wired in scan_jobs.py (full orchestration stub)
+- ✓ Vite proxy: /scans/* -> localhost:8000 (5th proxy rule)
 - ✓ Viral scoring algorithm: calculate_viral_score() with 6-tier velocity multiplier, capped at 100.0
-- ✓ Growth velocity: calculate_growth_velocity() with zero-division safety
-- ✓ 25/25 TDD test cases passing (pytest added to venv)
 - ✓ Celery app + Scan/ViralPost SQLAlchemy models + migration 003
-- ✓ APScheduler background job: Instagram token refresh every 50 days, wired into FastAPI lifespan
-- ✓ Token expiry email notification (send_token_expired_email) with reconnect link
 
 **Environment Notes:**
 - Backend: Python 3.12 venv at `backend/.venv` (Python 3.13 incompatible with pydantic-core)
@@ -95,12 +96,12 @@ Progress: [##--------] 29% — IN PROGRESS
 ## Next Steps
 
 **Immediate:**
-1. Execute Plan 03-03: Apify Integration
+1. Execute Plan 03-05: Content Analysis (OpenAI)
 
 **Upcoming:**
-- Execute Phase 03 plans 03-03 through 03-07
-- Build viral content discovery using Apify/PhantomBuster APIs
-- Wire scan_jobs.py to use calculate_viral_score() from viral_scoring.py
+- Execute Phase 03 plans 03-05 through 03-07
+- Integrate OpenAI GPT-4o for viral content analysis
+- Results storage and final scan results API
 
 ---
 
@@ -145,6 +146,9 @@ Progress: [##--------] 29% — IN PROGRESS
 | 2026-02-19 | age <= 24h uses multiplier 1.0 (not 0.5) | Plan examples explicitly show age=24.0 -> 10.0 (multiplier 1.0); examples are authoritative over text description | Boundary is > 24h for 0.5 slow multiplier |
 | 2026-02-19 | round() to 10dp for viral score | IEEE 754 float artifacts (30.000000000000004) break equality tests; 10dp eliminates noise without losing precision | Required for reliable downstream comparisons |
 | 2026-02-19 | pytest installed to venv | Was missing from requirements.txt; added as blocking fix for TDD execution | pytest 9.0.2 now available for all future test plans |
+| 2026-02-19 | Lazy import execute_scan inside route handler | Prevents circular import at FastAPI startup (routes imported by main.py which also imports celery_app) | Standard pattern for circular-import-safe Celery task dispatch |
+| 2026-02-19 | FREE_TIER_MONTHLY_LIMIT = 5 hardcoded for Phase 3 | Pragmatic for current phase; proper subscription tier enforcement deferred to Phase 10 | Known tech debt with explicit upgrade path |
+| 2026-02-19 | scan_service.py as shared utility module | URL validation belongs in services layer for reuse by Celery task and routes | Avoids code duplication between route handlers and tasks |
 
 ---
 
@@ -202,16 +206,17 @@ Progress: [##--------] 29% — IN PROGRESS
 | 02-05 | 5 min | 2 | 4 | 2 | 2026-02-18 |
 | 03-01 | 4 min | 2 | 6 | 2 | 2026-02-19 |
 | 03-02 | 15 min | 3 | 3 | 3 | 2026-02-19 |
+| 03-04 | 3 min | 2 | 6 | 2 | 2026-02-19 |
 
 ---
 
 ## Last Session
 
 **Date:** 2026-02-19
-**Stopped at:** docs(03-01): complete Celery infrastructure + model enhancements plan
-**Status:** Phase 03 IN PROGRESS. Plan 03-01 complete: Celery app, migration 003, Scan/ViralPost model enhancements. Plans 03-01 and 03-02 done. Next: Plan 03-03 Apify Integration.
+**Stopped at:** Completed 03-04-PLAN.md — Scan API Endpoints
+**Status:** Phase 03 IN PROGRESS. Plans 03-01 through 03-04 complete. 4 of 7 plans done. Next: Plan 03-05 Content Analysis (OpenAI). Scan endpoints live at /scans/trigger, /scans/analyze-url, /scans/status/{id}, /scans/history.
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-19T13:49:00Z*
+*Last updated: 2026-02-19T15:19:28Z*
