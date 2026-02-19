@@ -72,11 +72,15 @@ class TestCalculateViralScore:
         result = calculate_viral_score(1000, 10000, 12.0)
         assert result == 10.0
 
-    def test_score_age_exactly_24_hours_uses_0_5_multiplier(self):
-        """Age == 24.0 should use 0.5 multiplier (>= 24 range)."""
-        # (1000 / 10000) * 0.5 * 100 = 5.0
+    def test_score_age_exactly_24_hours_uses_1_0_multiplier(self):
+        """Age == 24.0 uses 1.0 multiplier (12 to <= 24 range per spec examples).
+
+        Plan specifies: engagement=100, followers=1000, age=24.0 -> 10.0 (multiplier 1.0).
+        The >= 24 boundary is exclusive: only age > 24 uses the 0.5 multiplier.
+        """
+        # (1000 / 10000) * 1.0 * 100 = 10.0
         result = calculate_viral_score(1000, 10000, 24.0)
-        assert result == 5.0
+        assert result == 10.0
 
     # --- Plan-specified edge cases ---
 
