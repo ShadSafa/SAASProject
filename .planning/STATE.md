@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-02-19
 **Current Phase:** 03-core-scanning-engine IN PROGRESS
-**Current Plan:** 03-05 complete — 5/7 plans done
+**Current Plan:** 03-06 complete — 6/7 plans done
 **Milestone:** v1.0
 
 ---
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Phase 03 Progress:**
 - Plans: 7 total
-- Completed: 5 (03-01, 03-02, 03-03, 03-04, 03-05)
-- Remaining: 2
+- Completed: 6 (03-01, 03-02, 03-03, 03-04, 03-05, 03-06)
+- Remaining: 1
 
-Progress: [#####-----] 57% — IN PROGRESS
+Progress: [######----] 64% — IN PROGRESS
 
 **Requirements:**
 - Total v1: 79
@@ -43,7 +43,7 @@ Progress: [#####-----] 57% — IN PROGRESS
 
 **Phase:** 03 - Core Scanning Engine
 **Status:** IN PROGRESS
-**Plans Completed:** 5 of 7
+**Plans Completed:** 6 of 7
 
 **Completed Plans:**
 - ✓ Plan 03-01: Celery/Redis Infrastructure + Scan/ViralPost Models (2026-02-19)
@@ -51,10 +51,10 @@ Progress: [#####-----] 57% — IN PROGRESS
 - ✓ Plan 03-03: Apify Integration (2026-02-19)
 - ✓ Plan 03-04: Scan API Endpoints — schemas, routes, Vite proxy (2026-02-19)
 - ✓ Plan 03-05: Frontend Scan Data Layer — types, API client, Zustand store, useScan hook (2026-02-19)
+- ✓ Plan 03-06: Frontend Scan UI — ScanForm, ScanProgress, ViralPostCard, ViralPostGrid, ScanPage (2026-02-19)
 
 **Remaining Plans:**
-- Plan 03-06: Results Storage + API Endpoints
-- Plan 03-07: Frontend Scan UI
+- Plan 03-07: (final plan in Phase 3)
 
 **Previously Completed (Phase 02):**
 - ✓ Plan 02-01: InstagramAccount Model Enhancement (2026-02-18)
@@ -77,13 +77,15 @@ Progress: [#####-----] 57% — IN PROGRESS
 - ✓ Plan 01-10: Profile Frontend Page (2026-02-17) [Human Verified]
 
 **Recently Completed:**
+- ✓ ScanPage: full scan UX flow (idle -> progress -> results/error) via useScan hook at /scan route
+- ✓ ScanForm: discover tab (time range 12h/24h/48h/7d) + analyze tab (URL input with instagram.com validation)
+- ✓ ScanProgress: animated skeleton cards (8) + progress bar for pending (25%) / running (65%) states
+- ✓ ViralPostCard: thumbnail (null-safe), rank badge, creator info, engagement metrics, color-coded viral score badge
+- ✓ ViralPostGrid: responsive 1/2/3/4-col grid, empty state fallback
+- ✓ /scan route registered in App.tsx + Scan nav link added to AppLayout
 - ✓ Frontend scan data layer: types/scan.ts, api/scans.ts, store/scanStore.ts, hooks/useScan.ts
 - ✓ useScan hook: polls /scans/status/{id} every 2s, stops on completed/failed/5min timeout, cleanup on unmount
-- ✓ Scan API: POST /scans/trigger, POST /scans/analyze-url, GET /scans/status/{id}, GET /scans/history — all with auth, rate limit, 404/422/429
-- ✓ Pydantic schemas: ScanRequest (time_range regex), AnalyzeUrlRequest, ViralPostResponse, ScanResponse, ScanTriggerResponse, ScanHistoryItem
-- ✓ scan_service.py: extract_post_id_from_url(), cache_thumbnail_to_s3(), get_scan_with_posts()
-- ✓ execute_scan Celery task wired in scan_jobs.py (full orchestration stub)
-- ✓ Vite proxy: /scans/* -> localhost:8000 (5th proxy rule)
+- ✓ Scan API: POST /scans/trigger, POST /scans/analyze-url, GET /scans/status/{id}, GET /scans/history
 - ✓ Viral scoring algorithm: calculate_viral_score() with 6-tier velocity multiplier, capped at 100.0
 - ✓ Celery app + Scan/ViralPost SQLAlchemy models + migration 003
 
@@ -98,12 +100,11 @@ Progress: [#####-----] 57% — IN PROGRESS
 ## Next Steps
 
 **Immediate:**
-1. Execute Plan 03-06: Results Storage + API Endpoints
+1. Execute Plan 03-07: Final plan in Phase 3 (Core Scanning Engine)
 
 **Upcoming:**
-- Execute Phase 03 plans 03-06, 03-07
-- Results storage and final scan results API
-- Frontend Scan UI (ScanPage.tsx using useScan hook)
+- Complete Phase 03 with Plan 03-07
+- Begin Phase 04 planning
 
 ---
 
@@ -156,6 +157,9 @@ Progress: [#####-----] 57% — IN PROGRESS
 | 2026-02-19 | useRef for interval ID in useScan | Stable across re-renders; closure in stopPolling always captures same ref without stale closure issues | Correct React pattern for mutable values that don't trigger re-renders |
 | 2026-02-19 | Network errors during polling don't stop polling | Transient connection issues should retry; only terminal statuses (completed/failed/timeout) stop polling | Resilient against brief network interruptions |
 | 2026-02-19 | clearScan() called at start of each scan | Prevents stale results from previous scan leaking into new scan UI state | Clean slate for every new scan invocation |
+| 2026-02-19 | ScanPage hides ScanForm during active scan | Prevents duplicate scan triggers while a scan is in progress (isInProgress = pending or running) | Clean UX: user can't accidentally start two scans |
+| 2026-02-19 | ViralPostCard onError hides failed img elements | Instagram CDN URLs expire ~1hr; graceful fallback to bg-gray-100 placeholder when src fails | Robust thumbnail display without breaking the card layout |
+| 2026-02-19 | /scan route added via Rule 2 auto-fix | ScanPage was unreachable without a registered route; added /scan with ProtectedRoute + Scan nav link | Essential for page accessibility; follows existing routing pattern |
 
 ---
 
@@ -216,16 +220,17 @@ Progress: [#####-----] 57% — IN PROGRESS
 | 03-03 | 6 min | 2 | 6 | 2 | 2026-02-19 |
 | 03-04 | 3 min | 2 | 6 | 2 | 2026-02-19 |
 | 03-05 | 2 min | 2 | 4 | 2 | 2026-02-19 |
+| 03-06 | 3 min | 2 | 7 | 3 | 2026-02-19 |
 
 ---
 
 ## Last Session
 
 **Date:** 2026-02-19
-**Stopped at:** docs(03-05): complete Frontend Scan Data Layer plan — types, API client, Zustand store, useScan hook
-**Status:** Phase 03 IN PROGRESS. Plans 03-01 through 03-05 complete. 5 of 7 plans done. Next: Plan 03-06 Results Storage + API Endpoints. Frontend data layer ready: useScan hook polls every 2s, stops on completion/failure/timeout.
+**Stopped at:** docs(03-06): complete Frontend Scan UI plan — ScanForm, ScanProgress, ViralPostCard, ViralPostGrid, ScanPage
+**Status:** Phase 03 IN PROGRESS. Plans 03-01 through 03-06 complete. 6 of 7 plans done. Next: Plan 03-07 (final Phase 3 plan). Full scan UI at /scan: form -> animated progress skeleton -> viral post card grid.
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-19T15:27:26Z*
+*Last updated: 2026-02-19T15:33:29Z*
