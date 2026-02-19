@@ -146,6 +146,8 @@ Progress: [####------] 43% — IN PROGRESS
 | 2026-02-19 | age <= 24h uses multiplier 1.0 (not 0.5) | Plan examples explicitly show age=24.0 -> 10.0 (multiplier 1.0); examples are authoritative over text description | Boundary is > 24h for 0.5 slow multiplier |
 | 2026-02-19 | round() to 10dp for viral score | IEEE 754 float artifacts (30.000000000000004) break equality tests; 10dp eliminates noise without losing precision | Required for reliable downstream comparisons |
 | 2026-02-19 | pytest installed to venv | Was missing from requirements.txt; added as blocking fix for TDD execution | pytest 9.0.2 now available for all future test plans |
+| 2026-02-19 | asyncio.run() inside Celery task body | Celery workers run sync; asyncio.run() creates a new event loop per task call for async SQLAlchemy session management | Correct Celery + async pattern without needing gevent/eventlet |
+| 2026-02-19 | task name='scan.execute_scan' (explicit) | Short namespaced name preferred over default module path for cleaner Celery routing and monitoring | Consistent with celery best practices for named tasks |
 | 2026-02-19 | Lazy import execute_scan inside route handler | Prevents circular import at FastAPI startup (routes imported by main.py which also imports celery_app) | Standard pattern for circular-import-safe Celery task dispatch |
 | 2026-02-19 | FREE_TIER_MONTHLY_LIMIT = 5 hardcoded for Phase 3 | Pragmatic for current phase; proper subscription tier enforcement deferred to Phase 10 | Known tech debt with explicit upgrade path |
 | 2026-02-19 | scan_service.py as shared utility module | URL validation belongs in services layer for reuse by Celery task and routes | Avoids code duplication between route handlers and tasks |
@@ -206,6 +208,7 @@ Progress: [####------] 43% — IN PROGRESS
 | 02-05 | 5 min | 2 | 4 | 2 | 2026-02-18 |
 | 03-01 | 4 min | 2 | 6 | 2 | 2026-02-19 |
 | 03-02 | 15 min | 3 | 3 | 3 | 2026-02-19 |
+| 03-03 | 6 min | 2 | 6 | 2 | 2026-02-19 |
 | 03-04 | 3 min | 2 | 6 | 2 | 2026-02-19 |
 
 ---
@@ -213,7 +216,7 @@ Progress: [####------] 43% — IN PROGRESS
 ## Last Session
 
 **Date:** 2026-02-19
-**Stopped at:** Completed 03-04-PLAN.md — Scan API Endpoints
+**Stopped at:** docs(03-04): complete Scan API Endpoints plan — schemas, routes, Vite proxy
 **Status:** Phase 03 IN PROGRESS. Plans 03-01 through 03-04 complete. 4 of 7 plans done. Next: Plan 03-05 Content Analysis (OpenAI). Scan endpoints live at /scans/trigger, /scans/analyze-url, /scans/status/{id}, /scans/history.
 
 ---
