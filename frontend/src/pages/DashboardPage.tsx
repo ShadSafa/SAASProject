@@ -1,6 +1,7 @@
 import { useAuthStore } from '../store/authStore';
 import { useAccountsStore } from '../store/accountsStore';
 import ExpiryBanner from '../components/ExpiryBanner';
+import ScanHistory from '../components/ScanHistory';
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
@@ -39,12 +40,9 @@ export default function DashboardPage() {
           </div>
         </div>
       ) : (
-        /* Has accounts: show scan trigger area (Phase 3 placeholder) */
-        <div className="border-2 border-dashed border-gray-200 rounded-xl p-12 text-center">
-          <p className="text-gray-500">
-            {accounts.filter(a => a.status === 'active').length} account{accounts.filter(a => a.status === 'active').length !== 1 ? 's' : ''} connected.
-            Scanning features coming in the next phase.
-          </p>
+        /* Has accounts: show scan history */
+        <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <ScanHistory />
         </div>
       )}
     </div>
