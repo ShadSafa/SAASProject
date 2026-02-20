@@ -36,7 +36,7 @@ async def _check_scan_limit(user: User, db: AsyncSession) -> None:
     Free tier: max 5 scans per rolling 30-day window.
     Phase 10 will replace this with proper subscription tier enforcement.
     """
-    thirty_days_ago = datetime.now(timezone.utc) - timedelta(days=30)
+    thirty_days_ago = datetime.utcnow() - timedelta(days=30)
     result = await db.execute(
         select(func.count(Scan.id))
         .where(Scan.user_id == user.id)
