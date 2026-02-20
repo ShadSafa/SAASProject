@@ -108,7 +108,7 @@ async def _run_scan(scan_id: int) -> None:
 
             # Mark completed
             scan.status = "completed"
-            scan.completed_at = datetime.now(timezone.utc)
+            scan.completed_at = datetime.utcnow()
             await db.commit()
             logger.info(f"Scan {scan_id} completed with {len(top_posts)} posts")
 
