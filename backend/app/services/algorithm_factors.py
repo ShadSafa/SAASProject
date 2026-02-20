@@ -94,6 +94,9 @@ def calculate_hashtag_performance_score(hashtags: str | None) -> float:
 
     try:
         hashtag_list = json.loads(hashtags)
+        # Ensure it's a list/array, not a dict or other type
+        if not isinstance(hashtag_list, list):
+            return 0.0
         hashtag_count = len(hashtag_list)
     except (json.JSONDecodeError, TypeError):
         # Invalid JSON or non-string, treat as no hashtags
