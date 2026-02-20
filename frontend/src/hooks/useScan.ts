@@ -5,6 +5,7 @@ import type { TimeRange } from '../types/scan';
 
 const POLL_INTERVAL_MS = 2000;  // Poll every 2 seconds
 const POLL_TIMEOUT_MS = 15 * 60 * 1000;  // Stop polling after 15 minutes
+const MAX_CONSECUTIVE_ERRORS = 5;  // Stop polling after 5 consecutive network errors
 
 export function useScan() {
   const {
@@ -25,6 +26,7 @@ export function useScan() {
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const pollStartTimeRef = useRef<number | null>(null);
+  const consecutiveErrorsRef = useRef<number>(0);
 
   const stopPolling = useCallback(() => {
     if (intervalRef.current) {
@@ -32,6 +34,7 @@ export function useScan() {
       intervalRef.current = null;
     }
     pollStartTimeRef.current = null;
+    consecutiveErrorsRef.current = 0;
   }, []);
 
   const startPolling = useCallback((scanId: number) => {
@@ -50,6 +53,7 @@ export function useScan() {
 
       try {
         const data = await getScanStatus(scanId);
+        consecutiveErrorsRef.current = 0;  // Reset error counter on success
         setStatus(data.status);
         setLastScan(data);
 
@@ -63,8 +67,16 @@ export function useScan() {
           stopPolling();
         }
       } catch (err) {
-        // Network error during polling — don't stop, retry next interval
-        console.warn('Polling error (will retry):', err);
+        // Network error during polling
+        consecutiveErrorsRef.current += 1;
+        console.warn(`Polling error (${consecutiveErrorsRef.current}/${MAX_CONSECUTIVE_ERRORS}):`, err);
+
+        // Stop polling after too many consecutive errors
+        if (consecutiveErrorsRef.current >= MAX_CONSECUTIVE_ERRORS) {
+          stopPolling();
+          setError('Server is unreachable. Please check your connection and try again.');
+          setIsScanning(false);
+        }
       }
     }, POLL_INTERVAL_MS);
   }, [stopPolling, setStatus, setScanResults, setIsScanning, setError, setLastScan]);

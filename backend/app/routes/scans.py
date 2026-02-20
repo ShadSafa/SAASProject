@@ -106,16 +106,21 @@ async def trigger_scan(
     await db.commit()
     await db.refresh(scan)
 
+    logger.info(f"Scan {scan.id} created. ENVIRONMENT={settings.ENVIRONMENT}")
+
     # Development mode: execute synchronously (no Redis/Celery required)
     if settings.ENVIRONMENT == "development":
+        logger.info(f"Scan {scan.id} executing in development mode")
         from app.tasks.scan_jobs import _run_scan
         try:
+            logger.info(f"Scan {scan.id} _run_scan starting")
             await _run_scan(scan.id)
             logger.info(f"Scan {scan.id} completed synchronously (dev mode)")
         except Exception as e:
             logger.error(f"Scan {scan.id} failed: {e}", exc_info=True)
     else:
         # Production: dispatch Celery task (non-blocking)
+        logger.info(f"Scan {scan.id} dispatching to Celery")
         from app.tasks.scan_jobs import execute_scan
         execute_scan.delay(scan.id)
         logger.info(f"Scan {scan.id} dispatched for user {current_user.id} (time_range={request.time_range})")

@@ -20,7 +20,29 @@
       "Bash(\"/c/Program Files/PostgreSQL/18/bin/psql.exe\" -U postgres -c \"CREATE DATABASE instagram_analyzer;\")",
       "Bash(PGPASSWORD=Matrix4466 \"/c/Program Files/PostgreSQL/18/bin/psql.exe\":*)",
       "Bash(uvicorn:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(start:*)",
+      "Bash(git push:*)",
+      "Bash(curl:*)",
+      "Bash(.venvScriptspython.exe -c \"\nimport sys\nsys.path.insert\\(0, ''.''\\)\nfrom app.services.email import send_verification_email\n\nresult = send_verification_email\\(''shadisafa@hotmail.com'', ''test-token-12345''\\)\nprint\\(''Result:'', result\\)\n\")",
+      "Bash(\".venv/Scripts/python.exe\":*)",
+      "Bash(\".venv/Scripts/python.exe\" -c \"\nimport sys\nsys.path.insert\\(0, ''.''\\)\nfrom app.services.email import send_password_reset_email\n\nresult = send_password_reset_email\\(''shadisafa@hotmail.com'', ''test-reset-token-67890''\\)\nprint\\(''Result:'', result\\)\n\")",
+      "Bash(test:*)",
+      "Bash(python:*)",
+      "WebFetch(domain:www.freepik.com)",
+      "Bash(..venvScriptspython.exe -c \"from app.routes import auth, profile; print\\(''auth routes:'', [r.path for r in auth.router.routes]\\); print\\(''profile routes:'', [r.path for r in profile.router.routes]\\)\")",
+      "Bash(\"c:\\\\Users\\\\shadi\\\\Documents\\\\Development\\\\AntiGravity\\\\Saas Project\\\\backend\\\\.venv\\\\Scripts\\\\python.exe\" -c \"from app.routes import auth, profile; print\\(''auth routes:'', [r.path for r in auth.router.routes]\\); print\\(''profile routes:'', [r.path for r in profile.router.routes]\\)\")",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(wmic process where:*)",
+      "Bash(\"c:\\\\Users\\\\shadi\\\\Documents\\\\Development\\\\AntiGravity\\\\Saas Project\\\\backend\\\\.venv\\\\Scripts\\\\python.exe\" -c \"from app.main import app; print\\(''Routes:'', [r.path for r in app.routes]\\)\")",
+      "Skill(gsd:progress)",
+      "Skill(gsd:progress:*)",
+      "Bash(npx tsc:*)",
+      "Bash(dir:*)",
+      "Skill(gsd:plan-phase)",
+      "Skill(gsd:plan-phase:*)"
     ]
   }
 }
