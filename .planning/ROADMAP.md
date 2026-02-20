@@ -166,17 +166,19 @@ Plans:
 
 **Dependencies:** Phase 3 (scan data required)
 
-**Estimated Plans:** 8-10
-- OpenAI API integration
-- Prompt engineering for viral analysis
-- Hook analysis (video thumbnails + captions)
-- Emotional trigger taxonomy
-- Engagement velocity calculations
-- Hashtag performance metrics
-- Comment sentiment analysis
-- Analysis caching layer
-- Structured output validation
-- Cost monitoring
+**Plans:** 10 plans in 6 waves
+
+Plans:
+- [ ] 04-01-PLAN.md — OpenAI GPT-4o integration with Pydantic structured output
+- [ ] 04-02-PLAN.md — Redis caching layer with 7-day TTL for cost optimization
+- [ ] 04-03-PLAN.md — Celery background analysis tasks with cache integration
+- [ ] 04-04-PLAN.md — Algorithm factor calculations (velocity, save/share ratio, hashtag, posting time)
+- [ ] 04-05-PLAN.md — VADER sentiment analysis service for social media comments
+- [ ] 04-06-PLAN.md — Scan-to-analysis workflow integration with pre-calculated factors
+- [ ] 04-07-PLAN.md — Analysis model enhancement and database migration 004
+- [ ] 04-08-PLAN.md — Analysis API endpoints and frontend TypeScript client
+- [ ] 04-09-PLAN.md — Frontend UI components with color-coded algorithm factor badges
+- [ ] 04-10-PLAN.md — Human verification checkpoint for Phase 4 end-to-end workflow
 
 ---
 
