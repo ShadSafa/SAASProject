@@ -82,6 +82,7 @@ async def _run_scan(scan_id: int) -> None:
             top_posts = posts_data[:20]
 
             # Store ViralPost records
+            viral_posts = []
             for post in top_posts:
                 # Cache thumbnail to S3
                 s3_url = await cache_thumbnail_to_s3(post.get("thumbnail"))
@@ -105,12 +106,21 @@ async def _run_scan(scan_id: int) -> None:
                     viral_score=post["viral_score"],
                 )
                 db.add(viral_post)
+                viral_posts.append(viral_post)
 
             # Mark completed
             scan.status = "completed"
             scan.completed_at = datetime.utcnow()
             await db.commit()
             logger.info(f"Scan {scan_id} completed with {len(top_posts)} posts")
+
+            # Dispatch analysis as background task (lazy import to avoid circular)
+            # After commit, ViralPost objects have their IDs
+            if viral_posts:
+                viral_post_ids = [post.id for post in viral_posts]
+                from app.tasks.analysis_jobs import analyze_posts_batch
+                analyze_posts_batch.delay(scan_id, viral_post_ids)
+                logger.info(f"Scan {scan_id} analysis dispatched for {len(viral_post_ids)} posts")
 
         except Exception as exc:
             scan.status = "failed"
