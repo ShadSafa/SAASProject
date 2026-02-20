@@ -19,7 +19,12 @@ export default function DashboardPage() {
 
       <ExpiryBanner expiredAccounts={expiredAccounts} />
 
-      {accounts.length === 0 ? (
+      {/* Show scan history regardless of account connection (dev mode allows scanning without accounts) */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
+        <ScanHistory />
+      </div>
+
+      {accounts.length === 0 && (
         /* Empty state: no accounts connected */
         <div className="border-2 border-dashed border-gray-200 rounded-xl p-12 text-center">
           <div className="max-w-sm mx-auto">
@@ -38,11 +43,6 @@ export default function DashboardPage() {
               Connect Instagram Account
             </a>
           </div>
-        </div>
-      ) : (
-        /* Has accounts: show scan history */
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <ScanHistory />
         </div>
       )}
     </div>
