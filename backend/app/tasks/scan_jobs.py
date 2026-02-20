@@ -124,6 +124,11 @@ async def _fetch_posts(scan) -> List[Dict[str, Any]]:
     from app.integrations.apify import ApifyClient
     from app.integrations.phantombuster import PhantomBusterClient
 
+    # Development mode: return mock data for instant testing
+    if settings.ENVIRONMENT == "development":
+        logger.info(f"Development mode: returning mock data for scan {scan.id}")
+        return _get_mock_posts()
+
     if scan.scan_type == "url":
         # Single URL analysis
         apify = ApifyClient()
@@ -164,3 +169,89 @@ async def _mark_scan_failed(scan_id: int, error: str) -> None:
             scan.status = "failed"
             scan.error_message = error[:500]
             await db.commit()
+
+
+def _get_mock_posts() -> List[Dict[str, Any]]:
+    """Return mock Instagram posts for development/testing."""
+    return [
+        {
+            "post_id": "18456789012345678",
+            "url": "https://instagram.com/p/ABC123/",
+            "type": "Photo",
+            "caption": "Beautiful sunset at the beach 🌅 #travel #sunset #nature",
+            "hashtags": '["travel", "sunset", "nature", "beautiful"]',
+            "thumbnail": "https://via.placeholder.com/400?text=Mock+Post+1",
+            "creator_username": "travel_blogger",
+            "creator_followers": 125000,
+            "likes": 8500,
+            "comments": 450,
+            "saves": 1200,
+            "shares": 320,
+            "age_hours": 2.5,
+            "engagement_count": 10470,
+        },
+        {
+            "post_id": "18456789012345679",
+            "url": "https://instagram.com/p/ABC124/",
+            "type": "Carousel",
+            "caption": "My morning routine 🌍 #lifestyle #wellness #morningroutine",
+            "hashtags": '["lifestyle", "wellness", "morningroutine"]',
+            "thumbnail": "https://via.placeholder.com/400?text=Mock+Post+2",
+            "creator_username": "wellness_coach",
+            "creator_followers": 98000,
+            "likes": 6200,
+            "comments": 380,
+            "saves": 950,
+            "shares": 250,
+            "age_hours": 3.0,
+            "engagement_count": 7782,
+        },
+        {
+            "post_id": "18456789012345680",
+            "url": "https://instagram.com/p/ABC125/",
+            "type": "Video",
+            "caption": "New recipe: Chocolate lava cake 🍫 #foodblogger #dessert #recipe",
+            "hashtags": '["foodblogger", "dessert", "recipe", "homemade"]',
+            "thumbnail": "https://via.placeholder.com/400?text=Mock+Post+3",
+            "creator_username": "foodie_creator",
+            "creator_followers": 156000,
+            "likes": 12300,
+            "comments": 680,
+            "saves": 2100,
+            "shares": 450,
+            "age_hours": 1.5,
+            "engagement_count": 15530,
+        },
+        {
+            "post_id": "18456789012345681",
+            "url": "https://instagram.com/p/ABC126/",
+            "type": "Photo",
+            "caption": "Spring collection now available 🌸 #fashion #shopping #style",
+            "hashtags": '["fashion", "shopping", "style", "spring"]',
+            "thumbnail": "https://via.placeholder.com/400?text=Mock+Post+4",
+            "creator_username": "fashion_house",
+            "creator_followers": 234000,
+            "likes": 5600,
+            "comments": 290,
+            "saves": 800,
+            "shares": 180,
+            "age_hours": 4.5,
+            "engagement_count": 6970,
+        },
+        {
+            "post_id": "18456789012345682",
+            "url": "https://instagram.com/p/ABC127/",
+            "type": "Reel",
+            "caption": "Fitness motivation 💪 #gym #fitness #motivation #transformation",
+            "hashtags": '["gym", "fitness", "motivation", "transformation"]',
+            "thumbnail": "https://via.placeholder.com/400?text=Mock+Post+5",
+            "creator_username": "fitness_trainer",
+            "creator_followers": 87000,
+            "likes": 9100,
+            "comments": 520,
+            "saves": 1400,
+            "shares": 380,
+            "age_hours": 2.0,
+            "engagement_count": 11400,
+        },
+    ]
