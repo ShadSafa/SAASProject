@@ -1,4 +1,6 @@
 import type { ViralPost } from '../types/scan';
+import { useAnalysis } from '../hooks/useAnalysis';
+import { AnalysisPanel } from './AnalysisPanel';
 
 interface ViralPostCardProps {
   post: ViralPost;
@@ -40,6 +42,9 @@ export default function ViralPostCard({ post, rank }: ViralPostCardProps) {
 
   // Use S3 thumbnail (persistent); fall back to Instagram thumbnail URL
   const thumbSrc = post.thumbnail_url;
+
+  // Fetch analysis for this post
+  const { analysis, loading, notAvailable } = useAnalysis(post.id);
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow group">
@@ -121,6 +126,23 @@ export default function ViralPostCard({ post, rank }: ViralPostCardProps) {
             {post.viral_score !== null ? `${Math.round(post.viral_score)}/100` : '\u2014'}
           </span>
         </div>
+
+        {/* Analysis loading state */}
+        {loading && (
+          <div className="mt-4 pt-4 border-t border-gray-200 text-center">
+            <p className="text-sm text-gray-500">Loading analysis...</p>
+          </div>
+        )}
+
+        {/* Analysis results */}
+        {analysis && <AnalysisPanel analysis={analysis} />}
+
+        {/* Analysis not yet available */}
+        {notAvailable && (
+          <div className="mt-4 pt-4 border-t border-gray-200">
+            <p className="text-sm text-gray-500 italic">Analysis in progress...</p>
+          </div>
+        )}
 
         {/* View post link */}
         {post.instagram_url && (
