@@ -43,6 +43,9 @@ class Settings(BaseSettings):
     PHANTOMBUSTER_API_KEY: str = ""
     PHANTOMBUSTER_AGENT_ID: str = ""
 
+    # OpenAI API (required for viral analysis)
+    OPENAI_API_KEY: str = ""
+
     # Environment
     ENVIRONMENT: str = "development"
 
