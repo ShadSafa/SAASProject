@@ -15,6 +15,7 @@ from app.crud.instagram import (
     get_instagram_account_by_instagram_id,
     delete_instagram_account,
 )
+from app.crud.user import get_user_by_id
 from app.services.instagram import (
     build_authorize_url,
     exchange_code_for_token,
@@ -44,7 +45,6 @@ async def callback(
     state: str = None,
     error: str = None,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_active_user),
 ):
     """Handle OAuth callback from Instagram. INSTA-01, INSTA-02."""
     frontend_url = settings.FRONTEND_URL
@@ -57,8 +57,11 @@ async def callback(
     if not state or state not in _oauth_states:
         return RedirectResponse(url=f"{frontend_url}/settings/integrations?error=invalid_state")
 
-    expected_user_id = _oauth_states.pop(state)
-    if expected_user_id != current_user.id:
+    user_id = _oauth_states.pop(state)
+
+    # Fetch user from database
+    user = await get_user_by_id(db, user_id)
+    if not user:
         return RedirectResponse(url=f"{frontend_url}/settings/integrations?error=invalid_state")
 
     # Exchange code for long-lived token
@@ -79,12 +82,12 @@ async def callback(
 
     # Check if this Instagram account is already linked to another user (one-to-one constraint)
     existing = await get_instagram_account_by_instagram_id(db, instagram_user_id)
-    if existing and existing.user_id != current_user.id:
+    if existing and existing.user_id != user.id:
         return RedirectResponse(url=f"{frontend_url}/settings/integrations?error=already_connected")
 
     # Enforce tier-based account limit: free tier = 1 account
     # Phase 10 will add subscription lookup; for now enforce free tier limit
-    user_accounts = await get_user_instagram_accounts(db, current_user.id)
+    user_accounts = await get_user_instagram_accounts(db, user.id)
     if existing is None and len(user_accounts) >= 1:
         # TODO Phase 10: Check subscription tier for higher limits
         return RedirectResponse(url=f"{frontend_url}/settings/integrations?error=account_limit")
@@ -95,7 +98,7 @@ async def callback(
 
     account = await create_instagram_account(
         db=db,
-        user_id=current_user.id,
+        user_id=user.id,
         instagram_user_id=instagram_user_id,
         username=profile.get("username", ""),
         access_token_encrypted=token_encrypted,
