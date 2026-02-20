@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routes import auth, profile, instagram, scans
+from app.routes import auth, profile, instagram, scans, analysis
 from app.tasks.token_refresh import start_scheduler, stop_scheduler
 
 
@@ -53,3 +53,4 @@ app.include_router(auth.router)
 app.include_router(profile.router)
 app.include_router(instagram.router)
 app.include_router(scans.router)
+app.include_router(analysis.router)
