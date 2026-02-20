@@ -49,6 +49,9 @@ def analyze_viral_post(viral_post: ViralPost) -> ViralAnalysisResult:
     Uses OpenAI's GPT-4o model with structured output to generate reliable,
     validated JSON responses matching the ViralAnalysisResult schema.
 
+    Incorporates pre-calculated algorithm factors (engagement velocity, save/share ratio,
+    hashtag performance, posting time) in the prompt for AI refinement and validation.
+
     Args:
         viral_post: ViralPost ORM object with engagement metrics, caption, etc.
 
@@ -66,32 +69,45 @@ def analyze_viral_post(viral_post: ViralPost) -> ViralAnalysisResult:
 
     client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
-    # Build analysis prompt with all available post data
-    prompt = f"""Analyze this viral Instagram post and score 7 algorithm factors (0-100 each).
+    # Pre-calculate algorithm factors (instant, no API call needed)
+    from app.services.algorithm_factors import (
+        calculate_engagement_velocity_score,
+        calculate_save_share_ratio_score,
+        calculate_hashtag_performance_score,
+        calculate_posting_time_score
+    )
 
-POST DETAILS:
+    velocity_score = calculate_engagement_velocity_score(viral_post)
+    save_share_score = calculate_save_share_ratio_score(viral_post)
+    hashtag_score = calculate_hashtag_performance_score(viral_post.hashtags)
+    posting_time_score = calculate_posting_time_score(viral_post.created_at, viral_post.creator_follower_count)
+
+    # Build analysis prompt with pre-calculated factors
+    prompt = f"""Analyze this viral Instagram post and provide AI-enhanced analysis.
+
+POST DATA:
 - Caption: {viral_post.caption or "(No caption)"}
 - Hashtags: {viral_post.hashtags or "(No hashtags)"}
 - Post Type: {viral_post.post_type}
 - Creator: @{viral_post.creator_username} ({viral_post.creator_follower_count:,} followers)
-- Age: {viral_post.post_age_hours:.1f} hours old
-- Engagement:
-  - Likes: {viral_post.likes_count:,}
-  - Comments: {viral_post.comments_count:,}
-  - Saves: {viral_post.saves_count:,}
-  - Shares: {viral_post.shares_count:,}
+- Engagement: {viral_post.likes_count:,} likes, {viral_post.comments_count:,} comments, {viral_post.saves_count:,} saves, {viral_post.shares_count:,} shares
+- Post Age: {viral_post.post_age_hours:.1f} hours
 
-SCORING GUIDANCE:
-1. Posting Time (0-100): Is posting time optimal for audience timezone and engagement window?
-2. Hook Strength (0-100): How strong is the hook in first 3 seconds or caption opening?
-3. Emotional Trigger (joy|awe|anger|surprise|sadness|fear): What primary emotion does it evoke?
-4. Engagement Velocity (0-100): How quickly did it gain engagement? (rapid = high score)
-5. Save/Share Ratio (0-100): High saves relative to likes = high value = high score (0-100)
-6. Hashtag Performance (0-100): How relevant and trending are the hashtags? (0-100)
-7. Audience Retention (0-100): Does content hold attention throughout? (0-100)
+PRE-CALCULATED ALGORITHM FACTORS (validate/refine if needed):
+- Engagement Velocity: {velocity_score:.1f}/100
+- Save/Share Ratio: {save_share_score:.1f}/100
+- Hashtag Performance: {hashtag_score:.1f}/100
+- Posting Time: {posting_time_score:.1f}/100
 
-Provide a 2-3 sentence summary of why this post went viral, then score each factor.
-Also provide a confidence score (0.0-1.0) for how confident you are in this analysis."""
+YOUR ANALYSIS TASKS:
+1. Why Viral Summary: 2-3 sentences explaining what made this post go viral
+2. Validate/refine the 4 pre-calculated scores above (adjust if mathematical calculation missed context)
+3. Hook Strength (0-100): Rate the opening (first line of caption for photos, first 3 seconds for videos)
+4. Emotional Trigger: Which primary emotion? (joy|awe|anger|surprise|sadness|fear)
+5. Audience Retention (0-100): How well does content hold attention throughout?
+6. Confidence Score (0-1): How confident are you in this analysis?
+
+Provide structured analysis following the ViralAnalysisResult schema."""
 
     try:
         response = client.beta.chat.completions.parse(
