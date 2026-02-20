@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-02-21
 **Current Phase:** 04 - AI Analysis — Algorithm Factors (EXECUTION IN PROGRESS) ⚡
-**Current Plan:** 04-04 Algorithm Factor Calculations COMPLETE ✅
+**Current Plan:** 04-06 Scan-to-Analysis Integration COMPLETE ✅
 **Milestone:** v1.0
 
 ---
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Phase 04 Progress:**
 - Plans: 10 total
-- Completed: 6 (04-01, 04-02, 04-03, 04-04, 04-05, 04-07) ✅
-- Remaining: 4
+- Completed: 7 (04-01, 04-02, 04-03, 04-04, 04-05, 04-06, 04-07) ✅
+- Remaining: 3
 
-Progress: [######----] 60% — Phase 4 execution in progress
+Progress: [#######---] 70% — Phase 4 execution in progress
 
 **Requirements:**
 - Total v1: 79
@@ -51,10 +51,10 @@ Progress: [######----] 60% — Phase 4 execution in progress
 - ✓ Plan 04-03: Celery Background Tasks for AI Analysis (2026-02-21)
 - ✓ Plan 04-04: Algorithm Factor Calculations (2026-02-21)
 - ✓ Plan 04-05: VADER Sentiment Analysis (2026-02-21)
+- ✓ Plan 04-06: Scan-to-Analysis Integration (2026-02-21)
 - ✓ Plan 04-07: Analysis Model & Migration 004 (2026-02-21)
 
 **Remaining Plans:**
-- Plan 04-06: OpenAI Analysis Integration
 - Plan 04-08 to 04-10: Cost Monitoring & Future phases
 
 **Previous Phase 03 Plans (COMPLETE):**
@@ -176,6 +176,9 @@ Progress: [######----] 60% — Phase 4 execution in progress
 | 2026-02-19 | ScanPage hides ScanForm during active scan | Prevents duplicate scan triggers while a scan is in progress (isInProgress = pending or running) | Clean UX: user can't accidentally start two scans |
 | 2026-02-19 | ViralPostCard onError hides failed img elements | Instagram CDN URLs expire ~1hr; graceful fallback to bg-gray-100 placeholder when src fails | Robust thumbnail display without breaking the card layout |
 | 2026-02-19 | /scan route added via Rule 2 auto-fix | ScanPage was unreachable without a registered route; added /scan with ProtectedRoute + Scan nav link | Essential for page accessibility; follows existing routing pattern |
+| 2026-02-21 | Fire-and-forget task dispatch for analysis | Use Celery .delay() for non-blocking scan completion; analysis runs in background | Scan returns in <1s, analysis enriches posts over 10-30s; improves UX |
+| 2026-02-21 | Pre-calculated factors in OpenAI prompt | Include 4 algorithm scores (velocity, save/share, hashtag, posting time) in prompt as context | Reduces token usage ~10-15%, AI validates/refines scores if context missed |
+| 2026-02-21 | Lazy import inside _run_scan function | Import analyze_posts_batch only when dispatching (after posts saved) | Prevents circular import: scan_jobs → analysis_jobs → openai_service |
 
 ---
 
@@ -243,6 +246,7 @@ Progress: [######----] 60% — Phase 4 execution in progress
 | 04-03 | 2 min | 2 | 2 | 2 | 2026-02-21 |
 | 04-04 | 5.5 min | 2 | 3 | 2 | 2026-02-21 |
 | 04-05 | 8 min | 2 | 3 | 2 | 2026-02-21 |
+| 04-06 | 12 min | 3 | 3 | 4 | 2026-02-21 |
 | 04-07 | 5 min | 2 | 2 | 2 | 2026-02-21 |
 
 ---
@@ -250,34 +254,25 @@ Progress: [######----] 60% — Phase 4 execution in progress
 ## Last Session
 
 **Date:** 2026-02-21
-**Completed:** Phase 04 Plans 04-01, 04-02, 04-03, 04-04, 04-05, 04-07 ✅
-**Status:** Phase 04 execution in progress:
+**Completed:** Phase 04 Plans 04-01, 04-02, 04-03, 04-04, 04-05, 04-06, 04-07 ✅
+**Status:** Phase 04 execution at 70%:
   - ✅ Plan 04-01: OpenAI SDK + API key configuration
   - ✅ Plan 04-02: Redis caching layer with 7-day TTL
-    - Redis client initialized from CELERY_BROKER_URL
-    - Cache service with cache_analysis, get_cached_analysis, clear_analysis_cache functions
-    - 12 comprehensive test cases with fakeredis (all passing)
   - ✅ Plan 04-03: Celery background tasks for AI analysis
-    - analyze_posts_batch task: cache-first strategy, per-post error handling
-    - 9 comprehensive test cases (all passing)
-    - Cost optimization: cache hits avoid expensive OpenAI calls
-    - Expected cost reduction: ~85% on repeat analyses (~$20/day → ~$3/day)
+  - ✅ Plan 04-04: Algorithm Factor Calculations (4 pure-Python functions)
   - ✅ Plan 04-05: VADER Sentiment Analysis Service
-    - VADER-optimized sentiment analysis for social media comments
-    - 3 exported functions: analyze_comment_sentiment, categorize_sentiment, analyze_comment_batch
-    - 33 comprehensive test cases covering positive/negative/neutral, emojis, slang, edge cases
-    - All tests passing - ready for comment analysis pipeline integration
+  - ✅ Plan 04-06: Scan-to-Analysis Integration
+    - analyze_posts_batch dispatched automatically after scan completes
+    - Non-blocking pattern: scan returns immediately, analysis enriches in background
+    - Pre-calculated algorithm factors (velocity, save/share ratio, hashtag, posting time) included in OpenAI prompt
+    - 14 integration tests + 28 total tests all passing
+    - Lazy import prevents circular dependencies
+    - Empty scans skip analysis (cost optimization)
   - ✅ Plan 04-07: Analysis Model & Migration 004
-    - Updated Analysis ORM model with 7 algorithm factor score fields
-    - hook_strength_score, engagement_velocity_score, save_share_ratio_score (renamed for clarity)
-    - Added audience_retention_score, hashtag_performance_score, confidence_score
-    - Alembic migration 004 created and applied: renames + type conversions (String→Float)
-    - All 15 columns verified, foreign key to viral_posts preserved
-    - Ready for OpenAI analysis results storage (Plan 04-06)
 
-**Ready for:** Phase 04 Plan 04-06 (OpenAI Analysis Integration)
+**Ready for:** Phase 04 Plans 04-08, 04-09, 04-10 (Cost monitoring, comment analysis, advanced features)
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-20T23:00:00Z*
+*Last updated: 2026-02-21T23:15:00Z*
