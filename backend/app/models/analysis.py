@@ -12,16 +12,29 @@ class Analysis(Base):
 
     id = Column(Integer, primary_key=True)
     viral_post_id = Column(Integer, ForeignKey("viral_posts.id", ondelete="CASCADE"), unique=True, nullable=False)
-    why_viral_summary = Column(Text)
-    hook_strength = Column(String)
-    emotional_trigger = Column(String)
-    posting_time_score = Column(Float)
-    engagement_velocity = Column(Float)
-    save_share_ratio = Column(Float)
-    hashtag_performance = Column(JSON)
-    audience_demographics = Column(JSON)
-    content_category = Column(String)
-    niche = Column(String)
+
+    # AI-generated summary
+    why_viral_summary = Column(Text, nullable=True)
+
+    # Algorithm factors (0-100 scores)
+    posting_time_score = Column(Float, nullable=True)
+    hook_strength_score = Column(Float, nullable=True)
+    engagement_velocity_score = Column(Float, nullable=True)
+    save_share_ratio_score = Column(Float, nullable=True)
+    hashtag_performance_score = Column(Float, nullable=True)
+    audience_retention_score = Column(Float, nullable=True)
+
+    # Qualitative factors
+    emotional_trigger = Column(String, nullable=True)  # joy|awe|anger|surprise|sadness|fear
+
+    # AI confidence
+    confidence_score = Column(Float, nullable=True)  # 0.0-1.0
+
+    # Phase 5 fields (placeholders for now)
+    audience_demographics = Column(JSON, nullable=True)
+    content_category = Column(String, nullable=True)
+    niche = Column(String, nullable=True)
+
     created_at = Column(DateTime, default=datetime.utcnow)
 
     # Relationships
