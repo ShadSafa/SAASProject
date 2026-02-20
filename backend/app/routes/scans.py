@@ -91,8 +91,9 @@ async def trigger_scan(
             detail="Connect an Instagram account first to run a scan.",
         )
 
-    # Check rate limit
-    await _check_scan_limit(current_user, db)
+    # Check rate limit (skip in development mode for checkpoint testing)
+    if settings.ENVIRONMENT == "production":
+        await _check_scan_limit(current_user, db)
 
     # Create scan record
     scan = Scan(
@@ -105,11 +106,19 @@ async def trigger_scan(
     await db.commit()
     await db.refresh(scan)
 
-    # Dispatch Celery task (non-blocking)
-    from app.tasks.scan_jobs import execute_scan
-    execute_scan.delay(scan.id)
-
-    logger.info(f"Scan {scan.id} dispatched for user {current_user.id} (time_range={request.time_range})")
+    # Development mode: execute synchronously (no Redis/Celery required)
+    if settings.ENVIRONMENT == "development":
+        from app.tasks.scan_jobs import _run_scan
+        try:
+            await _run_scan(scan.id)
+            logger.info(f"Scan {scan.id} completed synchronously (dev mode)")
+        except Exception as e:
+            logger.error(f"Scan {scan.id} failed: {e}", exc_info=True)
+    else:
+        # Production: dispatch Celery task (non-blocking)
+        from app.tasks.scan_jobs import execute_scan
+        execute_scan.delay(scan.id)
+        logger.info(f"Scan {scan.id} dispatched for user {current_user.id} (time_range={request.time_range})")
 
     return ScanTriggerResponse(
         scan_id=scan.id,
@@ -137,13 +146,15 @@ async def analyze_url(
             detail="Invalid Instagram URL. Expected format: https://www.instagram.com/p/SHORTCODE/ or /reel/SHORTCODE/",
         )
 
-    if not current_user.instagram_accounts:
+    if not current_user.instagram_accounts and settings.ENVIRONMENT == "production":
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Connect an Instagram account first to analyze posts.",
         )
 
-    await _check_scan_limit(current_user, db)
+    # Check rate limit (skip in development mode for checkpoint testing)
+    if settings.ENVIRONMENT == "production":
+        await _check_scan_limit(current_user, db)
 
     scan = Scan(
         user_id=current_user.id,
@@ -155,8 +166,18 @@ async def analyze_url(
     await db.commit()
     await db.refresh(scan)
 
-    from app.tasks.scan_jobs import execute_scan
-    execute_scan.delay(scan.id)
+    # Development mode: execute synchronously (no Redis/Celery required)
+    if settings.ENVIRONMENT == "development":
+        from app.tasks.scan_jobs import _run_scan
+        try:
+            await _run_scan(scan.id)
+            logger.info(f"Scan {scan.id} completed synchronously (dev mode)")
+        except Exception as e:
+            logger.error(f"Scan {scan.id} failed: {e}", exc_info=True)
+    else:
+        # Production: dispatch Celery task (non-blocking)
+        from app.tasks.scan_jobs import execute_scan
+        execute_scan.delay(scan.id)
 
     return ScanTriggerResponse(
         scan_id=scan.id,

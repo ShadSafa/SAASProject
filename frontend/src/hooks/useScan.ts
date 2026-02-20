@@ -4,7 +4,7 @@ import { triggerScan, analyzeUrl, getScanStatus } from '../api/scans';
 import type { TimeRange } from '../types/scan';
 
 const POLL_INTERVAL_MS = 2000;  // Poll every 2 seconds
-const POLL_TIMEOUT_MS = 5 * 60 * 1000;  // Stop polling after 5 minutes
+const POLL_TIMEOUT_MS = 15 * 60 * 1000;  // Stop polling after 15 minutes
 
 export function useScan() {
   const {
@@ -43,7 +43,7 @@ export function useScan() {
       if (pollStartTimeRef.current && Date.now() - pollStartTimeRef.current > POLL_TIMEOUT_MS) {
         stopPolling();
         setStatus('failed');
-        setError('Scan timed out after 5 minutes. Please try again.');
+        setError('Scan timed out after 15 minutes. Please try again.');
         setIsScanning(false);
         return;
       }
