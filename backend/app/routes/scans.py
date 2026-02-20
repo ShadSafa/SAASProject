@@ -20,6 +20,7 @@ from app.schemas.scan import (
     EngagementResponse,
     ScanHistoryItem,
 )
+from app.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -82,8 +83,9 @@ async def trigger_scan(
     Trigger a new time-range viral content scan (SCAN-01, SCAN-02, SCAN-03).
     Returns immediately with scan_id; use GET /scans/status/{scan_id} to poll.
     """
-    # Require connected Instagram account
-    if not current_user.instagram_accounts:
+    # Development bypass: allow scans without Instagram account in dev mode
+    # Production (Phase 4+) will require proper Instagram OAuth connection
+    if not current_user.instagram_accounts and settings.ENVIRONMENT == "production":
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Connect an Instagram account first to run a scan.",
