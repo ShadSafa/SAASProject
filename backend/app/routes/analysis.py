@@ -41,4 +41,19 @@ async def get_analysis(
     if not analysis:
         raise HTTPException(status_code=404, detail="Analysis not yet available")
 
-    return analysis
+    # Convert datetime to ISO string for JSON serialization
+    analysis_dict = {
+        "id": analysis.id,
+        "viral_post_id": analysis.viral_post_id,
+        "why_viral_summary": analysis.why_viral_summary,
+        "posting_time_score": analysis.posting_time_score,
+        "hook_strength_score": analysis.hook_strength_score,
+        "emotional_trigger": analysis.emotional_trigger,
+        "engagement_velocity_score": analysis.engagement_velocity_score,
+        "save_share_ratio_score": analysis.save_share_ratio_score,
+        "hashtag_performance_score": analysis.hashtag_performance_score,
+        "audience_retention_score": analysis.audience_retention_score,
+        "confidence_score": analysis.confidence_score,
+        "created_at": analysis.created_at.isoformat() if analysis.created_at else None,
+    }
+    return analysis_dict
