@@ -120,6 +120,19 @@ Progress: [#####-----] 62.5% — Phase 5 IN PROGRESS
   - Status: AI analysis workflow fully functional end-to-end
 
 **Recently Completed:**
+- ✓ Plan 05-05: Niche Detection Service (2026-02-21)
+  - Built AI-powered niche detection using OpenAI GPT-4o with structured output
+  - Created 30-category niche taxonomy (Fitness, Beauty, Tech, Finance, etc.)
+  - Implemented detect_niche() async function with NicheDetectionResult Pydantic model
+  - Returns primary/secondary niche, confidence (0.0-1.0), reasoning, and keywords
+  - Lazy OpenAI client initialization to avoid import-time errors
+  - Graceful error handling with fallback to "Other" niche
+  - Creator size classification helper for better niche context
+  - Created 6 comprehensive tests (100% passing, all mocked, zero API costs)
+  - 3 minutes execution time, 3 commits
+- ✓ Plan 05-04: Content Category Classification (2026-02-21)
+  - Analysis enrichment service integrating content categorization
+  - 5 minutes execution time, 4 commits
 - ✓ Plan 05-03: Content Categorization Service (2026-02-21)
   - Built content categorization service with Instagram native types and extended formats
   - Created InstagramNativeType enum (6 types: Reel, Story, Post, Guide, Video, Carousel)
@@ -167,11 +180,11 @@ Progress: [#####-----] 62.5% — Phase 5 IN PROGRESS
 ## Next Steps
 
 **Immediate:**
-1. Execute Plan 05-02: Audience Demographics Service (calculate engagement rate, infer demographics)
-2. Execute Plan 05-03: Audience API & Client (expose audience data to frontend)
+1. Execute Plan 05-06: Advanced Insights API (integrate niche detection into enrichment)
+2. Execute Plan 05-07: Audience Demographics UI (display detected niche in viral post cards)
 
 **Upcoming:**
-- Continue Phase 05 execution (7 plans remaining)
+- Complete Phase 05 execution (3 plans remaining)
 - Phase 05 verification checkpoint upon completion of all 8 plans
 
 ---
@@ -237,6 +250,7 @@ Progress: [#####-----] 62.5% — Phase 5 IN PROGRESS
 | 2026-02-21 | JSON type for audience_demographics and audience_interests | Structured nested data (age ranges, gender, countries, topics) doesn't fit relational columns; JSON provides flexibility | Enables rich audience insights without complex table joins |
 | 2026-02-21 | SQLite in-memory fixtures for model tests | Fast, isolated testing without PostgreSQL dependency; conftest.py provides db_session fixture | Enables rapid test execution in CI/CD without database setup |
 | 2026-02-21 | Keyword-based categorization over ML for v1.0 | Simple keyword matching for content categorization instead of ML; fast, deterministic, no API costs, no training data | Sufficient for v1.0; upgrade path to GPT-4o or custom model documented for future enhancement |
+| 2026-02-21 | Lazy OpenAI client initialization in niche detection | Create client only when detect_niche() called, not at module import time | Prevents authentication errors during imports and test setup; enables test mocking without OPENAI_API_KEY |
 
 ---
 
@@ -319,18 +333,19 @@ Progress: [#####-----] 62.5% — Phase 5 IN PROGRESS
 ## Last Session
 
 **Date:** 2026-02-21
-**Completed:** Phase 05 Plan 05-04 ✅
-**Status:** Phase 05 content enrichment integration complete:
-  - ✅ Plan 05-04: Content Category Classification
-    - Created analysis_enrichment_service.py to orchestrate engagement + categorization
-    - Integrated enrichment into analysis_jobs.py workflow (runs after OpenAI analysis)
-    - All analyses now automatically enriched with engagement rate and content categorization
-    - Created 5 comprehensive tests for enrichment integration (all passing)
-    - Extended TypeScript Analysis interface with Phase 05 enrichment fields
-    - Zero breaking changes to Phase 04 analysis workflow
-    - 5 minutes execution time, 4 commits
+**Completed:** Phase 05 Plan 05-05 ✅
+**Status:** Phase 05 niche detection complete:
+  - ✅ Plan 05-05: Niche Detection Service
+    - Built AI-powered niche detection using OpenAI GPT-4o with structured output
+    - Created 30-category niche taxonomy (Fitness, Beauty, Tech, Finance, etc.)
+    - Implemented detect_niche() async function with NicheDetectionResult Pydantic model
+    - Returns primary/secondary niche, confidence (0.0-1.0), reasoning, and keywords
+    - Lazy OpenAI client initialization to avoid import-time errors
+    - Graceful error handling with fallback to "Other" niche
+    - Created 6 comprehensive tests (100% passing, all mocked, zero API costs)
+    - 3 minutes execution time, 3 commits
 
-**Ready for:** Phase 05 Plan 05-06 (Advanced Insights API - expose enriched data to frontend)
+**Ready for:** Phase 05 Plan 05-06 (Advanced Insights API - integrate niche detection into enrichment flow)
 
 ---
 
