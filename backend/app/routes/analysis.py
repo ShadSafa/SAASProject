@@ -55,6 +55,8 @@ async def get_analysis(
         response = {
             "id": analysis.id,
             "viral_post_id": analysis.viral_post_id,
+
+            # Phase 04: OpenAI Analysis
             "why_viral_summary": analysis.why_viral_summary,
             "posting_time_score": analysis.posting_time_score,
             "hook_strength_score": analysis.hook_strength_score,
@@ -64,6 +66,15 @@ async def get_analysis(
             "hashtag_performance_score": hashtag_score,
             "audience_retention_score": analysis.audience_retention_score,
             "confidence_score": analysis.confidence_score,
+
+            # Phase 05: Enriched Analysis Data
+            "engagement_rate": analysis.engagement_rate,
+            "content_category": analysis.content_category,
+            "niche": analysis.niche,
+            "user_niche_override": analysis.user_niche_override,
+            "audience_demographics": analysis.audience_demographics,
+            "audience_interests": analysis.audience_interests,
+
             "created_at": analysis.created_at.isoformat() if analysis.created_at else None,
         }
 
