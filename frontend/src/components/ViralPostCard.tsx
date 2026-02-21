@@ -134,7 +134,7 @@ export default function ViralPostCard({ post, rank }: ViralPostCardProps) {
         )}
 
         {/* Analysis results */}
-        {analysis && <AnalysisPanel analysis={analysis} />}
+        {analysis && <AnalysisPanel analysis={analysis} viralPost={post} />}
 
         {/* Analysis not yet available */}
         {notAvailable && (
