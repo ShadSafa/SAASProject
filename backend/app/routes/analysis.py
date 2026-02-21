@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Path
+from pydantic import BaseModel
 from sqlalchemy import select
+import logging
 
 from app.database import AsyncSessionLocal
 from app.models.analysis import Analysis
@@ -8,6 +10,11 @@ from app.models.user import User
 from app.dependencies import get_current_active_user
 
 router = APIRouter(prefix="/api/analysis", tags=["analysis"])
+logger = logging.getLogger(__name__)
+
+
+class NicheOverrideRequest(BaseModel):
+    niche_override: str | None = None
 
 
 @router.get("/{viral_post_id}")
@@ -61,3 +68,64 @@ async def get_analysis(
         }
 
     return response
+
+
+@router.patch("/{analysis_id}/niche-override")
+async def patch_analysis_niche_override(
+    analysis_id: int = Path(..., gt=0),
+    request: NicheOverrideRequest = None,
+    current_user: User = Depends(get_current_active_user)
+):
+    """
+    Save user niche override for an analysis record.
+
+    Args:
+        analysis_id: Analysis record ID
+        request: Request body with niche_override field (or None to clear override)
+
+    Returns:
+        Updated analysis record with user_niche_override saved
+
+    Raises:
+        HTTPException: 404 if analysis not found, 400 if invalid input
+    """
+    try:
+        async with AsyncSessionLocal() as db:
+            # Fetch analysis
+            result = await db.execute(
+                select(Analysis).where(Analysis.id == analysis_id)
+            )
+            analysis = result.scalar_one_or_none()
+
+            if not analysis:
+                raise HTTPException(status_code=404, detail=f"Analysis {analysis_id} not found")
+
+            # Get niche override from request
+            niche_override = request.niche_override if request else None
+
+            # Validate niche override if provided
+            if niche_override:
+                if len(niche_override.strip()) == 0:
+                    raise HTTPException(status_code=400, detail="Niche override cannot be empty")
+                if len(niche_override) > 255:
+                    raise HTTPException(status_code=400, detail="Niche override too long (max 255 chars)")
+
+            # Save override
+            analysis.user_niche_override = niche_override.strip() if niche_override else None
+            await db.commit()
+            await db.refresh(analysis)
+
+            logger.info(f"Niche override saved for analysis {analysis_id}: {niche_override}")
+
+            return {
+                "id": analysis.id,
+                "niche": analysis.niche,  # AI-detected niche
+                "user_niche_override": analysis.user_niche_override,  # User override
+                "effective_niche": analysis.user_niche_override or analysis.niche  # For UI display
+            }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error saving niche override for analysis {analysis_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to save niche override")
