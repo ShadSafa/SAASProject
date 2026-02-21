@@ -49,13 +49,13 @@ export default function ViralPostCard({ post, rank }: ViralPostCardProps) {
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow group">
       {/* Thumbnail */}
-      <div className="relative bg-gray-100">
+      <div className="relative bg-gray-100 h-48">
         {thumbSrc ? (
           <a href={post.instagram_url || '#'} target="_blank" rel="noopener noreferrer">
             <img
               src={thumbSrc}
               alt={`Post by @${post.creator_username || 'unknown'}`}
-              className="w-full h-48 object-cover group-hover:opacity-95 transition-opacity"
+              className="w-full h-full object-cover group-hover:opacity-95 transition-opacity absolute inset-0"
               loading="lazy"
               onError={(e) => {
                 // If thumbnail fails to load, show placeholder
@@ -64,19 +64,19 @@ export default function ViralPostCard({ post, rank }: ViralPostCardProps) {
             />
           </a>
         ) : (
-          <div className="w-full h-48 flex items-center justify-center">
+          <div className="w-full h-full flex items-center justify-center">
             <span className="text-gray-400 text-sm">No preview</span>
           </div>
         )}
 
         {/* Rank badge - positioned absolutely with high z-index to stay on top */}
-        <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded-full z-10 pointer-events-none">
+        <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded-full z-50">
           #{rank}
         </div>
 
         {/* Post type badge */}
         {post.post_type && (
-          <div className="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded-full capitalize z-10 pointer-events-none">
+          <div className="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded-full capitalize z-50">
             {post.post_type}
           </div>
         )}
