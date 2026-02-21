@@ -55,6 +55,10 @@ class Analysis(Base):
     content_category = Column(String, nullable=True)
     niche = Column(String, nullable=True)
 
+    # Phase 05-08: User niche override
+    user_niche_override = Column(String, nullable=True)
+    # When user provides override, store here. Overrides AI-detected niche field for display.
+
     created_at = Column(DateTime, default=datetime.utcnow)
 
     # Relationships
