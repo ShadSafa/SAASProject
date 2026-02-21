@@ -6,6 +6,7 @@ from app.models.viral_post import ViralPost
 from app.services.analysis_enrichment_service import (
     enrich_analysis_with_metrics,
     enrich_analysis_with_categorization,
+    enrich_analysis_with_niche,
     enrich_analysis_complete,
 )
 
@@ -133,3 +134,89 @@ async def test_enrichment_preserves_openai_fields(mock_viral_post, mock_analysis
     # Enrichment fields should be populated
     assert mock_analysis.engagement_rate is not None
     assert mock_analysis.content_category is not None
+
+
+@pytest.mark.asyncio
+async def test_enrich_analysis_with_niche(mock_viral_post, mock_analysis, mocker):
+    """Test enrichment adds AI-detected niche to analysis"""
+    from app.services.niche_detection_service import NicheDetectionResult
+
+    mock_viral_post.caption = "Amazing fitness workout routine"
+    mock_viral_post.hashtags = '["fitness", "gym", "workout"]'
+    mock_viral_post.post_type = "Reel"
+
+    # Mock niche detection
+    mock_niche = NicheDetectionResult(
+        primary_niche="Fitness & Wellness",
+        secondary_niche=None,
+        confidence=0.92,
+        reasoning="Post contains fitness hashtags and workout content",
+        keywords=["fitness", "gym", "workout"]
+    )
+
+    mocker.patch(
+        "app.services.niche_detection_service.detect_niche",
+        return_value=mock_niche
+    )
+
+    assert mock_analysis.niche is None
+
+    await enrich_analysis_with_niche(mock_analysis, mock_viral_post)
+
+    assert mock_analysis.niche == "Fitness & Wellness"
+    assert mock_analysis.audience_interests["niche"] == "Fitness & Wellness"
+    assert mock_analysis.audience_interests["niche_confidence"] == 0.92
+
+
+@pytest.mark.asyncio
+async def test_enrich_analysis_complete_with_niche(mock_viral_post, mock_analysis, mocker):
+    """Test full enrichment includes niche detection as final step"""
+    from app.services.niche_detection_service import NicheDetectionResult
+
+    mock_viral_post.creator_follower_count = 100000
+    mock_viral_post.likes_count = 500
+    mock_viral_post.comments_count = 200
+    mock_viral_post.saves_count = 100
+    mock_viral_post.shares_count = 50
+    mock_viral_post.post_type = "Reel"
+    mock_viral_post.caption = "Fashion styling tips"
+    mock_viral_post.hashtags = '["fashion", "style"]'
+
+    mock_niche = NicheDetectionResult(
+        primary_niche="Fashion & Styling",
+        secondary_niche=None,
+        confidence=0.88,
+        reasoning="Fashion-related hashtags and styling content",
+        keywords=["fashion", "style"]
+    )
+
+    mocker.patch(
+        "app.services.niche_detection_service.detect_niche",
+        return_value=mock_niche
+    )
+
+    await enrich_analysis_complete(mock_analysis, mock_viral_post)
+
+    # All enrichment steps should be completed
+    assert abs(mock_analysis.engagement_rate - 0.85) < 0.01  # 850/100000 * 100
+    assert mock_analysis.content_category == "Reel"
+    assert mock_analysis.niche == "Fashion & Styling"
+    assert "inferred_formats" in mock_analysis.audience_interests
+
+
+@pytest.mark.asyncio
+async def test_niche_enrichment_handles_api_failure(mock_viral_post, mock_analysis, mocker):
+    """Test niche enrichment falls back gracefully if API fails"""
+
+    # Mock niche detection to fail (returns fallback)
+    mocker.patch(
+        "app.services.niche_detection_service.detect_niche",
+        side_effect=Exception("API Error")
+    )
+
+    await enrich_analysis_with_niche(mock_analysis, mock_viral_post)
+
+    # Should not crash, should set niche to fallback
+    assert mock_analysis.niche == "Other"
+    # Analysis should still be usable
+    assert mock_analysis.viral_post_id is not None
