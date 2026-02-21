@@ -62,6 +62,7 @@ async def _run_analysis(scan_id: int, viral_post_ids: List[int]) -> Dict[str, in
     from app.database import AsyncSessionLocal
     from app.models.viral_post import ViralPost
     from app.models.analysis import Analysis
+    from app.services.analysis_enrichment_service import enrich_analysis_complete
 
     analyzed_count = 0
     cached_count = 0
@@ -107,7 +108,7 @@ async def _run_analysis(scan_id: int, viral_post_ids: List[int]) -> Dict[str, in
                 logger.info(f"Calling OpenAI for viral_post_id={post_id}")
                 openai_result = analyze_viral_post(viral_post)
 
-                # Store in DB
+                # Create Analysis record with OpenAI data
                 analysis = Analysis(
                     viral_post_id=post_id,
                     why_viral_summary=openai_result.why_viral_summary,
@@ -118,9 +119,14 @@ async def _run_analysis(scan_id: int, viral_post_ids: List[int]) -> Dict[str, in
                     save_share_ratio_score=openai_result.save_share_ratio_score,
                     hashtag_performance_score=openai_result.hashtag_performance,
                     audience_retention_score=openai_result.audience_retention,
-                    content_category=None,  # Not provided by analysis result
-                    niche=None,  # Not provided by analysis result
                 )
+
+                # Phase 05: Enrich analysis with engagement metrics and content categorization
+                await enrich_analysis_complete(analysis, viral_post)
+                # enrichment_service populates:
+                #   - engagement_rate (from engagement_service)
+                #   - content_category and audience_interests (from categorization_service)
+
                 db.add(analysis)
                 await db.flush()  # Flush each record to prevent asyncpg concurrent ops
 
@@ -137,11 +143,13 @@ async def _run_analysis(scan_id: int, viral_post_ids: List[int]) -> Dict[str, in
                     save_share_ratio=openai_result.save_share_ratio_score,
                     hashtag_performance={"score": openai_result.hashtag_performance},
                     audience_demographics={"score": openai_result.audience_retention},
-                    content_category=None,
-                    niche=None,
+                    content_category=analysis.content_category,
+                    niche=analysis.niche,
                 )
                 cache_analysis(post_id, cache_obj)
                 analyzed_count += 1
+
+                logger.info(f"Analysis enriched and saved for post {viral_post.id}")
 
             except Exception as exc:
                 # Per-post error handling: log and continue to next post
