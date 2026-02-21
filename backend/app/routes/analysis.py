@@ -1,13 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 
-from app.database import AsyncSessionLocal, get_db
+from app.database import AsyncSessionLocal
 from app.models.analysis import Analysis
 from app.models.viral_post import ViralPost
-from app.models.scan import Scan
 from app.models.user import User
 from app.dependencies import get_current_active_user
-from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/api/analysis", tags=["analysis"])
 
@@ -22,27 +20,9 @@ async def get_analysis(
     Uses a fresh session to avoid async/greenlet issues with
     SQLAlchemy ORM object serialization through FastAPI.
     """
-    # Create a fresh database session (avoid FastAPI dependency injection issues)
+    # Create a fresh database session
     async with AsyncSessionLocal() as db:
-        # Query viral post
-        result = await db.execute(
-            select(ViralPost).where(ViralPost.id == viral_post_id)
-        )
-        viral_post = result.scalar_one_or_none()
-
-        if not viral_post:
-            raise HTTPException(status_code=404, detail="Viral post not found")
-
-        # Verify ownership: check if this post belongs to the current user's scan
-        result = await db.execute(
-            select(Scan).where(Scan.id == viral_post.scan_id)
-        )
-        scan = result.scalar_one_or_none()
-
-        if not scan or scan.user_id != current_user.id:
-            raise HTTPException(status_code=403, detail="Access denied")
-
-        # Query analysis
+        # Query analysis directly
         result = await db.execute(
             select(Analysis).where(Analysis.viral_post_id == viral_post_id)
         )
@@ -51,8 +31,16 @@ async def get_analysis(
         if not analysis:
             raise HTTPException(status_code=404, detail="Analysis not yet available")
 
+        # Query viral post to verify it exists
+        result = await db.execute(
+            select(ViralPost).where(ViralPost.id == viral_post_id)
+        )
+        viral_post = result.scalar_one_or_none()
+
+        if not viral_post:
+            raise HTTPException(status_code=404, detail="Viral post not found")
+
         # Convert to dict immediately while session is still open
-        # This avoids detached object and greenlet issues
         hashtag_score = analysis.hashtag_performance_score
         if isinstance(hashtag_score, dict):
             hashtag_score = hashtag_score.get("score", None)
@@ -72,5 +60,4 @@ async def get_analysis(
             "created_at": analysis.created_at.isoformat() if analysis.created_at else None,
         }
 
-    # Session is now closed - return plain dict (no ORM objects)
     return response
