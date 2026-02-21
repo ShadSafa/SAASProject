@@ -41,7 +41,11 @@ async def get_analysis(
     if not analysis:
         raise HTTPException(status_code=404, detail="Analysis not yet available")
 
-    # Convert datetime to ISO string for JSON serialization
+    # Convert datetime to ISO string and handle hashtag_performance_score JSON format
+    hashtag_score = analysis.hashtag_performance_score
+    if isinstance(hashtag_score, dict):
+        hashtag_score = hashtag_score.get("score", None)
+
     analysis_dict = {
         "id": analysis.id,
         "viral_post_id": analysis.viral_post_id,
@@ -51,7 +55,7 @@ async def get_analysis(
         "emotional_trigger": analysis.emotional_trigger,
         "engagement_velocity_score": analysis.engagement_velocity_score,
         "save_share_ratio_score": analysis.save_share_ratio_score,
-        "hashtag_performance_score": analysis.hashtag_performance_score,
+        "hashtag_performance_score": hashtag_score,
         "audience_retention_score": analysis.audience_retention_score,
         "confidence_score": analysis.confidence_score,
         "created_at": analysis.created_at.isoformat() if analysis.created_at else None,
