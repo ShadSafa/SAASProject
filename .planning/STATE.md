@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-02-21
 **Current Phase:** 05 - Content Deepdive (IN PROGRESS)
-**Current Plan:** 05-03 (next)
+**Current Plan:** 05-04 (next)
 **Milestone:** v1.0
 
 ---
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Phase 05 Progress:**
 - Plans: 8 total
-- Completed: 2 (05-01, 05-02) ✅
-- Remaining: 6
+- Completed: 3 (05-01, 05-02, 05-03) ✅
+- Remaining: 5
 
-Progress: [##--------] 25% — Phase 5 IN PROGRESS
+Progress: [###-------] 37.5% — Phase 5 IN PROGRESS
 
 **Requirements:**
 - Total v1: 79
@@ -43,14 +43,14 @@ Progress: [##--------] 25% — Phase 5 IN PROGRESS
 
 **Phase:** 05 - Content Deepdive
 **Status:** IN PROGRESS
-**Plans Planned:** 8 total (2 completed, 6 remaining)
+**Plans Planned:** 8 total (3 completed, 5 remaining)
 
 **Completed Plans:**
 - ✓ Plan 05-01: Audience Demographics Model (2026-02-21)
 - ✓ Plan 05-02: Audience Demographics Service (2026-02-21)
+- ✓ Plan 05-03: Content Categorization Service (2026-02-21)
 
 **Remaining Plans:**
-- Plan 05-03: Audience API & Client (pending)
 - Plan 05-04: Content Category Classification (pending)
 - Plan 05-05: Niche Detection Service (pending)
 - Plan 05-06: Advanced Insights API (pending)
@@ -120,6 +120,15 @@ Progress: [##--------] 25% — Phase 5 IN PROGRESS
   - Status: AI analysis workflow fully functional end-to-end
 
 **Recently Completed:**
+- ✓ Plan 05-03: Content Categorization Service (2026-02-21)
+  - Built content categorization service with Instagram native types and extended formats
+  - Created InstagramNativeType enum (6 types: Reel, Story, Post, Guide, Video, Carousel)
+  - Created ExtendedFormat enum (23 categories: Tutorial, Comedy, ASMR, Educational, Fitness, etc.)
+  - Implemented categorize_content() with keyword-based format detection
+  - Added confidence scoring based on signal clarity (text length + format count)
+  - Created 7 comprehensive tests covering normalization, detection, and edge cases
+  - All tests passing, zero external dependencies
+  - 4 minutes execution time, 3 commits
 - ✓ Plan 05-02: Audience Demographics Service (2026-02-21)
   - Created engagement_service.py with calculate_engagement_rate() and EngagementMetrics model
   - Formula: (likes + comments + saves + shares) / follower_count * 100
@@ -227,6 +236,7 @@ Progress: [##--------] 25% — Phase 5 IN PROGRESS
 | 2026-02-21 | Lazy import inside _run_scan function | Import analyze_posts_batch only when dispatching (after posts saved) | Prevents circular import: scan_jobs → analysis_jobs → openai_service |
 | 2026-02-21 | JSON type for audience_demographics and audience_interests | Structured nested data (age ranges, gender, countries, topics) doesn't fit relational columns; JSON provides flexibility | Enables rich audience insights without complex table joins |
 | 2026-02-21 | SQLite in-memory fixtures for model tests | Fast, isolated testing without PostgreSQL dependency; conftest.py provides db_session fixture | Enables rapid test execution in CI/CD without database setup |
+| 2026-02-21 | Keyword-based categorization over ML for v1.0 | Simple keyword matching for content categorization instead of ML; fast, deterministic, no API costs, no training data | Sufficient for v1.0; upgrade path to GPT-4o or custom model documented for future enhancement |
 
 ---
 
@@ -300,31 +310,28 @@ Progress: [##--------] 25% — Phase 5 IN PROGRESS
 | 04-09 | 15 min | 3 | 4 | 1 | 2026-02-21 |
 | 05-01 | 4 min | 3 | 4 | 3 | 2026-02-21 |
 | 05-02 | 2 min | 3 | 2 | 2 | 2026-02-21 |
+| 05-03 | 4 min | 3 | 2 | 3 | 2026-02-21 |
 
 ---
-| Phase 05 P03 | 4 | 3 tasks | 2 files |
 
 ## Last Session
 
 **Date:** 2026-02-21
-**Completed:** Phase 05 Plan 05-02 ✅
-**Status:** Phase 05 in progress - engagement rate calculation service complete:
-  - ✅ Plan 05-02: Audience Demographics Service
-    - Created engagement_service.py with calculate_engagement_rate() and EngagementMetrics model
-    - Formula: (likes + comments + saves + shares) / follower_count * 100
-    - Edge case handling: zero followers returns 0.0 (no crash)
-    - Added 6 comprehensive tests covering all scenarios (100% passing)
-    - Helper function should_calculate_engagement_rate_for_post() for future integration
-    - 2 minutes execution time, 2 commits
-  - ✅ Plan 05-01: Audience Demographics Model
-    - Extended Analysis model with 3 new fields for audience insights
-    - Created and applied migration a921a1d83e20
-    - SQLite in-memory test fixtures for isolated testing
+**Completed:** Phase 05 Plan 05-03 ✅
+**Status:** Phase 05 content categorization complete:
+  - ✅ Plan 05-03: Content Categorization Service
+    - Built content categorization service with Instagram native types and extended formats
+    - Created InstagramNativeType enum (6 types: Reel, Story, Post, Guide, Video, Carousel)
+    - Created ExtendedFormat enum (23 categories: Tutorial, Comedy, ASMR, Educational, Fitness, etc.)
+    - Implemented categorize_content() with keyword-based format detection
+    - Added confidence scoring based on signal clarity (text length + format count)
+    - Created 7 comprehensive tests covering normalization, detection, and edge cases
+    - All tests passing, zero external dependencies
     - 4 minutes execution time, 3 commits
 
-**Ready for:** Phase 05 Plan 05-03 (Audience API & Client)
+**Ready for:** Phase 05 Plan 05-04 (Content Category Classification - integration into analysis workflow)
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-21T14:04:11Z*
+*Last updated: 2026-02-21T14:06:28Z*
