@@ -180,9 +180,15 @@ async def analyze_url(
     # Development mode: execute synchronously (no Redis/Celery required)
     if settings.ENVIRONMENT == "development":
         from app.tasks.scan_jobs import _run_scan
+        from app.tasks.analysis_jobs import analyze_posts_batch
         try:
-            await _run_scan(scan.id)
+            viral_post_ids = await _run_scan(scan.id)
             logger.info(f"Scan {scan.id} completed synchronously (dev mode)")
+
+            # Dispatch analysis task after scan completes
+            if viral_post_ids:
+                analyze_posts_batch.delay(scan.id, viral_post_ids)
+                logger.info(f"Scan {scan.id} analysis dispatched for {len(viral_post_ids)} posts")
         except Exception as e:
             logger.error(f"Scan {scan.id} failed: {e}", exc_info=True)
     else:
