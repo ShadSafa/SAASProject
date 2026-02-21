@@ -30,8 +30,28 @@ class Analysis(Base):
     # AI confidence
     confidence_score = Column(Float, nullable=True)  # 0.0-1.0
 
-    # Phase 5 fields (placeholders for now)
+    # Phase 5 fields: Audience insights
     audience_demographics = Column(JSON, nullable=True)
+    # Structure: {
+    #   "age_range": {"13-17": 5, "18-24": 25, "25-34": 45, "35-44": 20, "45+": 5},
+    #   "gender_distribution": {"male": 40, "female": 55, "other": 5},
+    #   "top_countries": [
+    #     {"code": "US", "percentage": 45},
+    #     {"code": "GB", "percentage": 12},
+    #     {"code": "CA", "percentage": 8}
+    #   ]
+    # }
+
+    engagement_rate = Column(Float, nullable=True)  # Percentage (0-100)
+    # Calculation: (likes + comments + saves + shares) / follower_count * 100
+
+    audience_interests = Column(JSON, nullable=True)
+    # Structure: {
+    #   "inferred_topics": ["fitness", "nutrition", "wellness"],
+    #   "content_affinity": ["educational", "inspirational", "lifestyle"],
+    #   "hashtag_analysis": ["#fitnessmotivation", "#healthylifestyle"]
+    # }
+
     content_category = Column(String, nullable=True)
     niche = Column(String, nullable=True)
 
