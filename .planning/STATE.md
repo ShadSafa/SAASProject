@@ -1,8 +1,8 @@
 # Project State: Instagram Viral Content Analyzer
 
 **Last Updated:** 2026-02-21
-**Current Phase:** 05 - Content Deepdive (IN PROGRESS)
-**Current Plan:** 05-08 (next)
+**Current Phase:** 05 - Content Deepdive (COMPLETE)
+**Current Plan:** 06-01 (next)
 **Milestone:** v1.0
 
 ---
@@ -21,16 +21,16 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Milestone v1.0:**
 - Phases: 11 total
-- Completed: 4 (Phase 01, Phase 02, Phase 03, Phase 04) ✅
-- In Progress: 1 (Phase 05)
+- Completed: 5 (Phase 01, Phase 02, Phase 03, Phase 04, Phase 05) ✅
+- In Progress: 0
 - Pending: 6
 
 **Phase 05 Progress:**
 - Plans: 8 total
-- Completed: 7 (05-01, 05-02, 05-03, 05-04, 05-05, 05-06, 05-07) ✅
-- Remaining: 1
+- Completed: 8 (05-01, 05-02, 05-03, 05-04, 05-05, 05-06, 05-07, 05-08) ✅
+- Remaining: 0
 
-Progress: [#######---] 88% — Phase 5 IN PROGRESS
+Progress: [##########] 100% — Phase 5 COMPLETE
 
 **Requirements:**
 - Total v1: 79
@@ -42,8 +42,8 @@ Progress: [#######---] 88% — Phase 5 IN PROGRESS
 ## Current Phase
 
 **Phase:** 05 - Content Deepdive
-**Status:** IN PROGRESS
-**Plans Planned:** 8 total (7 completed, 1 remaining)
+**Status:** COMPLETE
+**Plans Planned:** 8 total (8 completed, 0 remaining)
 
 **Completed Plans:**
 - ✓ Plan 05-01: Audience Demographics Model (2026-02-21)
@@ -53,9 +53,10 @@ Progress: [#######---] 88% — Phase 5 IN PROGRESS
 - ✓ Plan 05-05: Niche Detection Service (2026-02-21)
 - ✓ Plan 05-06: Advanced Insights API (2026-02-21)
 - ✓ Plan 05-07: Audience Demographics UI (2026-02-21)
+- ✓ Plan 05-08: Niche Override Capability (2026-02-21)
 
 **Remaining Plans:**
-- Plan 05-08: Phase 05 Verification (pending)
+- None - Phase 05 COMPLETE
 
 **Previous Phase 04 Plans (COMPLETE):**
 - ✓ Plan 04-01: OpenAI SDK Integration (2026-02-20)
@@ -120,6 +121,14 @@ Progress: [#######---] 88% — Phase 5 IN PROGRESS
   - Status: AI analysis workflow fully functional end-to-end
 
 **Recently Completed:**
+- ✓ Plan 05-08: Niche Override Capability (2026-02-21)
+  - Added user_niche_override String field to Analysis model with migration 52e88bf15934
+  - Created PATCH /api/analysis/{id}/niche-override endpoint with validation (non-empty, max 255 chars)
+  - Updated NicheBadge component with edit mode, save/clear functionality, and API integration
+  - Visual distinction for custom niches (purple background) vs AI-detected (color-coded by confidence)
+  - Effective niche calculation: user_niche_override || niche (override takes precedence)
+  - Created 7 comprehensive tests (100% passing) for save, clear, validation, and persistence
+  - 6 minutes execution time, 4 commits
 - ✓ Plan 05-07: Audience Demographics UI (2026-02-21)
   - Created EngagementMetricsCard displaying color-coded engagement rate (green/blue/yellow/red), total interactions, and creator follower count
   - Created NicheBadge displaying AI-detected niche with confidence score, secondary niche, and reasoning
@@ -271,6 +280,9 @@ Progress: [#######---] 88% — Phase 5 IN PROGRESS
 | 2026-02-21 | Graceful error handling for niche detection | Niche detection failures set Analysis.niche to "Other" fallback instead of crashing | Maintains analysis usability even if OpenAI niche detection API fails; prevents batch failure from single detection error |
 | 2026-02-21 | Dual storage of niche data (niche field + audience_interests JSON) | Primary niche in Analysis.niche field for simple queries; full metadata in audience_interests JSON | Enables both simple database queries and rich frontend display with confidence/reasoning/keywords |
 | 2026-02-21 | Phase 05 sections before Phase 04 in AnalysisPanel | Display enriched data (engagement, niche, categories) before OpenAI analysis for better information hierarchy | Users see concrete metrics first, then AI interpretation; improves comprehension and trust |
+| 2026-02-21 | Separate user_niche_override field instead of overwriting AI niche | Preserves AI-detected niche while allowing user customization; enables revert to AI niche | User can clear override to return to original AI detection; maintains data integrity and reversibility |
+| 2026-02-21 | Purple visual treatment for custom niches | Clear visual distinction between AI-detected (confidence colors) and user-customized (purple) | Immediately visible customization status but adds another color to UI palette |
+| 2026-02-21 | Click-to-edit pattern for niche override | Reduces UI clutter and follows modern inline editing patterns | More discoverable via hover/hint than hidden edit mode but less obvious than dedicated button |
 
 ---
 
@@ -349,26 +361,33 @@ Progress: [#######---] 88% — Phase 5 IN PROGRESS
 | 05-05 | 3 min | 3 | 2 | 3 | 2026-02-21 |
 | 05-06 | 2 min | 2 | 2 | 2 | 2026-02-21 |
 | 05-07 | 4 min | 4 | 6 | 4 | 2026-02-21 |
+| 05-08 | 6 min | 4 | 5 | 4 | 2026-02-21 |
 
 ---
 
 ## Last Session
 
 **Date:** 2026-02-21
-**Completed:** Phase 05 Plan 05-07 ✅
-**Status:** Phase 05 UI complete:
-  - ✅ Plan 05-07: Audience Demographics UI
-    - Created EngagementMetricsCard displaying color-coded engagement rate (green/blue/yellow/red), total interactions, and follower count
-    - Created NicheBadge displaying AI-detected niche with confidence score, secondary niche, and reasoning
-    - Created ContentCategoryBadges displaying Instagram native type + extended formats
-    - Integrated all Phase 05 components into AnalysisPanel with conditional rendering
-    - Added audience demographics section with age range, gender distribution, and top countries visualization
-    - Phase 05 enriched sections displayed before Phase 04 OpenAI analysis for better information hierarchy
-    - 4 minutes execution time, 4 commits
+**Completed:** Phase 05 Plan 05-08 ✅
+**Status:** Phase 05 COMPLETE - All 8 plans executed successfully:
+  - ✅ Plan 05-08: Niche Override Capability
+    - Added user_niche_override field to Analysis model with database migration
+    - Created PATCH /api/analysis/{id}/niche-override endpoint with validation
+    - Updated NicheBadge component with edit mode and save/clear functionality
+    - Visual distinction for custom niches (purple) vs AI-detected (color-coded)
+    - Created 7 comprehensive tests (100% passing)
+    - 6 minutes execution time, 4 commits
+  - Phase 05 now provides complete content deepdive features:
+    * Audience demographics (age, gender, location)
+    * Engagement metrics with color-coded rates
+    * Content categorization (native type + extended formats)
+    * AI niche detection with user override capability
+    * Advanced insights API integration
+    * Full UI components for all features
 
-**Ready for:** Phase 05 Plan 05-08 (Phase 05 E2E Verification)
+**Ready for:** Phase 06 Planning
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-21T14:38:09Z*
+*Last updated: 2026-02-21T16:48:00Z*
