@@ -1,17 +1,22 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 
-from app.database import AsyncSessionLocal
+from app.database import AsyncSessionLocal, get_db
 from app.models.analysis import Analysis
 from app.models.viral_post import ViralPost
+from app.models.scan import Scan
+from app.models.user import User
 from app.dependencies import get_current_active_user
-from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/api/analysis", tags=["analysis"])
 
 
 @router.get("/{viral_post_id}")
-async def get_analysis(viral_post_id: int):
+async def get_analysis(
+    viral_post_id: int,
+    current_user: User = Depends(get_current_active_user),
+):
     """Get analysis results for a viral post.
 
     Uses a fresh session to avoid async/greenlet issues with
@@ -27,6 +32,15 @@ async def get_analysis(viral_post_id: int):
 
         if not viral_post:
             raise HTTPException(status_code=404, detail="Viral post not found")
+
+        # Verify ownership: check if this post belongs to the current user's scan
+        result = await db.execute(
+            select(Scan).where(Scan.id == viral_post.scan_id)
+        )
+        scan = result.scalar_one_or_none()
+
+        if not scan or scan.user_id != current_user.id:
+            raise HTTPException(status_code=403, detail="Access denied")
 
         # Query analysis
         result = await db.execute(
