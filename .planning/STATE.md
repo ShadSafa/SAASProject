@@ -1,8 +1,8 @@
 # Project State: Instagram Viral Content Analyzer
 
 **Last Updated:** 2026-02-21
-**Current Phase:** 04 - AI Analysis — Algorithm Factors (VERIFICATION COMPLETE) ✅
-**Current Plan:** 04-10 End-to-End Verification CHECKPOINT (PASSED) ✅
+**Current Phase:** 05 - Content Deepdive (IN PROGRESS)
+**Current Plan:** 05-02 (next)
 **Milestone:** v1.0
 
 ---
@@ -13,7 +13,7 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Core value:** Users can identify and understand viral content patterns to create better performing Instagram content themselves
 
-**Current focus:** Phase 4 - AI-powered analysis of viral content factors with OpenAI integration
+**Current focus:** Phase 5 - Content Deepdive with audience demographics and advanced insights
 
 ---
 
@@ -22,15 +22,15 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 **Milestone v1.0:**
 - Phases: 11 total
 - Completed: 4 (Phase 01, Phase 02, Phase 03, Phase 04) ✅
-- In Progress: 0
-- Pending: 7
+- In Progress: 1 (Phase 05)
+- Pending: 6
 
-**Phase 04 Progress:**
-- Plans: 10 total
-- Completed: 10 (04-01, 04-02, 04-03, 04-04, 04-05, 04-06, 04-07, 04-08, 04-09, 04-10) ✅
-- Remaining: 0
+**Phase 05 Progress:**
+- Plans: 8 total
+- Completed: 1 (05-01) ✅
+- Remaining: 7
 
-Progress: [##########] 100% — Phase 4 COMPLETE ✅
+Progress: [#---------] 12.5% — Phase 5 IN PROGRESS
 
 **Requirements:**
 - Total v1: 79
@@ -41,11 +41,23 @@ Progress: [##########] 100% — Phase 4 COMPLETE ✅
 
 ## Current Phase
 
-**Phase:** 04 - AI Analysis — Algorithm Factors
-**Status:** VERIFICATION COMPLETE ✅
-**Plans Planned:** 10 total (all completed)
+**Phase:** 05 - Content Deepdive
+**Status:** IN PROGRESS
+**Plans Planned:** 8 total (1 completed, 7 remaining)
 
 **Completed Plans:**
+- ✓ Plan 05-01: Audience Demographics Model (2026-02-21)
+
+**Remaining Plans:**
+- Plan 05-02: Audience Demographics Service (pending)
+- Plan 05-03: Audience API & Client (pending)
+- Plan 05-04: Content Category Classification (pending)
+- Plan 05-05: Niche Detection Service (pending)
+- Plan 05-06: Advanced Insights API (pending)
+- Plan 05-07: Audience Demographics UI (pending)
+- Plan 05-08: Phase 05 Verification (pending)
+
+**Previous Phase 04 Plans (COMPLETE):**
 - ✓ Plan 04-01: OpenAI SDK Integration (2026-02-20)
 - ✓ Plan 04-02: Redis Caching Layer (2026-02-20)
 - ✓ Plan 04-03: Celery Background Tasks for AI Analysis (2026-02-21)
@@ -108,6 +120,13 @@ Progress: [##########] 100% — Phase 4 COMPLETE ✅
   - Status: AI analysis workflow fully functional end-to-end
 
 **Recently Completed:**
+- ✓ Plan 05-01: Audience Demographics Model (2026-02-21)
+  - Extended Analysis model with audience_demographics (JSON), engagement_rate (Float), audience_interests (JSON)
+  - Created migration a921a1d83e20 to add new fields to analyses table
+  - Added conftest.py with SQLite in-memory test fixtures
+  - Created test_analysis_model.py with 3 passing tests for new fields
+  - All fields nullable=True for gradual Phase 05 service population
+- ✓ Plan 04-10: End-to-End Phase 4 Verification CHECKPOINT (2026-02-21) [PASSED]
 - ✓ Plan 04-01: OpenAI SDK Integration with Pydantic Structured Output (2026-02-21)
 - ✓ ScanPage: full scan UX flow (idle -> progress -> results/error) via useScan hook at /scan route
 - ✓ ScanForm: discover tab (time range 12h/24h/48h/7d) + analyze tab (URL input with instagram.com validation)
@@ -132,11 +151,12 @@ Progress: [##########] 100% — Phase 4 COMPLETE ✅
 ## Next Steps
 
 **Immediate:**
-1. Human verification of Phase 3 end-to-end scan flow (see 03-07-PLAN.md Task 2 checklist)
+1. Execute Plan 05-02: Audience Demographics Service (calculate engagement rate, infer demographics)
+2. Execute Plan 05-03: Audience API & Client (expose audience data to frontend)
 
 **Upcoming:**
-- Upon human approval: mark Phase 03 complete
-- Begin Phase 04 planning
+- Continue Phase 05 execution (7 plans remaining)
+- Phase 05 verification checkpoint upon completion of all 8 plans
 
 ---
 
@@ -198,6 +218,8 @@ Progress: [##########] 100% — Phase 4 COMPLETE ✅
 | 2026-02-21 | Fire-and-forget task dispatch for analysis | Use Celery .delay() for non-blocking scan completion; analysis runs in background | Scan returns in <1s, analysis enriches posts over 10-30s; improves UX |
 | 2026-02-21 | Pre-calculated factors in OpenAI prompt | Include 4 algorithm scores (velocity, save/share, hashtag, posting time) in prompt as context | Reduces token usage ~10-15%, AI validates/refines scores if context missed |
 | 2026-02-21 | Lazy import inside _run_scan function | Import analyze_posts_batch only when dispatching (after posts saved) | Prevents circular import: scan_jobs → analysis_jobs → openai_service |
+| 2026-02-21 | JSON type for audience_demographics and audience_interests | Structured nested data (age ranges, gender, countries, topics) doesn't fit relational columns; JSON provides flexibility | Enables rich audience insights without complex table joins |
+| 2026-02-21 | SQLite in-memory fixtures for model tests | Fast, isolated testing without PostgreSQL dependency; conftest.py provides db_session fixture | Enables rapid test execution in CI/CD without database setup |
 
 ---
 
@@ -269,41 +291,27 @@ Progress: [##########] 100% — Phase 4 COMPLETE ✅
 | 04-07 | 5 min | 2 | 2 | 2 | 2026-02-21 |
 | 04-08 | 2 min | 2 | 5 | 2 | 2026-02-20 |
 | 04-09 | 15 min | 3 | 4 | 1 | 2026-02-21 |
+| 05-01 | 4 min | 3 | 4 | 3 | 2026-02-21 |
 
 ---
 
 ## Last Session
 
 **Date:** 2026-02-21
-**Completed:** Phase 04 Plan 04-09 ✅
-**Status:** Phase 04 execution at 90%:
-  - ✅ Plan 04-01: OpenAI SDK + API key configuration
-  - ✅ Plan 04-02: Redis caching layer with 7-day TTL
-  - ✅ Plan 04-03: Celery background tasks for AI analysis
-  - ✅ Plan 04-04: Algorithm Factor Calculations (4 pure-Python functions)
-  - ✅ Plan 04-05: VADER Sentiment Analysis Service
-  - ✅ Plan 04-06: Scan-to-Analysis Integration
-    - analyze_posts_batch dispatched automatically after scan completes
-    - Non-blocking pattern: scan returns immediately, analysis enriches in background
-    - Pre-calculated algorithm factors (velocity, save/share ratio, hashtag, posting time) included in OpenAI prompt
-    - 14 integration tests + 28 total tests all passing
-    - Lazy import prevents circular dependencies
-    - Empty scans skip analysis (cost optimization)
-  - ✅ Plan 04-07: Analysis Model & Migration 004
-  - ✅ Plan 04-08: Analysis API & Client
-    - GET /api/analysis/{viral_post_id} endpoint with authorization
-    - AnalysisResponse schema with 7 algorithm factors
-    - Frontend TypeScript client with getAnalysis() and hasAnalysis()
-    - Type-safe API client following established patterns
-  - ✅ Plan 04-09: Analysis Visualization Components
-    - useAnalysis hook for data fetching with 404 handling
-    - AlgorithmFactorBadge component with color-coded scores (red <40, yellow 40-70, green >70)
-    - AnalysisPanel component displaying summary + 7 factors + emotional trigger
-    - ViralPostCard integrated with conditional rendering of analysis
+**Completed:** Phase 05 Plan 05-01 ✅
+**Status:** Phase 05 started - audience demographics foundation complete:
+  - ✅ Plan 05-01: Audience Demographics Model
+    - Extended Analysis model with 3 new fields: audience_demographics (JSON), engagement_rate (Float), audience_interests (JSON)
+    - Created and applied migration a921a1d83e20 to add columns to analyses table
+    - Created conftest.py with SQLite in-memory test fixtures for model testing
+    - Added test_analysis_model.py with 3 passing tests verifying field storage/retrieval
+    - All fields nullable=True for gradual Phase 05 service population
+    - Fixed migration schema drift (removed unrelated changes)
+    - 4 minutes execution time, 3 commits
 
-**Ready for:** Phase 04 Plan 04-10 (Comment analysis)
+**Ready for:** Phase 05 Plan 05-02 (Audience Demographics Service)
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-21T23:45:00Z*
+*Last updated: 2026-02-21T13:54:46Z*
