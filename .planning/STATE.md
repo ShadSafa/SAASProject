@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-02-21
 **Current Phase:** 05 - Content Deepdive (IN PROGRESS)
-**Current Plan:** 05-07 (next)
+**Current Plan:** 05-08 (next)
 **Milestone:** v1.0
 
 ---
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Phase 05 Progress:**
 - Plans: 8 total
-- Completed: 6 (05-01, 05-02, 05-03, 05-04, 05-05, 05-06) ✅
-- Remaining: 2
+- Completed: 7 (05-01, 05-02, 05-03, 05-04, 05-05, 05-06, 05-07) ✅
+- Remaining: 1
 
-Progress: [######----] 75% — Phase 5 IN PROGRESS
+Progress: [#######---] 88% — Phase 5 IN PROGRESS
 
 **Requirements:**
 - Total v1: 79
@@ -43,7 +43,7 @@ Progress: [######----] 75% — Phase 5 IN PROGRESS
 
 **Phase:** 05 - Content Deepdive
 **Status:** IN PROGRESS
-**Plans Planned:** 8 total (6 completed, 2 remaining)
+**Plans Planned:** 8 total (7 completed, 1 remaining)
 
 **Completed Plans:**
 - ✓ Plan 05-01: Audience Demographics Model (2026-02-21)
@@ -52,9 +52,9 @@ Progress: [######----] 75% — Phase 5 IN PROGRESS
 - ✓ Plan 05-04: Content Category Classification (2026-02-21)
 - ✓ Plan 05-05: Niche Detection Service (2026-02-21)
 - ✓ Plan 05-06: Advanced Insights API (2026-02-21)
+- ✓ Plan 05-07: Audience Demographics UI (2026-02-21)
 
 **Remaining Plans:**
-- Plan 05-07: Audience Demographics UI (pending)
 - Plan 05-08: Phase 05 Verification (pending)
 
 **Previous Phase 04 Plans (COMPLETE):**
@@ -120,6 +120,14 @@ Progress: [######----] 75% — Phase 5 IN PROGRESS
   - Status: AI analysis workflow fully functional end-to-end
 
 **Recently Completed:**
+- ✓ Plan 05-07: Audience Demographics UI (2026-02-21)
+  - Created EngagementMetricsCard displaying color-coded engagement rate (green/blue/yellow/red), total interactions, and creator follower count
+  - Created NicheBadge displaying AI-detected niche with confidence score, secondary niche, and reasoning
+  - Created ContentCategoryBadges displaying Instagram native type (Reel/Post/Story) and extended formats (Tutorial/Comedy/Educational)
+  - Integrated all Phase 05 components into AnalysisPanel with conditional rendering based on data availability
+  - Added audience demographics section with age range, gender distribution, and top countries visualization
+  - Phase 05 enriched sections displayed before Phase 04 OpenAI analysis for better information hierarchy
+  - 4 minutes execution time, 4 commits
 - ✓ Plan 05-06: Advanced Insights API (2026-02-21)
   - Integrated niche detection into analysis enrichment workflow as third enrichment step
   - AI-detected niche automatically populated in Analysis.niche field for all analyzed posts
@@ -262,6 +270,7 @@ Progress: [######----] 75% — Phase 5 IN PROGRESS
 | 2026-02-21 | Three-step enrichment pipeline (metrics → categorization → niche) | Niche detection runs third after categorization to leverage extended_formats from audience_interests | Each enrichment step can build on previous results for richer analysis |
 | 2026-02-21 | Graceful error handling for niche detection | Niche detection failures set Analysis.niche to "Other" fallback instead of crashing | Maintains analysis usability even if OpenAI niche detection API fails; prevents batch failure from single detection error |
 | 2026-02-21 | Dual storage of niche data (niche field + audience_interests JSON) | Primary niche in Analysis.niche field for simple queries; full metadata in audience_interests JSON | Enables both simple database queries and rich frontend display with confidence/reasoning/keywords |
+| 2026-02-21 | Phase 05 sections before Phase 04 in AnalysisPanel | Display enriched data (engagement, niche, categories) before OpenAI analysis for better information hierarchy | Users see concrete metrics first, then AI interpretation; improves comprehension and trust |
 
 ---
 
@@ -339,27 +348,27 @@ Progress: [######----] 75% — Phase 5 IN PROGRESS
 | 05-04 | 5 min | 4 | 4 | 4 | 2026-02-21 |
 | 05-05 | 3 min | 3 | 2 | 3 | 2026-02-21 |
 | 05-06 | 2 min | 2 | 2 | 2 | 2026-02-21 |
+| 05-07 | 4 min | 4 | 6 | 4 | 2026-02-21 |
 
 ---
-| Phase 05 P06 | 2 | 2 tasks | 2 files |
 
 ## Last Session
 
 **Date:** 2026-02-21
-**Completed:** Phase 05 Plan 05-06 ✅
-**Status:** Phase 05 niche integration complete:
-  - ✅ Plan 05-06: Advanced Insights API
-    - Integrated niche detection into analysis enrichment workflow as third enrichment step
-    - AI-detected niche automatically populated in Analysis.niche field for all analyzed posts
-    - Full niche metadata (confidence, reasoning, keywords) stored in audience_interests JSON
-    - Graceful error handling with "Other" fallback maintains analysis usability
-    - Three-step enrichment pipeline: metrics → categorization → niche
-    - Added 3 comprehensive tests for niche enrichment (all passing with mocked OpenAI)
-    - 2 minutes execution time, 2 commits
+**Completed:** Phase 05 Plan 05-07 ✅
+**Status:** Phase 05 UI complete:
+  - ✅ Plan 05-07: Audience Demographics UI
+    - Created EngagementMetricsCard displaying color-coded engagement rate (green/blue/yellow/red), total interactions, and follower count
+    - Created NicheBadge displaying AI-detected niche with confidence score, secondary niche, and reasoning
+    - Created ContentCategoryBadges displaying Instagram native type + extended formats
+    - Integrated all Phase 05 components into AnalysisPanel with conditional rendering
+    - Added audience demographics section with age range, gender distribution, and top countries visualization
+    - Phase 05 enriched sections displayed before Phase 04 OpenAI analysis for better information hierarchy
+    - 4 minutes execution time, 4 commits
 
-**Ready for:** Phase 05 Plan 05-07 (Audience Demographics UI - display detected niche in viral post cards)
+**Ready for:** Phase 05 Plan 05-08 (Phase 05 E2E Verification)
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-21T14:06:28Z*
+*Last updated: 2026-02-21T14:38:09Z*
