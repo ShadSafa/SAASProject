@@ -46,6 +46,7 @@ export interface Analysis {
   niche?: string | null;  // Detected niche
   audience_demographics?: AudienceDemographics | null;
   audience_interests?: AudienceInterests | null;
+  user_niche_override?: string | null;  // User-customized niche (overrides AI-detected niche)
 
   created_at: string;
   updated_at?: string;

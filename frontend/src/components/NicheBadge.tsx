@@ -34,13 +34,6 @@ export const NicheBadge: React.FC<NicheBadgeProps> = ({
     return 'bg-gray-100 text-gray-800 border-gray-300';
   };
 
-  const getConfidenceLabel = (conf: number) => {
-    if (conf > 0.85) return 'Very High';
-    if (conf > 0.70) return 'High';
-    if (conf > 0.50) return 'Medium';
-    return 'Low';
-  };
-
   const handleSaveOverride = async () => {
     if (!editValue.trim()) {
       setError('Niche cannot be empty');

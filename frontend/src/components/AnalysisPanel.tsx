@@ -39,7 +39,9 @@ export function AnalysisPanel({ analysis, viralPost }: AnalysisPanelProps) {
         />
 
         <NicheBadge
+          analysisId={analysis.id}
           niche={analysis.niche || null}
+          userNicheOverride={analysis.user_niche_override || null}
           confidence={analysis.audience_interests?.niche_confidence || null}
           secondaryNiche={analysis.audience_interests?.niche_secondary || null}
           reasoning={analysis.audience_interests?.niche_reasoning || null}
