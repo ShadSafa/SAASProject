@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
 
 from app.database import get_db
 from app.models.analysis import Analysis
@@ -20,7 +21,7 @@ async def get_analysis(
     """Get analysis results for a viral post."""
     # Verify viral post exists and belongs to user's scan
     result = await db.execute(
-        select(ViralPost).where(ViralPost.id == viral_post_id)
+        select(ViralPost).where(ViralPost.id == viral_post_id).options(joinedload(ViralPost.scan))
     )
     viral_post = result.scalar_one_or_none()
 

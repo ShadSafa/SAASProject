@@ -112,10 +112,16 @@ async def trigger_scan(
     if settings.ENVIRONMENT == "development":
         logger.info(f"Scan {scan.id} executing in development mode")
         from app.tasks.scan_jobs import _run_scan
+        from app.tasks.analysis_jobs import analyze_posts_batch
         try:
             logger.info(f"Scan {scan.id} _run_scan starting")
-            await _run_scan(scan.id)
-            logger.info(f"Scan {scan.id} completed synchronously (dev mode)")
+            viral_post_ids = await _run_scan(scan.id)
+            logger.info(f"Scan {scan.id} completed synchronously (dev mode), dispatching analysis for {len(viral_post_ids)} posts")
+
+            # Dispatch analysis task after scan completes
+            if viral_post_ids:
+                analyze_posts_batch.delay(scan.id, viral_post_ids)
+                logger.info(f"Scan {scan.id} analysis dispatched for {len(viral_post_ids)} posts")
         except Exception as e:
             logger.error(f"Scan {scan.id} failed: {e}", exc_info=True)
     else:

@@ -25,6 +25,7 @@ def execute_scan(self, scan_id: int) -> Dict[str, Any]:
     4. Cache thumbnails to S3
     5. Store ViralPost records
     6. Mark scan as completed (or failed on error)
+    7. Dispatch analysis background task
 
     Args:
         scan_id: Primary key of the Scan record to process.
@@ -33,7 +34,14 @@ def execute_scan(self, scan_id: int) -> Dict[str, Any]:
         dict with scan_id and status.
     """
     try:
-        asyncio.run(_run_scan(scan_id))
+        viral_post_ids = asyncio.run(_run_scan(scan_id))
+
+        # Dispatch analysis task AFTER event loop closes (outside async context)
+        if viral_post_ids:
+            from app.tasks.analysis_jobs import analyze_posts_batch
+            analyze_posts_batch.delay(scan_id, viral_post_ids)
+            logger.info(f"Scan {scan_id} analysis dispatched for {len(viral_post_ids)} posts")
+
         return {"scan_id": scan_id, "status": "completed"}
     except Exception as exc:
         logger.error(f"execute_scan failed for scan_id={scan_id}: {exc}", exc_info=True)
@@ -41,8 +49,8 @@ def execute_scan(self, scan_id: int) -> Dict[str, Any]:
         raise self.retry(exc=exc)
 
 
-async def _run_scan(scan_id: int) -> None:
-    """Async implementation of scan logic."""
+async def _run_scan(scan_id: int) -> List[int]:
+    """Async implementation of scan logic. Returns list of ViralPost IDs for analysis dispatch."""
     from app.database import AsyncSessionLocal
     from app.models.scan import Scan
     from app.models.viral_post import ViralPost
@@ -114,13 +122,10 @@ async def _run_scan(scan_id: int) -> None:
             await db.commit()
             logger.info(f"Scan {scan_id} completed with {len(top_posts)} posts")
 
-            # Dispatch analysis as background task (lazy import to avoid circular)
-            # After commit, ViralPost objects have their IDs
+            # Return ViralPost IDs for analysis dispatch (happens after event loop closes)
             if viral_posts:
-                viral_post_ids = [post.id for post in viral_posts]
-                from app.tasks.analysis_jobs import analyze_posts_batch
-                analyze_posts_batch.delay(scan_id, viral_post_ids)
-                logger.info(f"Scan {scan_id} analysis dispatched for {len(viral_post_ids)} posts")
+                return [post.id for post in viral_posts]
+            return []
 
         except Exception as exc:
             scan.status = "failed"

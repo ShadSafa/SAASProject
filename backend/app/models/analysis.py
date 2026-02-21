@@ -21,7 +21,7 @@ class Analysis(Base):
     hook_strength_score = Column(Float, nullable=True)
     engagement_velocity_score = Column(Float, nullable=True)
     save_share_ratio_score = Column(Float, nullable=True)
-    hashtag_performance_score = Column(Float, nullable=True)
+    hashtag_performance_score = Column(JSON, nullable=True)
     audience_retention_score = Column(Float, nullable=True)
 
     # Qualitative factors

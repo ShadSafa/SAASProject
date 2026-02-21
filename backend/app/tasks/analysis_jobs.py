@@ -34,7 +34,17 @@ def analyze_posts_batch(scan_id: int, viral_post_ids: List[int]) -> Dict[str, in
         dict with counts: {"analyzed": int, "cached": int, "failed": int}
     """
     try:
-        result = asyncio.run(_run_analysis(scan_id, viral_post_ids))
+        # Handle event loop properly for Celery workers
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_closed():
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+
+        result = loop.run_until_complete(_run_analysis(scan_id, viral_post_ids))
         return result
     except Exception as exc:
         logger.error(f"analyze_posts_batch failed for scan_id={scan_id}: {exc}", exc_info=True)
@@ -61,16 +71,18 @@ async def _run_analysis(scan_id: int, viral_post_ids: List[int]) -> Dict[str, in
                 if cached_result:
                     # Cache hit: create Analysis record from cached data
                     logger.info(f"Cache hit for viral_post_id={post_id}")
+                    # Extract scalar value from JSON demographic object for audience_retention_score
+                    audience_score = cached_result.audience_demographics.get("score") if isinstance(cached_result.audience_demographics, dict) else cached_result.audience_demographics
                     analysis = Analysis(
                         viral_post_id=post_id,
                         why_viral_summary=cached_result.why_viral_summary,
-                        hook_strength=cached_result.hook_strength,
+                        hook_strength_score=float(cached_result.hook_strength),
                         emotional_trigger=cached_result.emotional_trigger,
                         posting_time_score=cached_result.posting_time_score,
-                        engagement_velocity=cached_result.engagement_velocity,
-                        save_share_ratio=cached_result.save_share_ratio,
-                        hashtag_performance=cached_result.hashtag_performance,
-                        audience_demographics=cached_result.audience_demographics,
+                        engagement_velocity_score=cached_result.engagement_velocity,
+                        save_share_ratio_score=cached_result.save_share_ratio,
+                        hashtag_performance_score=cached_result.hashtag_performance,
+                        audience_retention_score=float(audience_score) if audience_score else None,
                         content_category=cached_result.content_category,
                         niche=cached_result.niche,
                     )
@@ -93,15 +105,15 @@ async def _run_analysis(scan_id: int, viral_post_ids: List[int]) -> Dict[str, in
                 analysis = Analysis(
                     viral_post_id=post_id,
                     why_viral_summary=openai_result.why_viral_summary,
-                    hook_strength=str(openai_result.hook_strength),  # Float->str
+                    hook_strength_score=openai_result.hook_strength,
                     emotional_trigger=openai_result.emotional_trigger,
                     posting_time_score=openai_result.posting_time_score,
-                    engagement_velocity=openai_result.engagement_velocity_score,  # Note: field name in result
-                    save_share_ratio=openai_result.save_share_ratio_score,  # Note: field name in result
-                    hashtag_performance={"score": openai_result.hashtag_performance},  # JSON field
-                    audience_demographics={"score": openai_result.audience_retention},  # JSON field
-                    content_category=None,  # Not provided by OpenAI result
-                    niche=None,  # Not provided by OpenAI result
+                    engagement_velocity_score=openai_result.engagement_velocity_score,
+                    save_share_ratio_score=openai_result.save_share_ratio_score,
+                    hashtag_performance_score=openai_result.hashtag_performance,
+                    audience_retention_score=openai_result.audience_retention,
+                    content_category=None,  # Not provided by analysis result
+                    niche=None,  # Not provided by analysis result
                 )
                 db.add(analysis)
 

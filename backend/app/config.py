@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 from typing import Optional
+from pathlib import Path
 
 
 class Settings(BaseSettings):
@@ -50,7 +51,8 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "development"
 
     class Config:
-        env_file = ".env"
+        # Use full path to .env file in backend directory
+        env_file = str(Path(__file__).parent.parent / ".env")
         case_sensitive = True
         extra = "ignore"  # Allow extra fields from .env (like NGROK_URL) without error
 
