@@ -87,6 +87,7 @@ async def _run_analysis(scan_id: int, viral_post_ids: List[int]) -> Dict[str, in
                         niche=cached_result.niche,
                     )
                     db.add(analysis)
+                    await db.flush()  # Flush each record to prevent asyncpg concurrent ops
                     cached_count += 1
                     continue
 
@@ -116,6 +117,7 @@ async def _run_analysis(scan_id: int, viral_post_ids: List[int]) -> Dict[str, in
                     niche=None,  # Not provided by analysis result
                 )
                 db.add(analysis)
+                await db.flush()  # Flush each record to prevent asyncpg concurrent ops
 
                 # Store in cache (7-day TTL)
                 # Convert ViralAnalysisResult to cache-compatible format
@@ -141,7 +143,7 @@ async def _run_analysis(scan_id: int, viral_post_ids: List[int]) -> Dict[str, in
                 logger.error(f"Analysis failed for viral_post_id={post_id}: {exc}", exc_info=True)
                 failed_count += 1
 
-        # Commit all Analysis records at end
+        # Final commit to ensure all changes are saved
         await db.commit()
         logger.info(
             f"Analysis batch complete for scan_id={scan_id}: "
