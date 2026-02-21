@@ -71,7 +71,7 @@ export default function ViralPostCard({ post, rank }: ViralPostCardProps) {
         )}
 
         {/* Rank badge */}
-        <div className="absolute top-2 left-2 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded-full">
+        <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded-full">
           #{rank}
         </div>
 

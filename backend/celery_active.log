@@ -1,0 +1,74 @@
+ 
+ -------------- analysis_worker@ShadiLP v5.6.2 (recovery)
+--- ***** ----- 
+-- ******* ---- Windows-11-10.0.26200-SP0 2026-02-21 06:12:34
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         instagram_analyzer:0x14af4c26f90
+- ** ---------- .> transport:   redis://localhost:6379/0
+- ** ---------- .> results:     redis://localhost:6379/1
+- *** --- * --- .> concurrency: 8 (solo)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . analysis.analyze_posts_batch
+  . scan.execute_scan
+
+[2026-02-21 06:12:34,302: INFO/MainProcess] Connected to redis://localhost:6379/0
+[2026-02-21 06:12:34,308: INFO/MainProcess] mingle: searching for neighbors
+[2026-02-21 06:12:35,354: WARNING/MainProcess] C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\celery\app\control.py:56: DuplicateNodenameWarning: Received multiple replies from node name: analysis_worker@ShadiLP.
+Please make sure you give each node a unique nodename using
+the celery worker `-n` option.
+  warnings.warn(DuplicateNodenameWarning(
+
+[2026-02-21 06:12:35,354: INFO/MainProcess] mingle: all alone
+[2026-02-21 06:12:35,455: INFO/MainProcess] analysis_worker@ShadiLP ready.
+[2026-02-21 06:13:24,813: INFO/MainProcess] Task analysis.analyze_posts_batch[fba55a11-3f34-4897-b0a2-de031911d3bd] received
+[2026-02-21 06:13:24,819: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=87, posts=[157, 158]
+[2026-02-21 06:13:24,819: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=87, posts=[157, 158]
+[2026-02-21 06:13:24,821: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=87, posts=2
+[2026-02-21 06:13:24,821: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=87, posts=2
+[2026-02-21 06:13:25,046: INFO/MainProcess] Calling OpenAI for viral_post_id=157
+[2026-02-21 06:13:25,061: INFO/MainProcess] Calling OpenAI for viral_post_id=158
+[2026-02-21 06:13:25,069: INFO/MainProcess] Analysis batch complete for scan_id=87: analyzed=2, cached=0, failed=0
+[2026-02-21 06:13:25,073: INFO/MainProcess] Task analysis.analyze_posts_batch[fba55a11-3f34-4897-b0a2-de031911d3bd] succeeded in 0.259803799999645s: {'analyzed': 2, 'cached': 0, 'failed': 0}
+[2026-02-21 06:15:31,164: INFO/MainProcess] Task analysis.analyze_posts_batch[4a9dd179-a57d-4c6d-b412-3b47be7f04f9] received
+[2026-02-21 06:15:31,166: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=88, posts=[159, 160]
+[2026-02-21 06:15:31,166: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=88, posts=[159, 160]
+[2026-02-21 06:15:31,166: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=88, posts=2
+[2026-02-21 06:15:31,166: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=88, posts=2
+[2026-02-21 06:15:31,173: INFO/MainProcess] Calling OpenAI for viral_post_id=159
+[2026-02-21 06:15:31,182: INFO/MainProcess] Calling OpenAI for viral_post_id=160
+[2026-02-21 06:15:31,188: INFO/MainProcess] Analysis batch complete for scan_id=88: analyzed=2, cached=0, failed=0
+[2026-02-21 06:15:31,190: INFO/MainProcess] Task analysis.analyze_posts_batch[4a9dd179-a57d-4c6d-b412-3b47be7f04f9] succeeded in 0.026438500000949716s: {'analyzed': 2, 'cached': 0, 'failed': 0}
+[2026-02-21 06:17:40,792: INFO/MainProcess] Task analysis.analyze_posts_batch[7e1307eb-38f9-48a6-9f65-13e67fdd9241] received
+[2026-02-21 06:17:40,794: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=89, posts=[161, 162]
+[2026-02-21 06:17:40,794: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=89, posts=[161, 162]
+[2026-02-21 06:17:40,795: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=89, posts=2
+[2026-02-21 06:17:40,795: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=89, posts=2
+[2026-02-21 06:17:40,799: INFO/MainProcess] Calling OpenAI for viral_post_id=161
+[2026-02-21 06:17:40,804: INFO/MainProcess] Calling OpenAI for viral_post_id=162
+[2026-02-21 06:17:40,809: INFO/MainProcess] Analysis batch complete for scan_id=89: analyzed=2, cached=0, failed=0
+[2026-02-21 06:17:40,811: INFO/MainProcess] Task analysis.analyze_posts_batch[7e1307eb-38f9-48a6-9f65-13e67fdd9241] succeeded in 0.017960400000447407s: {'analyzed': 2, 'cached': 0, 'failed': 0}
+[2026-02-21 06:25:01,583: INFO/MainProcess] Task analysis.analyze_posts_batch[01f534b6-d086-454d-9cec-51fc144681f5] received
+[2026-02-21 06:25:01,585: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=92, posts=[167, 168]
+[2026-02-21 06:25:01,586: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=92, posts=[167, 168]
+[2026-02-21 06:25:01,586: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=92, posts=2
+[2026-02-21 06:25:01,586: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=92, posts=2
+[2026-02-21 06:25:01,589: INFO/MainProcess] Calling OpenAI for viral_post_id=167
+[2026-02-21 06:25:01,593: INFO/MainProcess] Calling OpenAI for viral_post_id=168
+[2026-02-21 06:25:01,596: INFO/MainProcess] Analysis batch complete for scan_id=92: analyzed=2, cached=0, failed=0
+[2026-02-21 06:25:01,597: INFO/MainProcess] Task analysis.analyze_posts_batch[01f534b6-d086-454d-9cec-51fc144681f5] succeeded in 0.014189099998475285s: {'analyzed': 2, 'cached': 0, 'failed': 0}
+[2026-02-21 06:31:20,746: INFO/MainProcess] Task analysis.analyze_posts_batch[2cab560d-d051-4c12-9f37-d8846ff1fad3] received
+[2026-02-21 06:31:20,748: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=98, posts=[182, 183]
+[2026-02-21 06:31:20,748: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=98, posts=[182, 183]
+[2026-02-21 06:31:20,748: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=98, posts=2
+[2026-02-21 06:31:20,748: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=98, posts=2
+[2026-02-21 06:31:20,754: INFO/MainProcess] Calling OpenAI for viral_post_id=182
+[2026-02-21 06:31:20,760: INFO/MainProcess] Calling OpenAI for viral_post_id=183
+[2026-02-21 06:31:20,765: INFO/MainProcess] Analysis batch complete for scan_id=98: analyzed=2, cached=0, failed=0
+[2026-02-21 06:31:20,771: INFO/MainProcess] Task analysis.analyze_posts_batch[2cab560d-d051-4c12-9f37-d8846ff1fad3] succeeded in 0.0240644000004977s: {'analyzed': 2, 'cached': 0, 'failed': 0}

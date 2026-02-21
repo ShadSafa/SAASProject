@@ -6,8 +6,8 @@ interface AlgorithmFactorBadgeProps {
 export function AlgorithmFactorBadge({ label, score }: AlgorithmFactorBadgeProps) {
   if (score === null || score === undefined) {
     return (
-      <div className="flex items-center justify-between gap-2 px-3 py-2 bg-gray-100 rounded-md">
-        <span className="text-xs font-medium text-gray-700 truncate">{label}</span>
+      <div className="flex items-center justify-between gap-1 px-2 py-1 bg-gray-100 rounded-md">
+        <span className="text-xs font-medium text-gray-700 truncate leading-tight">{label}</span>
         <span className="text-xs font-medium text-gray-500 whitespace-nowrap">N/A</span>
       </div>
     );
@@ -22,9 +22,9 @@ export function AlgorithmFactorBadge({ label, score }: AlgorithmFactorBadgeProps
   }
 
   return (
-    <div className={`flex items-center justify-between gap-2 px-3 py-2 rounded-md ${colorClass}`}>
-      <span className="text-xs font-medium truncate">{label}</span>
-      <span className="text-sm font-bold whitespace-nowrap">{score.toFixed(0)}</span>
+    <div className={`flex items-center justify-between gap-1 px-2 py-1 rounded-md ${colorClass}`}>
+      <span className="text-xs font-medium truncate leading-tight">{label}</span>
+      <span className="text-xs font-bold whitespace-nowrap">{score.toFixed(0)}</span>
     </div>
   );
 }

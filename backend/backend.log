@@ -1078,3 +1078,186 @@ Traceback (most recent call last):
         "Unknown PG numeric type: %d" % coltype
     )
 sqlalchemy.exc.InvalidRequestError: Unknown PG numeric type: 114
+INFO:     127.0.0.1:57738 - "GET /api/analysis/132 HTTP/1.1" 401 Unauthorized
+2026-02-21 06:06:22,714 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-21 06:06:22,714 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.email_verified, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2026-02-21 06:06:22,714 INFO sqlalchemy.engine.Engine [cached since 225.4s ago] ('test@example.com',)
+2026-02-21 06:06:22,716 INFO sqlalchemy.engine.Engine SELECT instagram_accounts.user_id AS instagram_accounts_user_id, instagram_accounts.id AS instagram_accounts_id, instagram_accounts.instagram_user_id AS instagram_accounts_instagram_user_id, instagram_accounts.username AS instagram_accounts_username, instagram_accounts.access_token AS instagram_accounts_access_token, instagram_accounts.profile_picture AS instagram_accounts_profile_picture, instagram_accounts.account_type AS instagram_accounts_account_type, instagram_accounts.follower_count AS instagram_accounts_follower_count, instagram_accounts.token_expires_at AS instagram_accounts_token_expires_at, instagram_accounts.status AS instagram_accounts_status, instagram_accounts.created_at AS instagram_accounts_created_at, instagram_accounts.updated_at AS instagram_accounts_updated_at 
+FROM instagram_accounts 
+WHERE instagram_accounts.user_id IN ($1::INTEGER)
+2026-02-21 06:06:22,716 INFO sqlalchemy.engine.Engine [cached since 225.3s ago] (3,)
+2026-02-21 06:06:22,717 INFO sqlalchemy.engine.Engine SELECT viral_posts.id, viral_posts.scan_id, viral_posts.instagram_post_id, viral_posts.instagram_url, viral_posts.post_type, viral_posts.caption, viral_posts.hashtags, viral_posts.thumbnail_url, viral_posts.thumbnail_s3_url, viral_posts.creator_username, viral_posts.creator_follower_count, viral_posts.likes_count, viral_posts.comments_count, viral_posts.saves_count, viral_posts.shares_count, viral_posts.post_age_hours, viral_posts.viral_score, viral_posts.created_at, scans_1.id AS id_1, scans_1.user_id, scans_1.time_range, scans_1.scan_type, scans_1.target_url, scans_1.status, scans_1.error_message, scans_1.created_at AS created_at_1, scans_1.completed_at 
+FROM viral_posts LEFT OUTER JOIN scans AS scans_1 ON scans_1.id = viral_posts.scan_id 
+WHERE viral_posts.id = $1::INTEGER
+2026-02-21 06:06:22,717 INFO sqlalchemy.engine.Engine [cached since 213s ago] (132,)
+2026-02-21 06:06:22,718 INFO sqlalchemy.engine.Engine SELECT analyses.id, analyses.viral_post_id, analyses.why_viral_summary, analyses.posting_time_score, analyses.hook_strength_score, analyses.engagement_velocity_score, analyses.save_share_ratio_score, analyses.hashtag_performance_score, analyses.audience_retention_score, analyses.emotional_trigger, analyses.confidence_score, analyses.audience_demographics, analyses.content_category, analyses.niche, analyses.created_at 
+FROM analyses 
+WHERE analyses.viral_post_id = $1::INTEGER
+2026-02-21 06:06:22,718 INFO sqlalchemy.engine.Engine [cached since 212.9s ago] (132,)
+2026-02-21 06:06:22,718 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:61465 - "GET /api/analysis/132 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\fastapi\applications.py", line 1134, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\starlette\middleware\cors.py", line 87, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\fastapi\routing.py", line 424, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\fastapi\routing.py", line 312, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\backend\app\routes\analysis.py", line 36, in get_analysis
+        select(ViralPost).where(ViralPost.id == viral_post_id)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+    viral_post = result.scalar_one_or_none()
+    
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 449, in execute
+    result = await greenlet_spawn(
+             ^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2249, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        conn,
+        ^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+        statement, params or {}, execution_options=execution_options
+    )
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2366, in _handle_dbapi_exception
+    raise exc_info[1].with_traceback(exc_info[2])
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1983, in _exec_single_context
+    result = context._setup_result_proxy()
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1875, in _setup_result_proxy
+    result = _cursor.CursorResult(self, strategy, cursor_description)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\cursor.py", line 1549, in __init__
+    metadata = self._init_metadata(context, cursor_description)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\cursor.py", line 1604, in _init_metadata
+    metadata = CursorResultMetaData(self, cursor_description)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\cursor.py", line 387, in __init__
+    raw = self._merge_cursor_description(
+        context,
+    ...<6 lines>...
+        loose_column_name_matching,
+    )
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\cursor.py", line 596, in _merge_cursor_description
+    context.get_result_processor(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        rmap_entry[RM_TYPE],
+        ^^^^^^^^^^^^^^^^^^^^
+        rmap_entry[RM_RENDERED_NAME],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cursor_description[idx][1],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1809, in get_result_processor
+    return type_._cached_result_processor(self.dialect, coltype)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\sql\type_api.py", line 950, in _cached_result_processor
+    rp = d["impl"].result_processor(dialect, coltype)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 345, in result_processor
+    raise exc.InvalidRequestError(
+        "Unknown PG numeric type: %d" % coltype
+    )
+sqlalchemy.exc.InvalidRequestError: Unknown PG numeric type: 114

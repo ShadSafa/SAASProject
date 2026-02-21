@@ -1,0 +1,169 @@
+INFO:     Started server process [18912]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:61473 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61474 - "GET /api/analysis/144 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55525 - "GET /api/analysis/144 HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:54654 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54659 - "GET /scans/status/84 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54663 - "GET /api/analysis/149 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54662 - "GET /api/analysis/148 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53164 - "GET /api/analysis/148 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54063 - "GET /api/analysis/149 HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:57153 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59136 - "GET /scans/status/86 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63067 - "GET /api/analysis/155 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63068 - "GET /api/analysis/156 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63013 - "GET /api/analysis/155 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56695 - "GET /api/analysis/156 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56704 - "GET /api/analysis/150 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56705 - "GET /api/analysis/151 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56706 - "GET /api/analysis/152 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56707 - "GET /api/analysis/153 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56708 - "GET /api/analysis/154 HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:57980 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57987 - "GET /scans/status/87 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57991 - "GET /api/analysis/158 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57989 - "GET /api/analysis/157 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57994 - "GET /api/analysis/158 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57995 - "GET /api/analysis/157 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54936 - "GET /integrations/instagram/accounts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51354 - "GET /integrations/instagram/accounts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64571 - "GET /integrations/instagram/authorize HTTP/1.1" 307 Temporary Redirect
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:54982 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54984 - "GET /scans/status/88 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50558 - "GET /api/analysis/160 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50559 - "GET /api/analysis/159 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50461 - "GET /api/analysis/159 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50460 - "GET /api/analysis/160 HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:59522 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59524 - "GET /scans/status/89 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59527 - "GET /api/analysis/162 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59528 - "GET /api/analysis/161 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59532 - "GET /api/analysis/161 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59531 - "GET /api/analysis/162 HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:61625 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54450 - "GET /scans/status/90 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64917 - "GET /api/analysis/163 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64918 - "GET /api/analysis/164 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60410 - "GET /api/analysis/164 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60409 - "GET /api/analysis/163 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65031 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65037 - "GET /api/analysis/150 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65038 - "GET /api/analysis/151 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65039 - "GET /api/analysis/152 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65040 - "GET /api/analysis/153 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65041 - "GET /api/analysis/154 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64044 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61792 - "GET /scans/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61794 - "GET /scans/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56626 - "POST /auth/logout HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61768 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64326 - "GET /scans/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65285 - "GET /scans/history HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:58750 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65096 - "GET /scans/status/91 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59954 - "GET /api/analysis/165 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59955 - "GET /api/analysis/166 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49698 - "GET /api/analysis/165 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49699 - "GET /api/analysis/166 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52883 - "GET /scans/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64568 - "GET /scans/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54810 - "GET /api/analysis/165 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54811 - "GET /api/analysis/166 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57950 - "GET /api/analysis/165 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57952 - "GET /api/analysis/166 HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:52148 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62244 - "GET /scans/status/92 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49375 - "GET /api/analysis/168 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49376 - "GET /api/analysis/167 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57259 - "GET /api/analysis/168 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57261 - "GET /api/analysis/167 HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:55684 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55686 - "GET /scans/status/93 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55690 - "GET /api/analysis/169 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55689 - "GET /api/analysis/170 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55695 - "GET /api/analysis/170 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55694 - "GET /api/analysis/169 HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:59948 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62906 - "GET /scans/status/94 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58883 - "GET /api/analysis/172 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58884 - "GET /api/analysis/171 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53191 - "GET /api/analysis/172 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53193 - "GET /api/analysis/171 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58571 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58574 - "GET /scans/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58576 - "GET /scans/history HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:54158 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60379 - "GET /scans/status/95 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65120 - "GET /api/analysis/173 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65121 - "GET /api/analysis/174 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61132 - "GET /api/analysis/173 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61133 - "GET /api/analysis/174 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52713 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60855 - "GET /scans/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60857 - "GET /scans/history HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:55085 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49978 - "GET /scans/status/97 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61028 - "GET /api/analysis/180 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61029 - "GET /api/analysis/181 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49686 - "GET /api/analysis/180 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49688 - "GET /api/analysis/181 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58176 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53010 - "GET /scans/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53012 - "GET /scans/history HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:59608 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52412 - "GET /scans/status/98 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51727 - "GET /api/analysis/182 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51728 - "GET /api/analysis/183 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49937 - "GET /api/analysis/183 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49935 - "GET /api/analysis/182 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63356 - "GET /scans/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57503 - "GET /scans/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63706 - "GET /api/analysis/183 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63705 - "GET /api/analysis/182 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59864 - "GET /api/analysis/183 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59866 - "GET /api/analysis/182 HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:62166 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50438 - "GET /scans/status/99 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58772 - "GET /api/analysis/185 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58773 - "GET /api/analysis/184 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65103 - "GET /api/analysis/185 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65104 - "GET /api/analysis/184 HTTP/1.1" 200 OK
+S3 not configured — skipping thumbnail cache
+S3 not configured — skipping thumbnail cache
+INFO:     127.0.0.1:56820 - "POST /scans/trigger HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51985 - "GET /scans/status/101 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53514 - "GET /api/analysis/192 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53515 - "GET /api/analysis/191 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52768 - "GET /api/analysis/192 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52770 - "GET /api/analysis/191 HTTP/1.1" 200 OK

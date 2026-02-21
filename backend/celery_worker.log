@@ -1,0 +1,594 @@
+ 
+ -------------- analysis_worker@ShadiLP v5.6.2 (recovery)
+--- ***** ----- 
+-- ******* ---- Windows-11-10.0.26200-SP0 2026-02-21 05:59:30
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         instagram_analyzer:0x2bd7db26f90
+- ** ---------- .> transport:   redis://localhost:6379/0
+- ** ---------- .> results:     redis://localhost:6379/1
+- *** --- * --- .> concurrency: 8 (solo)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . analysis.analyze_posts_batch
+  . scan.execute_scan
+
+[2026-02-21 05:59:30,281: INFO/MainProcess] Connected to redis://localhost:6379/0
+[2026-02-21 05:59:30,310: INFO/MainProcess] mingle: searching for neighbors
+[2026-02-21 05:59:31,348: INFO/MainProcess] mingle: all alone
+[2026-02-21 05:59:31,472: INFO/MainProcess] analysis_worker@ShadiLP ready.
+[2026-02-21 05:59:31,475: INFO/MainProcess] Task analysis.analyze_posts_batch[a740a0da-31aa-4519-9024-628f67f6fe3b] received
+[2026-02-21 05:59:31,480: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=53, posts=[85, 86]
+[2026-02-21 05:59:31,480: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=53, posts=[85, 86]
+[2026-02-21 05:59:31,481: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=53, posts=2
+[2026-02-21 05:59:31,481: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=53, posts=2
+[2026-02-21 05:59:31,572: WARNING/MainProcess] ViralPost 85 not found in DB
+[2026-02-21 05:59:31,574: WARNING/MainProcess] ViralPost 86 not found in DB
+[2026-02-21 05:59:31,574: INFO/MainProcess] Analysis batch complete for scan_id=53: analyzed=0, cached=0, failed=2
+[2026-02-21 05:59:31,576: INFO/MainProcess] Task analysis.analyze_posts_batch[a740a0da-31aa-4519-9024-628f67f6fe3b] succeeded in 0.10100840000086464s: {'analyzed': 0, 'cached': 0, 'failed': 2}
+[2026-02-21 05:59:31,578: INFO/MainProcess] Task analysis.analyze_posts_batch[9022ce20-a273-4ff6-b172-ad699a62ac0a] received
+[2026-02-21 05:59:31,579: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=59, posts=[98, 99]
+[2026-02-21 05:59:31,579: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=59, posts=[98, 99]
+[2026-02-21 05:59:31,579: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=59, posts=2
+[2026-02-21 05:59:31,579: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=59, posts=2
+[2026-02-21 05:59:31,581: WARNING/MainProcess] ViralPost 98 not found in DB
+[2026-02-21 05:59:31,582: WARNING/MainProcess] ViralPost 99 not found in DB
+[2026-02-21 05:59:31,582: INFO/MainProcess] Analysis batch complete for scan_id=59: analyzed=0, cached=0, failed=2
+[2026-02-21 05:59:31,583: INFO/MainProcess] Task analysis.analyze_posts_batch[9022ce20-a273-4ff6-b172-ad699a62ac0a] succeeded in 0.005769899998995243s: {'analyzed': 0, 'cached': 0, 'failed': 2}
+[2026-02-21 05:59:31,585: INFO/MainProcess] Task analysis.analyze_posts_batch[e3eaa3f7-45ad-43e1-8b54-cbf51ab72416] received
+[2026-02-21 05:59:31,586: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=60, posts=[100, 101]
+[2026-02-21 05:59:31,586: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=60, posts=[100, 101]
+[2026-02-21 05:59:31,586: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=60, posts=2
+[2026-02-21 05:59:31,586: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=60, posts=2
+[2026-02-21 05:59:31,587: WARNING/MainProcess] ViralPost 100 not found in DB
+[2026-02-21 05:59:31,589: WARNING/MainProcess] ViralPost 101 not found in DB
+[2026-02-21 05:59:31,589: INFO/MainProcess] Analysis batch complete for scan_id=60: analyzed=0, cached=0, failed=2
+[2026-02-21 05:59:31,590: INFO/MainProcess] Task analysis.analyze_posts_batch[e3eaa3f7-45ad-43e1-8b54-cbf51ab72416] succeeded in 0.004852599999139784s: {'analyzed': 0, 'cached': 0, 'failed': 2}
+[2026-02-21 05:59:31,592: INFO/MainProcess] Task analysis.analyze_posts_batch[10e52cbf-2f55-4379-9f11-76e909c212b0] received
+[2026-02-21 05:59:31,592: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=81, posts=[142, 143]
+[2026-02-21 05:59:31,592: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=81, posts=[142, 143]
+[2026-02-21 05:59:31,592: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=81, posts=2
+[2026-02-21 05:59:31,593: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=81, posts=2
+[2026-02-21 05:59:31,594: INFO/MainProcess] Calling OpenAI for viral_post_id=142
+[2026-02-21 05:59:31,604: INFO/MainProcess] Calling OpenAI for viral_post_id=143
+[2026-02-21 05:59:31,620: INFO/MainProcess] Analysis batch complete for scan_id=81: analyzed=2, cached=0, failed=0
+[2026-02-21 05:59:31,622: INFO/MainProcess] Task analysis.analyze_posts_batch[10e52cbf-2f55-4379-9f11-76e909c212b0] succeeded in 0.03027460000157589s: {'analyzed': 2, 'cached': 0, 'failed': 0}
+[2026-02-21 05:59:37,678: INFO/MainProcess] Task analysis.analyze_posts_batch[7104a120-b164-4c4b-a354-f2265fcf7f0f] received
+[2026-02-21 05:59:37,680: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=82, posts=[144, 145]
+[2026-02-21 05:59:37,680: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=82, posts=[144, 145]
+[2026-02-21 05:59:37,680: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=82, posts=2
+[2026-02-21 05:59:37,680: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=82, posts=2
+[2026-02-21 05:59:37,683: INFO/MainProcess] Calling OpenAI for viral_post_id=144
+[2026-02-21 05:59:37,686: INFO/MainProcess] Calling OpenAI for viral_post_id=145
+[2026-02-21 05:59:37,688: INFO/MainProcess] Analysis batch complete for scan_id=82: analyzed=2, cached=0, failed=0
+[2026-02-21 05:59:37,690: INFO/MainProcess] Task analysis.analyze_posts_batch[7104a120-b164-4c4b-a354-f2265fcf7f0f] succeeded in 0.01180699999895296s: {'analyzed': 2, 'cached': 0, 'failed': 0}
+[2026-02-21 06:07:12,962: INFO/MainProcess] Task analysis.analyze_posts_batch[99066013-bd47-4b41-a272-39745b7ab649] received
+[2026-02-21 06:07:12,966: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=64, posts=[108, 109]
+[2026-02-21 06:07:12,966: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=64, posts=[108, 109]
+[2026-02-21 06:07:12,966: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=64, posts=2
+[2026-02-21 06:07:12,966: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=64, posts=2
+[2026-02-21 06:07:12,967: INFO/MainProcess] Cache hit for viral_post_id=108
+[2026-02-21 06:07:12,978: ERROR/MainProcess] Analysis failed for viral_post_id=108: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+[SQL: INSERT INTO analyses (viral_post_id, why_viral_summary, posting_time_score, hook_strength_score, engagement_velocity_score, save_share_ratio_score, hashtag_performance_score, audience_retention_score, emotional_trigger, confidence_score, content_category, niche, created_at) VALUES ($1::INTEGER, $2::VARCHAR, $3::FLOAT, $4::FLOAT, $5::FLOAT, $6::FLOAT, $7::JSON, $8::FLOAT, $9::VARCHAR, $10::FLOAT, $11::VARCHAR, $12::VARCHAR, $13::TIMESTAMP WITHOUT TIME ZONE) RETURNING analyses.id]
+[parameters: (108, 'This post exploded with high engagement velocity (100/100), suggesting strong initial appeal. The Photo format resonated with the audience, driving rapid likes and shares.', 30.0, 100.0, 100.0, 72.59, '{"score": 50.0}', 92.59, 'awe', None, None, None, datetime.datetime(2026, 2, 21, 4, 7, 12, 968639))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
+    self._rows = deque(await prepared_stmt.fetch(*parameters))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\asyncpg\prepared_stmt.py", line 177, in fetch
+    data = await self.__bind_execute(args, 0, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\asyncpg\prepared_stmt.py", line 268, in __bind_execute
+    data, status, _ = await self.__do_execute(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda protocol: protocol.bind_execute(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            self._state, args, '', limit, True, timeout))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\asyncpg\prepared_stmt.py", line 257, in __do_execute
+    return await executor(protocol)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "asyncpg/protocol/protocol.pyx", line 205, in bind_execute
+asyncpg.exceptions.ForeignKeyViolationError: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.IntegrityError: <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\backend\app\tasks\analysis_jobs.py", line 95, in _run_analysis
+    await db.flush()  # Flush each record to prevent asyncpg concurrent ops
+    ^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 787, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.exc.IntegrityError: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+[SQL: INSERT INTO analyses (viral_post_id, why_viral_summary, posting_time_score, hook_strength_score, engagement_velocity_score, save_share_ratio_score, hashtag_performance_score, audience_retention_score, emotional_trigger, confidence_score, content_category, niche, created_at) VALUES ($1::INTEGER, $2::VARCHAR, $3::FLOAT, $4::FLOAT, $5::FLOAT, $6::FLOAT, $7::JSON, $8::FLOAT, $9::VARCHAR, $10::FLOAT, $11::VARCHAR, $12::VARCHAR, $13::TIMESTAMP WITHOUT TIME ZONE) RETURNING analyses.id]
+[parameters: (108, 'This post exploded with high engagement velocity (100/100), suggesting strong initial appeal. The Photo format resonated with the audience, driving rapid likes and shares.', 30.0, 100.0, 100.0, 72.59, '{"score": 50.0}', 92.59, 'awe', None, None, None, datetime.datetime(2026, 2, 21, 4, 7, 12, 968639))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[2026-02-21 06:07:13,063: INFO/MainProcess] Cache hit for viral_post_id=109
+[2026-02-21 06:07:13,063: ERROR/MainProcess] Analysis failed for viral_post_id=109: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+[SQL: INSERT INTO analyses (viral_post_id, why_viral_summary, posting_time_score, hook_strength_score, engagement_velocity_score, save_share_ratio_score, hashtag_performance_score, audience_retention_score, emotional_trigger, confidence_score, content_category, niche, created_at) VALUES ($1::INTEGER, $2::VARCHAR, $3::FLOAT, $4::FLOAT, $5::FLOAT, $6::FLOAT, $7::JSON, $8::FLOAT, $9::VARCHAR, $10::FLOAT, $11::VARCHAR, $12::VARCHAR, $13::TIMESTAMP WITHOUT TIME ZONE) RETURNING analyses.id]
+[parameters: (108, 'This post exploded with high engagement velocity (100/100), suggesting strong initial appeal. The Photo format resonated with the audience, driving rapid likes and shares.', 30.0, 100.0, 100.0, 72.59, '{"score": 50.0}', 92.59, 'awe', None, None, None, datetime.datetime(2026, 2, 21, 4, 7, 12, 968639))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) (Background on this error at: https://sqlalche.me/e/20/7s2a)
+Traceback (most recent call last):
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\backend\app\tasks\analysis_jobs.py", line 95, in _run_analysis
+    await db.flush()  # Flush each record to prevent asyncpg concurrent ops
+    ^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 787, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4423, in _flush
+    flush_context.transaction = transaction = self._autobegin_t()._begin()
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _begin
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 101, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 971, in _raise_for_prerequisite_state
+    raise sa_exc.PendingRollbackError(
+    ...<6 lines>...
+    )
+sqlalchemy.exc.PendingRollbackError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+[SQL: INSERT INTO analyses (viral_post_id, why_viral_summary, posting_time_score, hook_strength_score, engagement_velocity_score, save_share_ratio_score, hashtag_performance_score, audience_retention_score, emotional_trigger, confidence_score, content_category, niche, created_at) VALUES ($1::INTEGER, $2::VARCHAR, $3::FLOAT, $4::FLOAT, $5::FLOAT, $6::FLOAT, $7::JSON, $8::FLOAT, $9::VARCHAR, $10::FLOAT, $11::VARCHAR, $12::VARCHAR, $13::TIMESTAMP WITHOUT TIME ZONE) RETURNING analyses.id]
+[parameters: (108, 'This post exploded with high engagement velocity (100/100), suggesting strong initial appeal. The Photo format resonated with the audience, driving rapid likes and shares.', 30.0, 100.0, 100.0, 72.59, '{"score": 50.0}', 92.59, 'awe', None, None, None, datetime.datetime(2026, 2, 21, 4, 7, 12, 968639))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) (Background on this error at: https://sqlalche.me/e/20/7s2a)
+[2026-02-21 06:07:13,072: ERROR/MainProcess] analyze_posts_batch failed for scan_id=64: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+[SQL: INSERT INTO analyses (viral_post_id, why_viral_summary, posting_time_score, hook_strength_score, engagement_velocity_score, save_share_ratio_score, hashtag_performance_score, audience_retention_score, emotional_trigger, confidence_score, content_category, niche, created_at) VALUES ($1::INTEGER, $2::VARCHAR, $3::FLOAT, $4::FLOAT, $5::FLOAT, $6::FLOAT, $7::JSON, $8::FLOAT, $9::VARCHAR, $10::FLOAT, $11::VARCHAR, $12::VARCHAR, $13::TIMESTAMP WITHOUT TIME ZONE) RETURNING analyses.id]
+[parameters: (108, 'This post exploded with high engagement velocity (100/100), suggesting strong initial appeal. The Photo format resonated with the audience, driving rapid likes and shares.', 30.0, 100.0, 100.0, 72.59, '{"score": 50.0}', 92.59, 'awe', None, None, None, datetime.datetime(2026, 2, 21, 4, 7, 12, 968639))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) (Background on this error at: https://sqlalche.me/e/20/7s2a)
+Traceback (most recent call last):
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\backend\app\tasks\analysis_jobs.py", line 49, in analyze_posts_batch
+    result = loop.run_until_complete(_run_analysis(scan_id, viral_post_ids))
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\backend\app\tasks\analysis_jobs.py", line 152, in _run_analysis
+    await db.commit()
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 1000, in commit
+    await greenlet_spawn(self.sync_session.commit)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 101, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 971, in _raise_for_prerequisite_state
+    raise sa_exc.PendingRollbackError(
+    ...<6 lines>...
+    )
+sqlalchemy.exc.PendingRollbackError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+[SQL: INSERT INTO analyses (viral_post_id, why_viral_summary, posting_time_score, hook_strength_score, engagement_velocity_score, save_share_ratio_score, hashtag_performance_score, audience_retention_score, emotional_trigger, confidence_score, content_category, niche, created_at) VALUES ($1::INTEGER, $2::VARCHAR, $3::FLOAT, $4::FLOAT, $5::FLOAT, $6::FLOAT, $7::JSON, $8::FLOAT, $9::VARCHAR, $10::FLOAT, $11::VARCHAR, $12::VARCHAR, $13::TIMESTAMP WITHOUT TIME ZONE) RETURNING analyses.id]
+[parameters: (108, 'This post exploded with high engagement velocity (100/100), suggesting strong initial appeal. The Photo format resonated with the audience, driving rapid likes and shares.', 30.0, 100.0, 100.0, 72.59, '{"score": 50.0}', 92.59, 'awe', None, None, None, datetime.datetime(2026, 2, 21, 4, 7, 12, 968639))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) (Background on this error at: https://sqlalche.me/e/20/7s2a)
+[2026-02-21 06:07:13,084: INFO/MainProcess] Task analysis.analyze_posts_batch[99066013-bd47-4b41-a272-39745b7ab649] succeeded in 0.12186570000267238s: {'analyzed': 0, 'cached': 0, 'failed': 2}
+[2026-02-21 06:07:13,086: INFO/MainProcess] Task analysis.analyze_posts_batch[dd126c81-9d2f-45d2-9e88-282259fb9e01] received
+[2026-02-21 06:07:13,087: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=64, posts=[108, 109]
+[2026-02-21 06:07:13,087: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=64, posts=[108, 109]
+[2026-02-21 06:07:13,087: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=64, posts=2
+[2026-02-21 06:07:13,087: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=64, posts=2
+[2026-02-21 06:07:13,088: INFO/MainProcess] Cache hit for viral_post_id=108
+[2026-02-21 06:07:13,089: ERROR/MainProcess] Analysis failed for viral_post_id=108: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+[SQL: INSERT INTO analyses (viral_post_id, why_viral_summary, posting_time_score, hook_strength_score, engagement_velocity_score, save_share_ratio_score, hashtag_performance_score, audience_retention_score, emotional_trigger, confidence_score, content_category, niche, created_at) VALUES ($1::INTEGER, $2::VARCHAR, $3::FLOAT, $4::FLOAT, $5::FLOAT, $6::FLOAT, $7::JSON, $8::FLOAT, $9::VARCHAR, $10::FLOAT, $11::VARCHAR, $12::VARCHAR, $13::TIMESTAMP WITHOUT TIME ZONE) RETURNING analyses.id]
+[parameters: (108, 'This post exploded with high engagement velocity (100/100), suggesting strong initial appeal. The Photo format resonated with the audience, driving rapid likes and shares.', 30.0, 100.0, 100.0, 72.59, '{"score": 50.0}', 92.59, 'awe', None, None, None, datetime.datetime(2026, 2, 21, 4, 7, 13, 88485))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
+    self._rows = deque(await prepared_stmt.fetch(*parameters))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\asyncpg\prepared_stmt.py", line 177, in fetch
+    data = await self.__bind_execute(args, 0, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\asyncpg\prepared_stmt.py", line 268, in __bind_execute
+    data, status, _ = await self.__do_execute(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda protocol: protocol.bind_execute(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            self._state, args, '', limit, True, timeout))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\asyncpg\prepared_stmt.py", line 257, in __do_execute
+    return await executor(protocol)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "asyncpg/protocol/protocol.pyx", line 205, in bind_execute
+asyncpg.exceptions.ForeignKeyViolationError: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.IntegrityError: <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\backend\app\tasks\analysis_jobs.py", line 95, in _run_analysis
+    await db.flush()  # Flush each record to prevent asyncpg concurrent ops
+    ^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 787, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.exc.IntegrityError: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+[SQL: INSERT INTO analyses (viral_post_id, why_viral_summary, posting_time_score, hook_strength_score, engagement_velocity_score, save_share_ratio_score, hashtag_performance_score, audience_retention_score, emotional_trigger, confidence_score, content_category, niche, created_at) VALUES ($1::INTEGER, $2::VARCHAR, $3::FLOAT, $4::FLOAT, $5::FLOAT, $6::FLOAT, $7::JSON, $8::FLOAT, $9::VARCHAR, $10::FLOAT, $11::VARCHAR, $12::VARCHAR, $13::TIMESTAMP WITHOUT TIME ZONE) RETURNING analyses.id]
+[parameters: (108, 'This post exploded with high engagement velocity (100/100), suggesting strong initial appeal. The Photo format resonated with the audience, driving rapid likes and shares.', 30.0, 100.0, 100.0, 72.59, '{"score": 50.0}', 92.59, 'awe', None, None, None, datetime.datetime(2026, 2, 21, 4, 7, 13, 88485))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[2026-02-21 06:07:13,109: INFO/MainProcess] Cache hit for viral_post_id=109
+[2026-02-21 06:07:13,109: ERROR/MainProcess] Analysis failed for viral_post_id=109: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+[SQL: INSERT INTO analyses (viral_post_id, why_viral_summary, posting_time_score, hook_strength_score, engagement_velocity_score, save_share_ratio_score, hashtag_performance_score, audience_retention_score, emotional_trigger, confidence_score, content_category, niche, created_at) VALUES ($1::INTEGER, $2::VARCHAR, $3::FLOAT, $4::FLOAT, $5::FLOAT, $6::FLOAT, $7::JSON, $8::FLOAT, $9::VARCHAR, $10::FLOAT, $11::VARCHAR, $12::VARCHAR, $13::TIMESTAMP WITHOUT TIME ZONE) RETURNING analyses.id]
+[parameters: (108, 'This post exploded with high engagement velocity (100/100), suggesting strong initial appeal. The Photo format resonated with the audience, driving rapid likes and shares.', 30.0, 100.0, 100.0, 72.59, '{"score": 50.0}', 92.59, 'awe', None, None, None, datetime.datetime(2026, 2, 21, 4, 7, 13, 88485))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) (Background on this error at: https://sqlalche.me/e/20/7s2a)
+Traceback (most recent call last):
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\backend\app\tasks\analysis_jobs.py", line 95, in _run_analysis
+    await db.flush()  # Flush each record to prevent asyncpg concurrent ops
+    ^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 787, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4423, in _flush
+    flush_context.transaction = transaction = self._autobegin_t()._begin()
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _begin
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 101, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 971, in _raise_for_prerequisite_state
+    raise sa_exc.PendingRollbackError(
+    ...<6 lines>...
+    )
+sqlalchemy.exc.PendingRollbackError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+[SQL: INSERT INTO analyses (viral_post_id, why_viral_summary, posting_time_score, hook_strength_score, engagement_velocity_score, save_share_ratio_score, hashtag_performance_score, audience_retention_score, emotional_trigger, confidence_score, content_category, niche, created_at) VALUES ($1::INTEGER, $2::VARCHAR, $3::FLOAT, $4::FLOAT, $5::FLOAT, $6::FLOAT, $7::JSON, $8::FLOAT, $9::VARCHAR, $10::FLOAT, $11::VARCHAR, $12::VARCHAR, $13::TIMESTAMP WITHOUT TIME ZONE) RETURNING analyses.id]
+[parameters: (108, 'This post exploded with high engagement velocity (100/100), suggesting strong initial appeal. The Photo format resonated with the audience, driving rapid likes and shares.', 30.0, 100.0, 100.0, 72.59, '{"score": 50.0}', 92.59, 'awe', None, None, None, datetime.datetime(2026, 2, 21, 4, 7, 13, 88485))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) (Background on this error at: https://sqlalche.me/e/20/7s2a)
+[2026-02-21 06:07:13,114: ERROR/MainProcess] analyze_posts_batch failed for scan_id=64: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+[SQL: INSERT INTO analyses (viral_post_id, why_viral_summary, posting_time_score, hook_strength_score, engagement_velocity_score, save_share_ratio_score, hashtag_performance_score, audience_retention_score, emotional_trigger, confidence_score, content_category, niche, created_at) VALUES ($1::INTEGER, $2::VARCHAR, $3::FLOAT, $4::FLOAT, $5::FLOAT, $6::FLOAT, $7::JSON, $8::FLOAT, $9::VARCHAR, $10::FLOAT, $11::VARCHAR, $12::VARCHAR, $13::TIMESTAMP WITHOUT TIME ZONE) RETURNING analyses.id]
+[parameters: (108, 'This post exploded with high engagement velocity (100/100), suggesting strong initial appeal. The Photo format resonated with the audience, driving rapid likes and shares.', 30.0, 100.0, 100.0, 72.59, '{"score": 50.0}', 92.59, 'awe', None, None, None, datetime.datetime(2026, 2, 21, 4, 7, 13, 88485))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) (Background on this error at: https://sqlalche.me/e/20/7s2a)
+Traceback (most recent call last):
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\backend\app\tasks\analysis_jobs.py", line 49, in analyze_posts_batch
+    result = loop.run_until_complete(_run_analysis(scan_id, viral_post_ids))
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\backend\app\tasks\analysis_jobs.py", line 152, in _run_analysis
+    await db.commit()
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 1000, in commit
+    await greenlet_spawn(self.sync_session.commit)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 101, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shadi\Documents\Development\AntiGravity\Saas Project\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 971, in _raise_for_prerequisite_state
+    raise sa_exc.PendingRollbackError(
+    ...<6 lines>...
+    )
+sqlalchemy.exc.PendingRollbackError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "analyses" violates foreign key constraint "analyses_viral_post_id_fkey"
+DETAIL:  Key (viral_post_id)=(108) is not present in table "viral_posts".
+[SQL: INSERT INTO analyses (viral_post_id, why_viral_summary, posting_time_score, hook_strength_score, engagement_velocity_score, save_share_ratio_score, hashtag_performance_score, audience_retention_score, emotional_trigger, confidence_score, content_category, niche, created_at) VALUES ($1::INTEGER, $2::VARCHAR, $3::FLOAT, $4::FLOAT, $5::FLOAT, $6::FLOAT, $7::JSON, $8::FLOAT, $9::VARCHAR, $10::FLOAT, $11::VARCHAR, $12::VARCHAR, $13::TIMESTAMP WITHOUT TIME ZONE) RETURNING analyses.id]
+[parameters: (108, 'This post exploded with high engagement velocity (100/100), suggesting strong initial appeal. The Photo format resonated with the audience, driving rapid likes and shares.', 30.0, 100.0, 100.0, 72.59, '{"score": 50.0}', 92.59, 'awe', None, None, None, datetime.datetime(2026, 2, 21, 4, 7, 13, 88485))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) (Background on this error at: https://sqlalche.me/e/20/7s2a)
+[2026-02-21 06:07:13,119: INFO/MainProcess] Task analysis.analyze_posts_batch[dd126c81-9d2f-45d2-9e88-282259fb9e01] succeeded in 0.03280409999933909s: {'analyzed': 0, 'cached': 0, 'failed': 2}
+[2026-02-21 06:25:57,345: INFO/MainProcess] Task analysis.analyze_posts_batch[d979efec-1083-4f77-b469-05237613da14] received
+[2026-02-21 06:25:57,368: INFO/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=94, posts=[171, 172]
+[2026-02-21 06:25:57,369: WARNING/MainProcess] [CELERY TASK STARTED] analyze_posts_batch called with scan_id=94, posts=[171, 172]
+[2026-02-21 06:25:57,371: INFO/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=94, posts=2
+[2026-02-21 06:25:57,371: WARNING/MainProcess] [_RUN_ANALYSIS] Starting analysis for scan_id=94, posts=2
+[2026-02-21 06:25:57,436: INFO/MainProcess] Calling OpenAI for viral_post_id=171
+[2026-02-21 06:25:57,451: INFO/MainProcess] Calling OpenAI for viral_post_id=172
+[2026-02-21 06:25:57,455: INFO/MainProcess] Analysis batch complete for scan_id=94: analyzed=2, cached=0, failed=0
+[2026-02-21 06:25:57,459: INFO/MainProcess] Task analysis.analyze_posts_batch[d979efec-1083-4f77-b469-05237613da14] succeeded in 0.11095959999875049s: {'analyzed': 2, 'cached': 0, 'failed': 0}
