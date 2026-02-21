@@ -49,7 +49,7 @@ export default function ViralPostCard({ post, rank }: ViralPostCardProps) {
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow group">
       {/* Thumbnail */}
-      <div className="relative">
+      <div className="relative bg-gray-100">
         {thumbSrc ? (
           <a href={post.instagram_url || '#'} target="_blank" rel="noopener noreferrer">
             <img
@@ -60,24 +60,23 @@ export default function ViralPostCard({ post, rank }: ViralPostCardProps) {
               onError={(e) => {
                 // If thumbnail fails to load, show placeholder
                 (e.target as HTMLImageElement).style.display = 'none';
-                (e.target as HTMLImageElement).parentElement!.classList.add('bg-gray-100');
               }}
             />
           </a>
         ) : (
-          <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
+          <div className="w-full h-48 flex items-center justify-center">
             <span className="text-gray-400 text-sm">No preview</span>
           </div>
         )}
 
-        {/* Rank badge */}
-        <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded-full">
+        {/* Rank badge - positioned absolutely with high z-index to stay on top */}
+        <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded-full z-10 pointer-events-none">
           #{rank}
         </div>
 
         {/* Post type badge */}
         {post.post_type && (
-          <div className="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded-full capitalize">
+          <div className="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded-full capitalize z-10 pointer-events-none">
             {post.post_type}
           </div>
         )}
