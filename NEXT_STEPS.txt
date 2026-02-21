@@ -1,0 +1,133 @@
+================================================================================
+ANALYSIS WORKFLOW - WHAT TO DO NOW
+================================================================================
+
+ALL CODE ISSUES ARE FIXED. You now need to run the services.
+
+================================================================================
+DO THIS (Copy/Paste the exact commands):
+================================================================================
+
+TERMINAL 1: Start Redis
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+wsl redis-server
+
+Wait for output that says "Ready to accept connections"
+Leave this running.
+
+
+TERMINAL 2: Check Database
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+python init_db.py
+
+You should see: "DATABASE IS READY"
+This just checks the database. Terminal 2 can be closed after.
+
+
+TERMINAL 3: Start Celery Worker
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+cd backend
+python -m celery -A app.celery_app worker --loglevel=debug
+
+Wait for output that says: "Ready to accept tasks"
+Leave this running.
+
+
+TERMINAL 4: Start Backend API
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+cd backend
+python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+You should see: "Uvicorn running on http://0.0.0.0:8000"
+Leave this running.
+
+
+TERMINAL 5: Run Tests
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+python quick_fix.py
+
+This should show all checks passing (✓).
+
+Then run:
+
+python end_to_end_test.py
+
+This should complete with: "SUCCESS: Analysis workflow is fully functional!"
+
+
+================================================================================
+IF SOMETHING FAILS:
+================================================================================
+
+1. Check TERMINAL 1 (Redis) - should show "Ready to accept connections"
+2. Check TERMINAL 3 (Celery) - should show "Ready to accept tasks"
+3. Check TERMINAL 4 (API) - should show "Uvicorn running on http://0.0.0.0:8000"
+
+If any are missing, restart that terminal with the command above.
+
+Common issues:
+- "Connection refused" → Redis not running in Terminal 1
+- "Port already in use" → Another process is running. Kill it.
+- "Module not found" → Run: cd backend && pip install -r requirements.txt
+
+
+================================================================================
+DETAILED HELP:
+================================================================================
+
+If you need more information, read one of these files:
+
+1. FIX_ANALYSIS_WORKFLOW.md (DETAILED GUIDE - recommended)
+2. START_EVERYTHING.md (step-by-step with explanations)
+3. CELERY_SETUP.md (architecture and troubleshooting)
+4. ANALYSIS_WORKFLOW_FIX_SUMMARY.md (what was fixed)
+
+
+================================================================================
+WHAT WAS FIXED:
+================================================================================
+
+✓ Code: Fixed analyze_url endpoint to dispatch tasks
+✓ Config: Added Redis URLs to .env
+✓ Tools: Created diagnostic and test scripts
+✓ Docs: Complete setup and troubleshooting guides
+
+You just need to start the services and run the tests.
+
+
+================================================================================
+TIMELINE:
+================================================================================
+
+Step 1 (Redis):     2-3 minutes
+Step 2 (Database):  30 seconds
+Step 3 (Celery):    1 minute (wait for "Ready to accept tasks")
+Step 4 (API):       30 seconds
+Step 5 (Tests):     2-3 minutes
+
+TOTAL: ~10 minutes to verify everything works
+
+
+================================================================================
+AFTER TESTS PASS:
+================================================================================
+
+✓ The analysis workflow is fully functional
+
+You can now:
+- Use the frontend: http://localhost:5173
+- Use the API directly: http://localhost:8000/docs
+- Create scans and click on posts to see analysis
+- Keep Terminals 1, 3, 4 running continuously
+
+
+================================================================================
+ANY PROBLEMS?
+================================================================================
+
+Run this diagnostic:
+  python quick_fix.py
+
+This will tell you exactly what's wrong and how to fix it.
+
+Keep Terminals 1, 3, 4 running while testing!

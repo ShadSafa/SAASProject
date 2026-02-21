@@ -54,7 +54,6 @@ async def create_test_scan(user_id):
 async def run_scan_analysis(scan_id):
     """Execute scan and analysis (simulating what the route does)."""
     from app.tasks.scan_jobs import _run_scan
-    from app.tasks.analysis_jobs import analyze_posts_batch
 
     print(f"\n[SCAN] Running scan {scan_id}...")
 
@@ -62,12 +61,7 @@ async def run_scan_analysis(scan_id):
     viral_post_ids = await _run_scan(scan_id)
     print(f"[OK] Scan complete: {len(viral_post_ids)} posts created")
 
-    # Dispatch analysis task
-    if viral_post_ids:
-        print(f"[CELERY] Dispatching analysis task to Celery...")
-        analyze_posts_batch.delay(scan_id, viral_post_ids)
-        print(f"[OK] Task queued for {len(viral_post_ids)} posts")
-
+    # Return viral post IDs so dispatch can happen outside event loop
     return viral_post_ids
 
 
@@ -195,6 +189,15 @@ async def main():
         # Step 3: Run scan and dispatch analysis
         print("\n[3/5] Running scan and dispatching analysis...")
         viral_post_ids = await run_scan_analysis(scan_id)
+
+        # Dispatch analysis task (must be done outside event loop to avoid deadlock)
+        if viral_post_ids:
+            from app.tasks.analysis_jobs import analyze_posts_batch
+            loop = asyncio.get_event_loop()
+            # Run the delay() call in a thread pool executor to avoid blocking the event loop
+            await loop.run_in_executor(None, lambda: analyze_posts_batch.delay(scan_id, viral_post_ids))
+            print(f"[CELERY] Dispatching analysis task to Celery...")
+            print(f"[OK] Task queued for {len(viral_post_ids)} posts")
 
         # Step 4: Wait for Celery to process
         print("\n[4/5] Waiting for Celery worker to process analysis...")
