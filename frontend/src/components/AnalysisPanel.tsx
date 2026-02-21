@@ -7,14 +7,14 @@ interface AnalysisPanelProps {
 
 export function AnalysisPanel({ analysis }: AnalysisPanelProps) {
   return (
-    <div className="mt-4 pt-4 border-t border-gray-200">
+    <div className="mt-6 pt-6 border-t-2 border-gray-200">
       {/* Why Viral Summary */}
       {analysis.why_viral_summary && (
-        <div className="mb-4">
-          <h4 className="text-sm font-semibold text-gray-900 mb-2">Why It Went Viral</h4>
-          <p className="text-sm text-gray-700 leading-relaxed">{analysis.why_viral_summary}</p>
+        <div className="mb-6">
+          <h4 className="text-lg font-bold text-gray-900 mb-3">Why It Went Viral</h4>
+          <p className="text-base text-gray-700 leading-relaxed">{analysis.why_viral_summary}</p>
           {analysis.confidence_score && (
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 mt-2">
               Confidence: {(analysis.confidence_score * 100).toFixed(0)}%
             </p>
           )}
@@ -22,9 +22,9 @@ export function AnalysisPanel({ analysis }: AnalysisPanelProps) {
       )}
 
       {/* Algorithm Factors */}
-      <div className="space-y-2">
-        <h4 className="text-sm font-semibold text-gray-900 mb-2">Algorithm Factors</h4>
-        <div className="grid grid-cols-2 gap-2">
+      <div className="space-y-3">
+        <h4 className="text-lg font-bold text-gray-900 mb-4">Algorithm Factors</h4>
+        <div className="grid grid-cols-2 gap-3">
           <AlgorithmFactorBadge label="Hook Strength" score={analysis.hook_strength_score} />
           <AlgorithmFactorBadge label="Posting Time" score={analysis.posting_time_score} />
           <AlgorithmFactorBadge label="Engagement Velocity" score={analysis.engagement_velocity_score} />
@@ -35,9 +35,9 @@ export function AnalysisPanel({ analysis }: AnalysisPanelProps) {
 
         {/* Emotional Trigger */}
         {analysis.emotional_trigger && (
-          <div className="mt-3 px-3 py-2 bg-purple-50 rounded-lg">
-            <span className="text-sm font-medium text-purple-900">
-              Emotional Trigger: <span className="capitalize">{analysis.emotional_trigger}</span>
+          <div className="mt-4 px-4 py-3 bg-purple-50 rounded-lg border border-purple-200">
+            <span className="text-base font-semibold text-purple-900">
+              Emotional Trigger: <span className="capitalize font-bold">{analysis.emotional_trigger}</span>
             </span>
           </div>
         )}
