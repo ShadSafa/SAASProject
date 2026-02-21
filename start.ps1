@@ -23,6 +23,15 @@ Start-Sleep -Seconds 2
 Write-Host "Starting Frontend..." -ForegroundColor Blue
 Start-Process powershell -ArgumentList "-NoExit -Command `"cd '$PWD\frontend'; npm run dev`""
 
+# Wait for Frontend to start
+Start-Sleep -Seconds 2
+
+# Start Kanban board server on port 8080
+Write-Host "Starting Kanban board server..." -ForegroundColor Magenta
+$projectRoot = Get-Location
+Start-Process powershell -ArgumentList "-NoExit -Command `"cd '$projectRoot'; python -m http.server 8080 --directory '$projectRoot'`""
+
 Write-Host "`n✓ All services started!" -ForegroundColor Green
 Write-Host "Frontend: http://localhost:5173" -ForegroundColor Cyan
 Write-Host "Backend: http://localhost:8000" -ForegroundColor Cyan
+Write-Host "Kanban Board: http://localhost:8080/kanban.html" -ForegroundColor Magenta
