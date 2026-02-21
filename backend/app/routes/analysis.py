@@ -19,6 +19,9 @@ async def get_analysis(
     user = Depends(get_current_active_user)
 ):
     """Get analysis results for a viral post."""
+    # Cache user ID to avoid accessing detached ORM object later
+    user_id = user.id
+
     # Verify viral post exists and belongs to user's scan
     result = await db.execute(
         select(ViralPost).where(ViralPost.id == viral_post_id).options(joinedload(ViralPost.scan))
@@ -29,7 +32,7 @@ async def get_analysis(
         raise HTTPException(status_code=404, detail="Viral post not found")
 
     # Verify user owns this post's scan
-    if viral_post.scan.user_id != user.id:
+    if viral_post.scan.user_id != user_id:
         raise HTTPException(status_code=403, detail="Not authorized")
 
     # Fetch analysis (may not exist yet if still processing)
