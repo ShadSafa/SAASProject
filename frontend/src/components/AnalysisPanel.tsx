@@ -27,10 +27,10 @@ export function AnalysisPanel({ analysis }: AnalysisPanelProps) {
         <div className="grid grid-cols-2 gap-2">
           <AlgorithmFactorBadge label="Hook Strength" score={analysis.hook_strength_score} />
           <AlgorithmFactorBadge label="Posting Time" score={analysis.posting_time_score} />
-          <AlgorithmFactorBadge label="Engagement Velocity" score={analysis.engagement_velocity_score} />
-          <AlgorithmFactorBadge label="Save/Share Ratio" score={analysis.save_share_ratio_score} />
-          <AlgorithmFactorBadge label="Hashtag Performance" score={analysis.hashtag_performance_score} />
-          <AlgorithmFactorBadge label="Audience Retention" score={analysis.audience_retention_score} />
+          <AlgorithmFactorBadge label="Eng. Velocity" score={analysis.engagement_velocity_score} />
+          <AlgorithmFactorBadge label="Save/Share" score={analysis.save_share_ratio_score} />
+          <AlgorithmFactorBadge label="Hashtag Perf." score={analysis.hashtag_performance_score} />
+          <AlgorithmFactorBadge label="Audience Ret." score={analysis.audience_retention_score} />
         </div>
 
         {/* Emotional Trigger */}
