@@ -122,7 +122,7 @@ export default function ViralPostCard({ post, rank }: ViralPostCardProps) {
         <div className={`flex items-center justify-between px-3 py-2 rounded-lg border ${scoreColor}`}>
           <span className="text-xs font-medium">{scoreLabel} Viral</span>
           <span className="text-sm font-bold">
-            {post.viral_score !== null ? `${Math.round(post.viral_score)}/100` : '\u2014'}
+            {post.viral_score !== null ? `${Math.round(post.viral_score)}` : '\u2014'}
           </span>
         </div>
 
