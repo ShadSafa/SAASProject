@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-02-21
 **Current Phase:** 05 - Content Deepdive (IN PROGRESS)
-**Current Plan:** 05-02 (next)
+**Current Plan:** 05-03 (next)
 **Milestone:** v1.0
 
 ---
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-02-15)
 
 **Phase 05 Progress:**
 - Plans: 8 total
-- Completed: 1 (05-01) ✅
-- Remaining: 7
+- Completed: 2 (05-01, 05-02) ✅
+- Remaining: 6
 
-Progress: [#---------] 12.5% — Phase 5 IN PROGRESS
+Progress: [##--------] 25% — Phase 5 IN PROGRESS
 
 **Requirements:**
 - Total v1: 79
@@ -43,13 +43,13 @@ Progress: [#---------] 12.5% — Phase 5 IN PROGRESS
 
 **Phase:** 05 - Content Deepdive
 **Status:** IN PROGRESS
-**Plans Planned:** 8 total (1 completed, 7 remaining)
+**Plans Planned:** 8 total (2 completed, 6 remaining)
 
 **Completed Plans:**
 - ✓ Plan 05-01: Audience Demographics Model (2026-02-21)
+- ✓ Plan 05-02: Audience Demographics Service (2026-02-21)
 
 **Remaining Plans:**
-- Plan 05-02: Audience Demographics Service (pending)
 - Plan 05-03: Audience API & Client (pending)
 - Plan 05-04: Content Category Classification (pending)
 - Plan 05-05: Niche Detection Service (pending)
@@ -120,6 +120,13 @@ Progress: [#---------] 12.5% — Phase 5 IN PROGRESS
   - Status: AI analysis workflow fully functional end-to-end
 
 **Recently Completed:**
+- ✓ Plan 05-02: Audience Demographics Service (2026-02-21)
+  - Created engagement_service.py with calculate_engagement_rate() and EngagementMetrics model
+  - Formula: (likes + comments + saves + shares) / follower_count * 100
+  - Edge case handling: zero followers returns 0.0 (no crash)
+  - Added 6 comprehensive tests covering all scenarios (100% passing)
+  - Helper function should_calculate_engagement_rate_for_post() for future integration
+  - 2 minutes execution time, 2 commits
 - ✓ Plan 05-01: Audience Demographics Model (2026-02-21)
   - Extended Analysis model with audience_demographics (JSON), engagement_rate (Float), audience_interests (JSON)
   - Created migration a921a1d83e20 to add new fields to analyses table
@@ -292,26 +299,32 @@ Progress: [#---------] 12.5% — Phase 5 IN PROGRESS
 | 04-08 | 2 min | 2 | 5 | 2 | 2026-02-20 |
 | 04-09 | 15 min | 3 | 4 | 1 | 2026-02-21 |
 | 05-01 | 4 min | 3 | 4 | 3 | 2026-02-21 |
+| 05-02 | 2 min | 3 | 2 | 2 | 2026-02-21 |
 
 ---
+| Phase 05 P03 | 4 | 3 tasks | 2 files |
 
 ## Last Session
 
 **Date:** 2026-02-21
-**Completed:** Phase 05 Plan 05-01 ✅
-**Status:** Phase 05 started - audience demographics foundation complete:
+**Completed:** Phase 05 Plan 05-02 ✅
+**Status:** Phase 05 in progress - engagement rate calculation service complete:
+  - ✅ Plan 05-02: Audience Demographics Service
+    - Created engagement_service.py with calculate_engagement_rate() and EngagementMetrics model
+    - Formula: (likes + comments + saves + shares) / follower_count * 100
+    - Edge case handling: zero followers returns 0.0 (no crash)
+    - Added 6 comprehensive tests covering all scenarios (100% passing)
+    - Helper function should_calculate_engagement_rate_for_post() for future integration
+    - 2 minutes execution time, 2 commits
   - ✅ Plan 05-01: Audience Demographics Model
-    - Extended Analysis model with 3 new fields: audience_demographics (JSON), engagement_rate (Float), audience_interests (JSON)
-    - Created and applied migration a921a1d83e20 to add columns to analyses table
-    - Created conftest.py with SQLite in-memory test fixtures for model testing
-    - Added test_analysis_model.py with 3 passing tests verifying field storage/retrieval
-    - All fields nullable=True for gradual Phase 05 service population
-    - Fixed migration schema drift (removed unrelated changes)
+    - Extended Analysis model with 3 new fields for audience insights
+    - Created and applied migration a921a1d83e20
+    - SQLite in-memory test fixtures for isolated testing
     - 4 minutes execution time, 3 commits
 
-**Ready for:** Phase 05 Plan 05-02 (Audience Demographics Service)
+**Ready for:** Phase 05 Plan 05-03 (Audience API & Client)
 
 ---
 
 *State initialized: 2026-02-15*
-*Last updated: 2026-02-21T13:54:46Z*
+*Last updated: 2026-02-21T14:04:11Z*
