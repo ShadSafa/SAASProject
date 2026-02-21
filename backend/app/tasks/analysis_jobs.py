@@ -15,8 +15,8 @@ from app.services.cache_service import get_cached_analysis, cache_analysis
 logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name="analysis.analyze_posts_batch")
-def analyze_posts_batch(scan_id: int, viral_post_ids: List[int]) -> Dict[str, int]:
+@celery_app.task(name="analysis.analyze_posts_batch", bind=True)
+def analyze_posts_batch(self, scan_id: int, viral_post_ids: List[int]) -> Dict[str, int]:
     """
     Celery task: Analyze batch of viral posts with cache-first strategy.
 
@@ -33,6 +33,8 @@ def analyze_posts_batch(scan_id: int, viral_post_ids: List[int]) -> Dict[str, in
     Returns:
         dict with counts: {"analyzed": int, "cached": int, "failed": int}
     """
+    logger.info(f"[CELERY TASK STARTED] analyze_posts_batch called with scan_id={scan_id}, posts={viral_post_ids}")
+    print(f"[CELERY TASK STARTED] analyze_posts_batch called with scan_id={scan_id}, posts={viral_post_ids}")
     try:
         # Handle event loop properly for Celery workers
         try:
@@ -54,6 +56,9 @@ def analyze_posts_batch(scan_id: int, viral_post_ids: List[int]) -> Dict[str, in
 
 async def _run_analysis(scan_id: int, viral_post_ids: List[int]) -> Dict[str, int]:
     """Async implementation of analysis logic using SQLAlchemy async session."""
+    logger.info(f"[_RUN_ANALYSIS] Starting analysis for scan_id={scan_id}, posts={len(viral_post_ids)}")
+    print(f"[_RUN_ANALYSIS] Starting analysis for scan_id={scan_id}, posts={len(viral_post_ids)}")
+
     from app.database import AsyncSessionLocal
     from app.models.viral_post import ViralPost
     from app.models.analysis import Analysis
